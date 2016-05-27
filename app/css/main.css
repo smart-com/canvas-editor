@@ -1,3 +1,17 @@
-body {
-  background-color: silver;
+* {
+  outline: 1px dashed grey;
+}
+html body main section textarea {
+  width: 60%;
+  height: 100px;
+  padding: 20px;
+}
+html body main section canvas {
+  width: 600px;
+  height: 400px;
+}
+html body main .btn-field {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
