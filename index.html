@@ -35,9 +35,110 @@
         <div id="img-container"></div>
         <p>Щелкните правой кнопкой мыши для сохранения ...</p>
       </section>
-      <section class="btn-field"><span id="control-btn-field">
-          <div id="clear-btn" class="buttons">Clear Console</div>
-          <div id="run-btn" class="buttons">Run Canvas</div></span><span id="canvas-btn-field"></span></section>
+      <section class="btn-field">
+        <p>alert('hi');</p><span id="control-btn-field">
+          <div id="run-btn" class="buttons">Run Canvas</div>
+          <div id="clear-console-btn" class="buttons">Clear Console</div>
+          <div id="clear-canvas-btn" class="buttons">Clear Canvas</div>
+          <div id="restore-context-btn" class="buttons">Restore Context
+            <p class="desc">
+              The CanvasRenderingContext2D.restore() method
+              of the Canvas 2D API restores the most recently
+              saved canvas state by popping the top entry in the
+              drawing state stack. If there is no saved state,
+              this method does nothing.
+              
+            </p>
+          </div></span><span id="canvas-btn-field">
+          <div id="begin-path" class="buttons">Begin Path
+            <p class="desc">
+              Creates a new path. Once created, future drawing
+              commands are directed into the path and used
+              to build the path up.
+              
+            </p>
+          </div>
+          <div id="close-path" class="buttons">Close Path
+            <p class="desc">
+              Closes the path so that future drawing commands
+              are once again directed to the context.
+              
+            </p>
+          </div>
+          <div id="move-canvas" class="buttons">Move Canvas
+            <p class="desc">
+              The CanvasRenderingContext2D.translate() method of
+              the Canvas 2D API adds a translation transformation
+              by moving the canvas and its origin x horizontally
+              and y vertically on the grid.
+              
+            </p>
+          </div>
+          <div id="rotate-canvas" class="buttons">Rotate Canvas
+            <p class="desc">
+              The CanvasRenderingContext2D.rotate() method of the
+              Canvas 2D API adds a rotation to the transformation
+              matrix. The angle argument represents a clockwise
+              rotation angle and is expressed in radians.
+              
+            </p>
+          </div>
+          <div id="move-to" class="buttons">Move To
+            <p class="desc">
+              The CanvasRenderingContext2D.moveTo() method of the
+              Canvas 2D API moves the starting point of a new
+              sub-path to the (x, y) coordinates.
+              
+            </p>
+          </div>
+          <div id="line-to" class="buttons">Line To
+            <p class="desc">
+              The CanvasRenderingContext2D.lineTo() method of the
+              Canvas 2D API connects the last point in the
+              sub-path to the x, y coordinates with a straight
+              line (but does not actually draw it).
+              
+            </p>
+          </div>
+          <div id="stroke" class="buttons">Stroke
+            <p class="desc">
+              The CanvasRenderingContext2D.stroke() method of the
+              Canvas 2D API strokes the current or given path
+              with the current stroke style using the non-zero
+              winding rule.
+              
+            </p>
+          </div>
+          <div id="line-width" class="buttons">Line Width
+            <p class="desc">
+              The CanvasRenderingContext2D.lineWidth property of
+              the Canvas 2D API sets the thickness of lines in
+              space units. When getting, it returns the current
+              value (1.0 by default). When setting, zero,
+              negative, Infinity and NaN values are ignored;
+              otherwise the current value is set to the new value.
+              
+            </p>
+          </div>
+          <div id="stroke-style" class="buttons">Stroke Style
+            <p class="desc">
+              The CanvasRenderingContext2D.strokeStyle property of
+              the Canvas 2D API specifies the color or style to
+              use for the lines around shapes. The default is #000
+              (black).
+              
+            </p>
+          </div>
+          <div id="line-cap-round" class="buttons">Round Line
+            <p class="desc">
+              The CanvasRenderingContext2D.lineCap property of
+              the Canvas 2D API determines how the end points of
+              every line are drawn. There are three possible
+              values for this property and those are: butt, round
+              and square. By default this property is set to butt.
+            </p>
+          </div></span>
+      </section>
     </main>
     <script src="app/js/main.js"></script>
   </body>

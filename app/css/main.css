@@ -1,6 +1,9 @@
 * {
   outline: 1px dashed grey;
 }
+.desc {
+  display: none;
+}
 html body main section textarea {
   width: 60%;
   height: 100px;
