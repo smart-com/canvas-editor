@@ -1,166 +1,465 @@
 /**
  * @classdesc Экземпляр приложения
  * @class
+ *
  */
 var CanvasApp = function() {
+
+    // Объявляем основные объекты приложения
+    // Для упрощения доступа и установки обработчиков
 
     /**
      * @summary HTML-Элементы приложения
      * @type { Object }
      *
      * @property  { Object } canvas Поле для рисования
-     * @property  { Object } context CanvasRenderingContext2D
      * @property  { Object } console textarea для ввода кода
      * @property  { Object } runBtn Кнопка для запуска кода из консоли
      */
-    var html   = {
-        canvas  : {},
-        context : {},
-        console : {},
-        runBtn  : {},
-        clearConsoleBtn: {},
-        clearCanvasBtn: {},
-        restoreContextBtn: {}
-    },
+    var html                   = {},
 
         /**
-         * @summary Объект с кнопками
+         * @summary Canvas 2d Rendering Context
+         * @type { object }
+         */
+        ctx                    = {},
+
+        /**
+         * @summary Объект с кнопками для рисования
          *
          * @description
-         * Ключ - event.target.id - идентификатор кнопки
+         * Эта группа кнопок расположена отдельно в HTML
+         * Для запуска они используют текст из консоли
+         * Ключ - идентификатор кнопки
          * Значение - код, который должен выполниться
          * при нажатии пользователем на кнопку с этим идентификатором
          */
-        btnVal = {
-            'begin-path' : '\nbeginPath();\n',
-            'close-path' : '\nclosePath();\n',
-            'move-canvas' : '\ntranslate( 100, 100 );\n',
-            'rotate-canvas' : '\nrotate( 5 );\n',
-            'move-to' : '\nmoveTo( 300, 100 );\n',
-            'line-to' : '\nlineTo( 500, 100 );\n',
-            'stroke' : '\nstroke();\n',
-            'line-width' : '\nlineWidth = 10;\n',
-            'stroke-style' : '\nstrokeStyle = "red";\n',
-            'line-cap-round' : '\nlineCap = "round";\n"',
-            '': '' // Это бесполезная штука, чтобы легче копировать кнопки
-        };
+        canvasBtnVal           = {
+            'begin-path'   : 'ctx.beginPath();\n',
+            'close-path'   : 'ctx.closePath();\n',
+            'move-canvas'  : 'ctx.translate( 100, 100 );\n',
+            'rotate-canvas': 'ctx.rotate( 5 );\n',
+
+            'move-to': 'ctx.moveTo( 100, 100 );\n',
+            'line-to': 'ctx.lineTo( 200, 100 );\n',
+            'stroke' : 'ctx.stroke();\n',
+
+            'line-width': 'ctx.lineWidth = 10;\n',
+
+            'line-cap-round': 'ctx.lineCap = "round";\n',
+            'border-radius' : 'ctx.lineWidth = 20;\n' +
+                              'ctx.lineJoin = "round";\n',
+
+            'stroke-style': 'ctx.strokeStyle = "blue";\n',
+
+            'bg-color'       : 'ctx.fillStyle = "green";\n' +
+                               'ctx.fillRect( 10, 10, 100, 100 );\n',
+            'shadow-color'   : 'ctx.shadowColor = "red";\n',
+            'shadow-blur'    : 'ctx.shadowBlur = 10;\n',
+            'shadow-position': 'ctx.shadowOffsetY = 10;\n' +
+                               'ctx.shadowOffsetX = 10;\n',
+            'opacity'        : 'ctx.globalAlpha = 0.5;\n',
+
+            'fill-shape' : 'ctx.fill();\n',
+            'fill-text'  : 'ctx.font = "48px serif";\n' +
+                           'ctx.fillStyle = "gray";\n' +
+                           'ctx.fillText( "Hello world", 20, 100 );\n',
+            'stroke-text': 'ctx.font = "48px serif";\n' +
+                           'ctx.fillStyle = "darkgray";\n' +
+                           'ctx.strokeText( "Hello world", 20, 100 );\n',
+
+            'straight-line': 'ctx.moveTo( 100, 100 );\n' +
+                             'ctx.lineTo( 200, 100 );\n' +
+                             'ctx.stroke();\n',
+            'bezier'       : 'ctx.beginPath();\n' +
+                             'ctx.bezierCurveTo( 50, 100, 180, 10, 20, 10 );\n' +
+                             'ctx.stroke();\n',
+            'arc'          : 'ctx.arc( 100, 30, 50, 0.2 * Math.PI, 1.1 * Math.PI );\n' +
+                             'ctx.stroke();\n',
+
+            'round'                 : 'ctx.arc( 50, 50, 50, 0, 2 * Math.PI, false );\n' +
+                                      'ctx.stroke();\n',
+            'fill-rectangle'        : 'ctx.fillRect( 10, 10, 100, 100 );\n',
+            'empty-rectangle'       : 'ctx.strokeRect( 10, 10, 100, 100 );\n',
+            'create-linear-gradient': 'gradient = ctx.createLinearGradient( 0, 0, 200, 0 );\n' +
+                                      'gradient.addColorStop( 0, "green" );\n' +
+                                      'gradient.addColorStop( 1, "white" );\n' +
+                                      'ctx.fillStyle = gradient;\n' +
+                                      'ctx.fillRect( 10, 10, 200, 100 );\n',
+            'create-radial-gradient': 'gradient = ctx.createRadialGradient(100, 100, 100, 100, 100, 0);\n' +
+                                      'gradient.addColorStop( 0, "green" );\n' +
+                                      'gradient.addColorStop( 1, "white" );\n' +
+                                      'ctx.fillStyle = gradient;\n' +
+                                      'ctx.fillRect( 0, 0, 200, 100 );\n',
+            'create-image'          : 'var image = new Image();\n' +
+                                      'image.src="app/img/present.png";\n' +
+                                      // Таймаут необходим, чтобы картинка успела подгрузиться за один клик
+                                      'setTimeout( function() { ctx.drawImage( image, 10, 50, 50, 50 ) }, 5 );\n',
+            'tile-canvas'           : 'var image = new Image();\n' +
+                                      'image.src="app/img/present.png";\n' +
+                                      'image.onload = function() {\n' +
+                                      'var pattern = ctx.createPattern( image, "repeat" );\n' +
+                                      'ctx.fillStyle = pattern;\n' +
+                                      'ctx.fillRect( 0, 0, 300, 300 );\n' +
+                                      '}\n',
+            ''                      : '' // Это бесполезная штука, чтобы легче копировать кнопки
+        },
+
+        /**
+         * @summary Объект с кнопками для управления консолью
+         *
+         * @description
+         * Эта группа кнопок расположена отдельно в HTML
+         * Они запускают код, который не требует редактирования,
+         * минуя консоль
+         * Ключ - идентификатор кнопки
+         * Значение - код, который должен выполниться
+         * при нажатии пользователем на кнопку с этим идентификатором
+         */
+        ctrlBtnVal             = {
+            'clear-canvas-btn'   : 'html.canvas.width = html.canvas.width;',
+            'restore-context-btn': 'ctx.restore();',
+            ''                   : ''  // Это бесполезная штука, чтобы легче копировать кнопки
+        },
+
+        /**
+         * NOT USE: @summary Объект с кнопками для запуска и в консоли и без
+         */
+        additionalBtnVal       = {
+            'save-image': 'var imageCopy = html.imgCopy;\n' +
+                          'var imageContainer = html.imgContainer;\n' +
+                          'imageCopy.src = html.canvas.toDataURL();\n' +
+                          'imageContainer.href = imageCopy.src;\n' +
+                          'imageCopy.style.display = "inline-block";\n' +
+                          'imageContainer.style.display = "block";\n',
+            ''          : ''  // Это бесполезная штука, чтобы легче копировать кнопки
+        },
+
+        /**
+         * @summary Массив с кругами
+         * @type { Array.<Object> }
+         */
+        circles                = [],
+
+        /**
+         * @summary Массив с названиями цветов для выбора случайного цвета
+         * @type { Array.<String> }
+         */
+        colors                 = [
+            'red', 'green', 'blue', 'yellow', 'orange', 'rosybrown', 'magenta', 'brown', 'purple', 'pink',
+            'coral', 'indianred', 'lime', 'seagreen', 'teal', 'cadetblue', 'steelblue', 'slategray',
+            'blueviolet', 'crimson'
+        ],
+
+        previousSelectedCircle = {},
+        clickSound             = new Audio( 'app/media/popup.mp3' ),
+        isDragging             = false,
+        timeout = 10,
+        timeoutIDForFallBalls,
+        isDrawing = false;
 
     /**
-     * @summary Устанавливает строку в консоль
+     * @summary Устанавливает строку для редактирования в консоль
      * @listens click:MouseEvents
-     * @param value { object } event Клик на группе кнопок
      *
-     * @description
-     * Кнопки для рисования работают одинаково
-     * поэтому они в общем HTML контейнере
-     * на котором и висит один обработчик
-     * общий для всех кнопок
+     * @param { object } event Клик на группе кнопок
      */
     var setConsoleValue = function( event ) {
-        var event = window.event;
-        // Берем то, что должно выполниться
-        // при нажатии на эту кнопку
-        // в объекте btnVal
-        html.console.value += btnVal[ event.target.id ];
+        event = event || window.event;
+        html.console.value += canvasBtnVal[ event.target.id ];
     };
 
     /**
-     * @description
-     * 1. Удаляем все пробелы
-     * (понадобится удалить последнюю ; нужно убедиться, что это не пробел
-     * 2. Удаляем последнюю точку с запятой, чтобы она не заменялась на вызов контекста
-     * 3. Заменяем все оставшиеся ; вызоваом контекста канваса,
-     * (его пришлось предварительно присвоить в событие,
-     * так как из new Functions больше вообще ничего не было доступно,
-     * а все переданные ей параметры она бессовестно превращает в строку,
-     * с которой потом ничего нельзя сделать, так как это ни разу не JSON
-     * @param { string } Строка из консоли для валидации
-     * @returns { string } Строку для выполнения
+     * @summary Получает объекты HTML-страницы
+     *
+     * @param canvasId Идентификатор Канваса
+     * @param consoleId Идентификатор консоли
+     * @param runBtnId Идентификатор кнопки запуска
      */
-    function validateStr( str ) {
-        var deleteSpaces = str.replace( /\s+/g, '' );
-        var deleteLastSemicolon = deleteSpaces.slice( 0, -1 );
-        var insertContext = deleteLastSemicolon.replace( /;/g,";event.ctx." );
-        return insertContext;
+    function setHtml( id ) {
+        html.canvas = document.getElementById( id.canvasId );
+        html.console = document.getElementById( id.consoleId );
+        html.runBtn = document.getElementById( id.runBtnId );
+        html.imgContainer = document.getElementById( id.imgContainer );
+        html.imgCopy = document.getElementById( id.imgCopy );
+        html.randomCircleBtn = document.getElementById( id.randomCircleBtn );
+        html.idBallSize = id.ballSize;
+        html.animateCirclesBtn = document.getElementById( id.animateCircle );
+        html.clearCanvasBtn = document.getElementById( id.clearCanvasBtn );
     }
 
     /**
+     * @summary Устанавливает контекст канваса
+     */
+    function setContext() {
+        ctx = html.canvas.getContext( '2d' );
+    }
+
+    /**
+     * @summary NOT USE Готовит строку из консолм к запуску
+     * @description
+     * 1. Удаляем все пробелы, так как понадобится удалить последнюю ;
+     * Если в строке кода случайно окажутся пробелы, то точка с запятой останется
+     * и будет заменена на вызов контекста ( будет ошибка )
+     * 2. Удаляем последнюю точку с запятой, чтобы она не заменялась на вызов контекста
+     * 3. Заменяем все оставшиеся ; вызоваом контекста канваса,
+     * (его пришлось предварительно присвоить в событие,
+     * так как из new Function() больше вообще ничего не было доступно,
+     * а все переданные ей параметры она бессовестно превращает в строку,
+     * с которой потом ничего нельзя сделать, так как это ни разу не JSON
+     *
+     * @param { string } str Строка из консоли для валидации
+     * @param { string } contextPropertyWithDot Название свойства, которое нужно передать в new Function()
+     *
+     * @returns { string } Готовая строка для выполнения
+
+     function validateStr( str, contextPropertyWithDot ) {
+        var replacer             = contextPropertyWithDot,
+            deletedSpaces        = str.replace( /^\s+|\s+$/g, '' ),
+            deletedLastSemicolon = deletedSpaces.slice( 0, -1 ),
+            insertContext        = deletedLastSemicolon.replace( /;/g, ';\n' + replacer );
+        return replacer + insertContext;
+    }*/
+
+    /**
      * @summary Получает строку кода из консоли
-     * @returns { string } Исправленная строка
+     * @returns { string } Строка
      */
     function getConsoleValue() {
-        // Создаю новое свойство у объекта события
-        // и запихиваю туда контекст канваса,
-        // чтобы он был доступен из new Function()
-        event.ctx = html.context;
-        var consoleValue = 'event.ctx.' + html.console.value;
-        return validateStr( consoleValue );
-
+        var consoleValue = html.console.value;
+        return consoleValue;
     }
 
     /**
      * @summary Берет код из консоли и запускает его на выполнение
      * @listens click:MouseEvents
      */
-    function runCode() {
-        // Не понимаю почему html никак не определяется в новой функции
-        // Не понимаю, что здесь в arguments[0] делает клик
-        // и как он туда попал, если я не передавала вообще никаких аргументов...
-        // Но таки нашла относительно несложный способ
-        // Передать в новую функцию context канваса,
-        // создала у объекта события новое свойство
-        // и запихнула его туда. Жизнь стала налаживаться...
-        var code = getConsoleValue();
-        var run = new Function( code );
-        run();
+    function runConsoleCode() {
+        var consoleCode = getConsoleValue( 'ctx.' );
+        var runConsole = new Function( 'ctx', consoleCode );
+        runConsole( ctx );
     }
 
-    /**
-     * @summary Очищает содержимое консоли
-     * @listens click:MouseEvents
-     */
-    function clearConsole() {
-        html.console.value = '';
-    }
-
-    /**
-     * @summary Очищает пространство холста без изменения настроек
-     */
     function clearCanvas() {
-        html.canvas.width = html.canvas.width;
+        clearTimeout( timeoutIDForFallBalls );
+        circles = [];
+        ctx.clearRect( 0, 0, html.canvas.width, html.canvas.height );
     }
 
     /**
-     * @summary Восстанавливает последний сохраненный контекст
+     * @summary Запускает управляющий код без участия консоли
+     * @listens click:MouseEvents
+     *
+     * @param { object } event click:MouseEvents
      */
-    function restoreContext() {
-        html.context.restore();
+    function runCode( event ) {
+        event = event || window.event;
+        var code = ctrlBtnVal[ event.target.id ] || additionalBtnVal[ event.target.id ];
+        var run = new Function( 'html, ctx', code );
+        run( html, ctx );
     }
 
     /**
-     * @summary Получает объекты HTML-страницы
-     *
-     * @description
-     * Здесь инициализируем только компоненты,
-     * поведение которых отличается от кнопок для рисования.
-     * Они будут искаться динамически
-     *
-     * @param canvasId Идентификатор Канваса
-     * @param consoleId Идентификатор консоли
-     * @param runBtnId Идентификатор кнопки запуска
-     * @param clearConsoleBtnId Идентификатор кнопки очистки консоли
-     * @param clearCanvasBtnId Идентификатор кнопки очистки холста
-     * @param restoreContextBtnId Восстанавливает последний сохраненный контекст
+     * @summary Возвращает случайное число из заданного диапахона
+     * @param { number } [ from = 10 ] Начало диапазона
+     * @param { number } [ to = 60 ] Конец диапазона
+     * @returns { number }
      */
-    this.setHtml = function( canvasId, consoleId, runBtnId, clearConsoleBtnId, clearCanvasBtnId, restoreContextBtnId ) {
-        html.canvas = document.getElementById( canvasId );
-        html.context = html.canvas.getContext( '2d' );
-        html.console = document.getElementById( consoleId );
-        html.runBtn = document.getElementById( runBtnId );
-        html.clearConsoleBtn = document.getElementById( clearConsoleBtnId );
-        html.clearCanvasBtn = document.getElementById( clearCanvasBtnId );
-        html.restoreContextBtn = document.getElementById( restoreContextBtnId );
-    };
+    function randomFromTo( startDiapazone, endDiapazone ) {
+        var from = startDiapazone || 10;
+        var to = endDiapazone || 60;
+        return Math.floor(
+            Math.random() * (
+                to - from + 1
+            ) + from
+        );
+    }
+
+    /**
+     * @classdesc Создает случайный круг
+     * @class
+     * @property  { Number } randomRadius Радиус окружности
+     * @property  { Number } x Случайная Х-координата центра окружности
+     * @property  { Number } y Случайная Y-координата центра окружности
+     * @property  { Number } dx Случайный Коэффициент ускорения по горизонтали
+     * @property  { Number } dy Случайный коэффициент ускорения по вертикали
+     * @property  { Number } radius Радиус окружности ( Введенное в &lt;input&gt; пользовательское число )
+     *                              Если в инпуте 0, то радиус будет случайным
+     *                              в диапазоне от 10 до 60 {@link randomFromTo()}
+     * @property { String } color Цвет круга. Выбирается случайным образом из массива {@link colors}
+     * @property { String } borderColor Цвет рамки. Выбирается случайным образом из массива {@link colors}
+     * @property { Boolean } isSelected Метка для круга, выбранного в текущий момент
+     *
+     */
+    function Circle() {
+        var currentRadius = parseFloat( document.getElementById( html.idBallSize ).value );
+        var randomRadius = randomFromTo();
+        this.x = randomFromTo( 0, html.canvas.width );
+        this.y = randomFromTo( 0, html.canvas.height );
+        this.dx = randomFromTo( 0.1, 0.9 );
+        this.dy = randomFromTo( 0.1, 0.9 );
+        this.radius = (
+                          currentRadius === 0
+                      ) ? randomRadius : currentRadius;
+        this.color = colors[ randomFromTo( 0, colors.length ) ];
+        this.borderColor = colors[ randomFromTo( 0, colors.length ) ];
+        this.isSelected = false;
+    }
+
+    /**
+     * @description Создает случайный круг и добавляет его в массив circles
+     * @listens click:MouseEvent
+     */
+    function createRandomCircle() {
+        var circle = new Circle();
+        circles.push( circle );
+    }
+
+    /**
+     * @description Проверяет, выбран ли текущий круг
+     * @param { Circle } circle Текущий круг
+     * @param { Number } [selectedBorder = 7] Рамка у выбранного круго чуть шире
+     * @param { Number } [unselectedBorder = 3] Узкая рамка у остальных кругов
+     */
+    function checkSelectedCircle( circle, selectedBorder, unselectedBorder ) {
+        if( circle.isSelected ) {
+            ctx.lineWidth = selectedBorder || 7;
+        } else {
+            ctx.lineWidth = unselectedBorder || 3;
+        }
+    }
+
+    /**
+     * @summary Писует круги из массива
+     * @param { Number } opacity Прохрачность кругов
+     */
+    function drawCircle( opacity ) {
+
+        var defaultOpacity = 0.65;
+
+        ctx.clearRect( 0, 0, html.canvas.width, html.canvas.height );
+
+        for( var i = 0; i < circles.length; i++ ) {
+
+            var circle = circles[ i ];
+            ctx.globalAlpha = opacity || defaultOpacity;
+            ctx.beginPath();
+            ctx.arc( circle.x, circle.y, circle.radius, 0, Math.PI * 2 );
+            ctx.fillStyle = circle.color;
+            ctx.strokeStyle = circle.borderColor;
+            ctx.fill();
+            ctx.stroke();
+            checkSelectedCircle( circle );
+        }
+    }
+
+    /**
+     * @summary Проверяет, попал ли клик по кругу и разрешает перетаскивание
+     * @listens click:MouseEvent
+     * @param event
+     */
+    function checkCanvasClick( event ) {
+
+        var clickX = event.pageX - html.canvas.offsetLeft;
+        var clickY = event.pageY - html.canvas.offsetTop;
+
+        for( var i = circles.length - 1; i >= 0; i-- ) {
+            var circle = circles[ i ];
+            // Расстояние от клика до центра круга
+            var distanceFromCenter = Math.sqrt( Math.pow( circle.x - clickX, 2 ) + Math.pow( circle.y - clickY, 2 ) );
+
+            // Если расстояние меньше, то клик был внутри круга
+            if( distanceFromCenter <= circle.radius ) {
+                if( previousSelectedCircle != null ) {
+                    previousSelectedCircle.isSelected = false;
+                    clearTimeout( timeoutIDForFallBalls );
+                }
+                previousSelectedCircle = circle;
+                circle.isSelected = true;
+                drawCircle();
+                isDragging = true;
+                clickSound.play();
+                clearTimeout( timeoutIDForFallBalls );
+            }
+        }
+    }
+
+    /**
+     * @summary Тянет круг по канвасу
+     * @listens click:MouseEvent
+     * @listens mousemove:MouseEvent
+     *
+     * @param event
+     */
+    function startDragging( event ) {
+
+        if( isDragging === true ) {
+            clearTimeout( timeoutIDForFallBalls );
+            if( previousSelectedCircle !== null ) {
+                var x = event.pageX - html.canvas.offsetLeft;
+                var y = event.pageY - html.canvas.offsetTop;
+                previousSelectedCircle.x = x;
+                previousSelectedCircle.y = y;
+                drawCircle();
+            }
+        }
+    }
+
+    /**
+     * @summary Прекращает перетаскивание
+     */
+    function stopDragging() {
+        isDragging = false;
+    }
+
+    function animateCircles() {
+
+        ctx.clearRect( 0, 0, html.canvas.width, html.canvas.height );
+
+        for ( var i = 0; i < circles.length; i++ ) {
+            var circle = circles[ i ];
+            // Ускорение
+            circle.x += circle.dx;
+            circle.y += circle.dy;
+            // Гравитация
+            if ( ( circle.y ) < html.canvas.height ) {
+                circle.dy += 0.22;
+            }
+            // Трение
+            circle.dx = circle.dx * 0.998;
+            // Если мяч натолкнулся на край холста отбиваем его
+            if ( ( circle.x + circle.radius > html.canvas.width ) || ( circle.x - circle.radius < 0 ) ) {
+                circle.dx = -circle.dx;
+            }
+            // Если мяч упал вниз - отбиваем его, слегка уменьшив скорость
+            if ( ( circle.y + circle.radius > html.canvas.height ) || ( circle.y - circle.radius < 0 ) ) {
+                circle.dy = -circle.dy * 0.6;
+            }
+            // Рисуем текущий мячик
+            drawCircle();
+        }
+        timeoutIDForFallBalls = setTimeout( animateCircles, timeout );
+    }
+
+    function startDrawing( event ) {
+        isDrawing = true;
+        ctx.beginPath();
+        // Устанавливаем координаты куда рисовать
+        ctx.moveTo( event.pageX - html.canvas.offsetLeft, event.pageY - html.canvas.offsetTop);
+    }
+
+    function draw( event ) {
+        if ( isDrawing === true ) {
+            var x = event.pageX - html.canvas.offsetLeft;
+            var y = event.pageY - html.canvas.offsetTop;
+            ctx.lineTo( x, y );
+            ctx.stroke();
+        }
+    }
+
+    function stopDrawing() {
+        isDrawing = false;
+    }
 
     /**
      * @summary Устанавливает обработчики на HTML элементы
@@ -169,7 +468,7 @@ var CanvasApp = function() {
      * Обработчики в разных группах,
      * так как у них немного рахное поведение
      */
-    function addListeners( event ) {
+    function addListeners() {
 
         // Обработчик для всех сразу кнопок рисования на холсте
         var btnSection = document.getElementById( 'canvas-btn-field' );
@@ -179,25 +478,66 @@ var CanvasApp = function() {
             }
         );
 
-        // Обработчики для кнопок управления холстом
-        html.runBtn.addEventListener( 'click', runCode );
-        html.clearConsoleBtn.addEventListener( 'click', clearConsole );
+        // Обработчик для секции с управляющими кнопками
+        var ctrlBtnSection = document.getElementById( 'control-btn-field' );
+        ctrlBtnSection.addEventListener(
+            'click', function() {
+                runCode( event );
+            }
+        );
+
+        /**
+         * бработчик для секции с добавлением дополнительных объектов
+         */
+        var additionalObjSection = document.getElementById( 'additional-objects-field' );
+        additionalObjSection.addEventListener(
+            'click', function() {
+                runCode( event );
+            }
+        );
+
+        // Обработчики для осамостоятельных кнопок
+        html.runBtn.addEventListener( 'click', runConsoleCode );
         html.clearCanvasBtn.addEventListener( 'click', clearCanvas );
-        html.restoreContextBtn.addEventListener( 'click', restoreContext );
+        html.randomCircleBtn.addEventListener( 'click', createRandomCircle );
+        html.randomCircleBtn.addEventListener( 'click', drawCircle );
+
+        // Перетаскивание и анимация
+        html.canvas.addEventListener( 'click', checkCanvasClick );
+        html.canvas.addEventListener( 'click', startDragging );
+        html.canvas.addEventListener( 'mousemove', startDragging );
+        html.canvas.addEventListener( 'mousedown', stopDragging );
+        html.animateCirclesBtn.addEventListener( 'click', animateCircles );
+
+        // Рисование мышкой
+        html.canvas.ondblclick = startDrawing;
+        html.canvas.onmouseup = stopDrawing;
+        html.canvas.onmousemove = draw;
     }
 
     /**
      * @summary Выполняет подготовку к запуску приложения
      * 1. Устанавливает обработчики в HTML
      */
-    this.init = function() {
+    this.init = function( id ) {
+        setHtml( id );
+        setContext();
         addListeners();
     };
 };
 
-// 1 - Создаем приложение
-var app = new CanvasApp();
-app.setHtml( 'canvas-field', 'console', 'run-btn', 'clear-console-btn', 'clear-canvas-btn', 'restore-context-btn' );
-app.init();
+var id = {
+    canvasId: 'canvas-field',
+    consoleId: 'console',
+    runBtnId: 'run-btn',
+    imgContainer: 'img-container',
+    imgCopy: 'img-copy',
+    randomCircleBtn: 'random-circle',
+    ballSize: 'ball-size',
+    animateCircle: 'animate-circles',
+    clearCanvasBtn: 'clear-canvas-btn'
+};
 
-
+// Создаем приложение
+var app = new CanvasApp( id );
+app.init( id );

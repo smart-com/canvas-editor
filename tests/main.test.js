@@ -20,68 +20,21 @@ var testEnvironment = {
 };
 
 // Добавили контент их браузера на страницу дебага Кармы
-// Как рах там будут запущены все тесты
+// Как раз там будут запущены все тесты
 testEnvironment.init( testEnvironment.testPage );
 
-// Копируем объект приложения для тестов
-//var testApp = canvasApp();
+var fakeApp = new CanvasApp();
 
 describe(
-    '', function() {
+    'C HTML все в порядке...', function() {
 
         describe(
-            '', function() {
+            'Canvas', function() {
 
                 it(
                     'Canvas найден', function() {
-                        assert.property( testApp.html, 'canvas' );
-                    }
-                );
-
-                it(
-                    'Контейнер для фоток тоже', function() {
-                        assert.property( testApp.html, 'imgContainer' );
-                    }
-                );
-
-                it(
-                    'Кнопка для запуска кода есть', function() {
-                        assert.property( testApp.html, 'runBtn' );
-                    }
-                );
-
-                it(
-                    'Консоль есть', function() {
-                        assert.property( testApp.html, 'console' );
-                    }
-                );
-            }
-        );
-
-        describe(
-            '', function() {
-
-                it(
-                    'Canvas не NULL', function() {
-                        assert.isNotNull( testApp.html, 'canvas' );
-                    }
-                );
-
-                it(
-                    'Контейнер для фоток тоже', function() {
-                        assert.isNotNull( testApp.html, 'imgContainer' );
-                    }
-                );
-
-                it(
-                    'И кнопка для запуска не NULL', function() {
-                        assert.isNotNull( testApp.html, 'runBtn' );
-                    }
-                );
-
-                it(
-                    'Консоль не NULL...', function() {
-                        assert.isNotNull( testApp.html, 'console' );
+                        assert.isObject( fakeApp, 'canvas' );
+                        console.log( fakeApp );
                     }
                 );
             }
@@ -89,4 +42,4 @@ describe(
     }
 );
 
-var cmd = testApp.html.console;
+//var cmd = testApp.console;

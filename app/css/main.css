@@ -9,7 +9,13 @@ html body main section textarea {
   height: 100px;
   padding: 20px;
 }
-html body main section canvas {
+html body main section .saved-image {
+  display: none;
+  width: 600px;
+  height: 400px;
+}
+html body main section .saved-image .image-copy {
+  display: none;
   width: 600px;
   height: 400px;
 }
