@@ -94,7 +94,8 @@ var CanvasApp = function() {
             'create-image'          : 'var image = new Image();\n' +
                                       'image.src="app/img/present.png";\n' +
                                       // Таймаут необходим, чтобы картинка успела подгрузиться за один клик
-                                      'setTimeout( function() { ctx.drawImage( image, 10, 50, 50, 50 ) }, 5 );\n',
+                                      // Его нужно увеличить, если требуется подгрузить картинку большего размера
+                                      'setTimeout( function() { ctx.drawImage( image, 10, 50, 50, 50 ) }, 8 );\n',
             'tile-canvas'           : 'var image = new Image();\n' +
                                       'image.src="app/img/present.png";\n' +
                                       'image.onload = function() {\n' +
@@ -117,7 +118,9 @@ var CanvasApp = function() {
          * при нажатии пользователем на кнопку с этим идентификатором
          */
         ctrlBtnVal             = {
-            'clear-canvas-btn'   : 'html.canvas.width = html.canvas.width;',
+            'clear-console-btn'   : 'html.console.innerText = "";',
+            'clear-canvas-btn': 'ctx.clearRect( 0, 0, html.canvas.width, html.canvas.height );',
+            'clear-cheet-btn' : 'html.cheetArea.innerHTML = "";',
             'restore-context-btn': 'ctx.restore();',
             ''                   : ''  // Это бесполезная штука, чтобы легче копировать кнопки
         },
@@ -158,6 +161,17 @@ var CanvasApp = function() {
         timeoutIDForFallBalls,
         isDrawing = false;
 
+    function showCheet( event ) {
+        var event = event || window.event;
+        var cheet = event.target.nextElementSibling;
+        cheet.style.display = 'block';
+        html.cheetArea.appendChild( cheet );
+    }
+
+    function deleteCheet() {
+        html.cheetArea.innerHTML = '';
+    }
+
     /**
      * @summary Устанавливает строку для редактирования в консоль
      * @listens click:MouseEvents
@@ -166,7 +180,17 @@ var CanvasApp = function() {
      */
     var setConsoleValue = function( event ) {
         event = event || window.event;
-        html.console.value += canvasBtnVal[ event.target.id ];
+        var parentParent = event.target.parentElement.parentElement;
+        if( parentParent.classList.contains( 'animate-buttons' ) ) {
+            return;
+        }
+
+        html.console.innerText += canvasBtnVal[ event.target.id ];
+
+        var descriptionElem = event.target.nextElementSibling;
+        if ( descriptionElem  && descriptionElem.classList.contains( 'desc' ) ) {
+            showCheet( event );
+        }
     };
 
     /**
@@ -179,13 +203,14 @@ var CanvasApp = function() {
     function setHtml( id ) {
         html.canvas = document.getElementById( id.canvasId );
         html.console = document.getElementById( id.consoleId );
+        html.cheetArea = document.getElementById( id.cheetArea );
         html.runBtn = document.getElementById( id.runBtnId );
         html.imgContainer = document.getElementById( id.imgContainer );
         html.imgCopy = document.getElementById( id.imgCopy );
         html.randomCircleBtn = document.getElementById( id.randomCircleBtn );
         html.idBallSize = id.ballSize;
         html.animateCirclesBtn = document.getElementById( id.animateCircle );
-        html.clearCanvasBtn = document.getElementById( id.clearCanvasBtn );
+        html.resetCanvasBtn = document.getElementById( id.resetCanvasBtn );
     }
 
     /**
@@ -226,7 +251,7 @@ var CanvasApp = function() {
      * @returns { string } Строка
      */
     function getConsoleValue() {
-        var consoleValue = html.console.value;
+        var consoleValue = html.console.innerText;
         return consoleValue;
     }
 
@@ -240,7 +265,7 @@ var CanvasApp = function() {
         runConsole( ctx );
     }
 
-    function clearCanvas() {
+    function resetCanvas() {
         clearTimeout( timeoutIDForFallBalls );
         circles = [];
         ctx.clearRect( 0, 0, html.canvas.width, html.canvas.height );
@@ -346,10 +371,10 @@ var CanvasApp = function() {
             ctx.beginPath();
             ctx.arc( circle.x, circle.y, circle.radius, 0, Math.PI * 2 );
             ctx.fillStyle = circle.color;
+            checkSelectedCircle( circle );
             ctx.strokeStyle = circle.borderColor;
             ctx.fill();
             ctx.stroke();
-            checkSelectedCircle( circle );
         }
     }
 
@@ -498,7 +523,7 @@ var CanvasApp = function() {
 
         // Обработчики для осамостоятельных кнопок
         html.runBtn.addEventListener( 'click', runConsoleCode );
-        html.clearCanvasBtn.addEventListener( 'click', clearCanvas );
+        html.resetCanvasBtn.addEventListener( 'click', resetCanvas );
         html.randomCircleBtn.addEventListener( 'click', createRandomCircle );
         html.randomCircleBtn.addEventListener( 'click', drawCircle );
 
@@ -529,13 +554,14 @@ var CanvasApp = function() {
 var id = {
     canvasId: 'canvas-field',
     consoleId: 'console',
+    cheetArea: 'cheet-area',
     runBtnId: 'run-btn',
     imgContainer: 'img-container',
     imgCopy: 'img-copy',
     randomCircleBtn: 'random-circle',
     ballSize: 'ball-size',
     animateCircle: 'animate-circles',
-    clearCanvasBtn: 'clear-canvas-btn'
+    resetCanvasBtn: 'reset-canvas-btn'
 };
 
 // Создаем приложение

@@ -1,26 +1,4 @@
-* {
-  outline: 1px dashed grey;
-}
+@import url(https://fonts.googleapis.com/css?family=BenchNine:700);
 .desc {
   display: none;
-}
-html body main section textarea {
-  width: 60%;
-  height: 100px;
-  padding: 20px;
-}
-html body main section .saved-image {
-  display: none;
-  width: 600px;
-  height: 400px;
-}
-html body main section .saved-image .image-copy {
-  display: none;
-  width: 600px;
-  height: 400px;
-}
-html body main .btn-field {
-  position: absolute;
-  top: 0;
-  right: 0;
 }
