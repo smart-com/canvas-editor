@@ -64,7 +64,7 @@
           <!-- Содержимое всех вкладок-->
           <section id="canvas-btn-field" class="canvas-btn-field tab-content clearfix">
             <!-- Первая акти.вная вкладка-->
-            <section id="drawing-properties" class="tab-pane fade in active">
+            <section id="drawing-properties" class="tab-pane fade in active widget-container boxed">
               <div class="btn btn-hover"><span id="begin-path">Begin Path</span></div>
               <p class="desc">
                 Creates a new path. Once created, future drawing
@@ -112,7 +112,7 @@
               </p>
             </section>
             <!-- ============================================================-->
-            <section id="line-drawing" class="line-drawing tab-pane fade">
+            <section id="line-drawing" class="line-drawing tab-pane fade widget-container boxed">
               <div class="btn btn-hover"><span id="move-to">Move To</span></div>
               <p class="desc">
                 The CanvasRenderingContext2D.moveTo() method of the
@@ -202,7 +202,7 @@
               </p>
             </section>
             <!-- ===================================================================-->
-            <section id="shadow-drawing" class="shadow-drawing tab-pane fade">
+            <section id="shadow-drawing" class="shadow-drawing tab-pane fade widget-container boxed">
               <div class="btn btn-hover"><span id="shadow-color">Shadow Color</span></div>
               <p class="desc">
                 The CanvasRenderingContext2D.shadowColor property of the Canvas 2D API
@@ -225,7 +225,7 @@
               </p>
             </section>
             <!-- ===========================================================================-->
-            <section id="bg-drawing" class="bg-drawing tab-pane fade">
+            <section id="bg-drawing" class="bg-drawing tab-pane fade widget-container boxed">
               <div class="btn btn-hover"><span id="bg-color">Background Color</span></div>
               <p class="desc">
                 The CanvasRenderingContext2D.fillStyle property of the Canvas 2D API
@@ -268,7 +268,7 @@
               </p>
             </section>
             <!-- ===========================================================================-->
-            <section id="shapes-drawing" class="shapes-drawing tab-pane fade">
+            <section id="shapes-drawing" class="shapes-drawing tab-pane fade widget-container boxed">
               <div class="btn btn-hover"><span id="fill-shape">Fill Shape</span></div>
               <p class="desc">
                 The CanvasRenderingContext2D.fill() method of the Canvas 2D API
@@ -298,7 +298,7 @@
               </p>
             </section>
             <!-- ================================================================-->
-            <section id="text-drawing" class="text-drawing tab-pane fade">
+            <section id="text-drawing" class="text-drawing tab-pane fade widget-container boxed">
               <div class="btn btn-hover"><span id="fill-text">Fill Text</span></div>
               <p class="desc">
                 The CanvasRenderingContext2D.fillText() method
@@ -319,7 +319,7 @@
               </p>
             </section>
             <!-- ==================================================================================-->
-            <section id="images-drawing" class="images-drawing tab-pane fade">
+            <section id="images-drawing" class="images-drawing tab-pane fade widget-container boxed">
               <div class="btn btn-hover"><span id="create-image">Create an image</span></div>
               <p class="desc">
                 The CanvasRenderingContext2D.drawImage() method of the Canvas 2D API
@@ -367,18 +367,18 @@
               </p>
             </section>
             <!-- ===================================================================-->
-            <section id="animation-field" class="animate-buttons tab-pane fade">
+            <section id="animation-field" class="animate-buttons tab-pane fade widget-container boxed">
               <div class="btn btn-hover"><span id="random-circle">Random Circle</span></div>
               <p>Создает круг с заданным радиусом. Усли радиус равер 0, то он будет случайным</p>
-              <input id="ball-size" type="number" value="15">
+              <input id="ball-size" type="number" value="15" class="boxed">
               <div class="btn btn-hover"><span id="animate-circles">Animate Circles</span></div>
             </section>
           </section>
         </div>
       </div>
       <!-- ===================================================================-->
-      <section id="control-btn-field">
-        <div class="btn btn-large btn-green"><span id="restore-context-btn">Restore Context</span></div>
+      <section id="control-btn-field" class="widget-container boxed">
+        <div class="btn btn-white"><span id="restore-context-btn">Restore Context</span></div>
         <p class="desc">
           The CanvasRenderingContext2D.restore() method
           of the Canvas 2D API restores the most recently
@@ -387,24 +387,24 @@
           this method does nothing.
           void ctx.restore();
         </p>
-        <div class="btn btn-large btn-green"><span id="clear-canvas-btn">Clear Canvas</span></div>
-        <div class="btn btn-large btn-green"><span id="clear-cheet-btn">Clear Cheet</span></div>
-        <div class="btn btn-large btn-green"><span id="clear-console-btn">Clear Console</span></div>
+        <div class="btn btn-white"><span id="clear-canvas-btn">Clear Canvas</span></div>
+        <div class="btn btn-white"><span id="clear-cheet-btn">Clear Cheet</span></div>
+        <div class="btn btn-white"><span id="clear-console-btn">Clear Console</span></div>
         <!-- ===================================================================--><span class="single-buttons">
-          <div class="btn btn-large btn-green"><span id="run-btn">Run Canvas</span></div>
-          <div class="btn btn-large btn-green"><span id="reset-canvas-btn">Reset Canvas</span></div></span>
+          <div class="btn btn-white"><span id="run-btn">Run Canvas</span></div>
+          <div class="btn btn-white"><span id="reset-canvas-btn">Reset Canvas</span></div></span>
         <!-- ===================================================================--><span id="additional-objects-field" class="additional-objects-field tab-pane fade">
           <div class="btn btn-hover"><span id="save-image">Save Image</span></div>
           <p class="desc"></p></span>
       </section>
       <div class="row">
-        <section class="canvas-field col-md-6">
-          <canvas id="canvas-field" width="800" height="400"></canvas>
+        <section class="widget-container boxed canvas-field col-md-6">
+          <canvas id="canvas-field" width="800" height="480"></canvas>
           <div id="img-container" class="saved-image"><img id="img-copy" class="image-copy">
             <p>Щелкните правой кнопкой мыши для сохранения ...</p>
           </div>
         </section>
-        <section class="textarea-field col-md-6">
+        <section class="widget-container boxed textarea-field col-md-6">
           <pre><code id="console" contenteditable="true" class="language-css"></code></pre>
           <div id="cheet-area" class="cheet-area"></div>
         </section>

@@ -41,7 +41,7 @@ html( lang="ru" )
                     // Содержимое всех вкладок
                     section#canvas-btn-field.canvas-btn-field.tab-content.clearfix
                         // Первая акти.вная вкладка
-                        section#drawing-properties.tab-pane.fade.in.active
+                        section#drawing-properties.tab-pane.fade.in.active.widget-container.boxed
                             div.btn.btn-hover
                                 span#begin-path Begin Path
                             p.desc.
@@ -88,7 +88,7 @@ html( lang="ru" )
                                 x - The x axis of the coordinate for the end point.
                                 y - The y axis of the coordinate for the end point.
                         // ============================================================
-                        section#line-drawing.line-drawing.tab-pane.fade
+                        section#line-drawing.line-drawing.tab-pane.fade.widget-container.boxed
                             div.btn.btn-hover
                                 span#move-to Move To
                             p.desc.
@@ -178,7 +178,7 @@ html( lang="ru" )
                                 which, if true, causes the arc to be drawn counter-clockwise between the two angles.
                                 By default it is drawn clockwise.
                         // ===================================================================
-                        section#shadow-drawing.shadow-drawing.tab-pane.fade
+                        section#shadow-drawing.shadow-drawing.tab-pane.fade.widget-container.boxed
                             div.btn.btn-hover
                                 span#shadow-color Shadow Color
                             p.desc.
@@ -200,7 +200,7 @@ html( lang="ru" )
                                 specifies the distance that the shadow will be offset in horizontal distance.
                                 ctx.shadowOffsetX = offset;
                         // ===========================================================================
-                        section#bg-drawing.bg-drawing.tab-pane.fade
+                        section#bg-drawing.bg-drawing.tab-pane.fade.widget-container.boxed
                             div.btn.btn-hover
                                 span#bg-color Background Color
                             p.desc.
@@ -242,7 +242,7 @@ html( lang="ru" )
                                 CanvasGradient ctx.createRadialGradient(x0, y0, r0, x1, y1, r1);
 
                         // ===========================================================================
-                        section#shapes-drawing.shapes-drawing.tab-pane.fade
+                        section#shapes-drawing.shapes-drawing.tab-pane.fade.widget-container.boxed
                             div.btn.btn-hover
                                 span#fill-shape Fill Shape
                             p.desc.
@@ -272,7 +272,7 @@ html( lang="ru" )
                                 // fill the whole canvas
                                 // ctx.fillRect(0, 0, canvas.width, canvas.height);
                         // ================================================================
-                        section#text-drawing.text-drawing.tab-pane.fade
+                        section#text-drawing.text-drawing.tab-pane.fade.widget-container.boxed
                             div.btn.btn-hover
                                 span#fill-text Fill Text
                             p.desc.
@@ -292,7 +292,7 @@ html( lang="ru" )
                                 the text will be scaled to fit that width.
                                 void ctx.strokeText(text, x, y [, maxWidth]);
                         // ==================================================================================
-                        section#images-drawing.images-drawing.tab-pane.fade
+                        section#images-drawing.images-drawing.tab-pane.fade.widget-container.boxed
                             div.btn.btn-hover
                                 span#create-image Create an image
                             p.desc.
@@ -339,17 +339,17 @@ html( lang="ru" )
                                 repetition will be "repeat".
 
                         // ===================================================================
-                        section#animation-field.animate-buttons.tab-pane.fade
+                        section#animation-field.animate-buttons.tab-pane.fade.widget-container.boxed
                             div.btn.btn-hover
                                 span#random-circle Random Circle
                             p Создает круг с заданным радиусом. Усли радиус равер 0, то он будет случайным
-                            input#ball-size( type='number', value=15 )
+                            input#ball-size.boxed( type='number', value=15 )
                             div.btn.btn-hover
                                 span#animate-circles Animate Circles
 
             // ===================================================================
-            section#control-btn-field
-                div.btn.btn-large.btn-green
+            section#control-btn-field.widget-container.boxed
+                div.btn.btn-white
                     span#restore-context-btn Restore Context
                 p.desc.
                     The CanvasRenderingContext2D.restore() method
@@ -358,18 +358,18 @@ html( lang="ru" )
                     drawing state stack. If there is no saved state,
                     this method does nothing.
                     void ctx.restore();
-                div.btn.btn-large.btn-green
+                div.btn.btn-white
                     span#clear-canvas-btn Clear Canvas
-                div.btn.btn-large.btn-green
+                div.btn.btn-white
                     span#clear-cheet-btn Clear Cheet
-                div.btn.btn-large.btn-green
+                div.btn.btn-white
                     span#clear-console-btn Clear Console
 
                  // ===================================================================
                 span.single-buttons
-                    div.btn.btn-large.btn-green
+                    div.btn.btn-white
                         span#run-btn Run Canvas
-                    div.btn.btn-large.btn-green
+                    div.btn.btn-white
                         span#reset-canvas-btn Reset Canvas
 
                 // ===================================================================
@@ -379,13 +379,13 @@ html( lang="ru" )
                     p.desc.
 
             div.row
-                section.canvas-field.col-md-6
-                    canvas#canvas-field( width=800, height=400 )
+                section.widget-container.boxed.canvas-field.col-md-6
+                    canvas#canvas-field( width="800" height="480" )
                     div#img-container.saved-image
                         img#img-copy.image-copy
                         p Щелкните правой кнопкой мыши для сохранения ...
 
-                section.textarea-field.col-md-6
+                section.widget-container.boxed.textarea-field.col-md-6
                     pre
                         code#console( class="language-css" contenteditable='true' )
                     div#cheet-area.cheet-area

@@ -118,9 +118,9 @@ var CanvasApp = function() {
          * при нажатии пользователем на кнопку с этим идентификатором
          */
         ctrlBtnVal             = {
-            'clear-console-btn'   : 'html.console.innerText = "";',
-            'clear-canvas-btn': 'ctx.clearRect( 0, 0, html.canvas.width, html.canvas.height );',
-            'clear-cheet-btn' : 'html.cheetArea.innerHTML = "";',
+            'clear-console-btn'  : 'html.console.innerText = "";',
+            'clear-canvas-btn'   : 'ctx.clearRect( 0, 0, html.canvas.width, html.canvas.height );',
+            'clear-cheet-btn'    : 'html.cheetArea.innerHTML = "";',
             'restore-context-btn': 'ctx.restore();',
             ''                   : ''  // Это бесполезная штука, чтобы легче копировать кнопки
         },
@@ -157,9 +157,9 @@ var CanvasApp = function() {
         previousSelectedCircle = {},
         clickSound             = new Audio( 'app/media/popup.mp3' ),
         isDragging             = false,
-        timeout = 10,
+        timeout                = 10,
         timeoutIDForFallBalls,
-        isDrawing = false;
+        isDrawing              = false;
 
     function showCheet( event ) {
         var event = event || window.event;
@@ -188,7 +188,7 @@ var CanvasApp = function() {
         html.console.innerText += canvasBtnVal[ event.target.id ];
 
         var descriptionElem = event.target.nextElementSibling;
-        if ( descriptionElem  && descriptionElem.classList.contains( 'desc' ) ) {
+        if( descriptionElem && descriptionElem.classList.contains( 'desc' ) ) {
             showCheet( event );
         }
     };
@@ -355,7 +355,7 @@ var CanvasApp = function() {
     }
 
     /**
-     * @summary Писует круги из массива
+     * @summary Рисует круги из массива
      * @param { Number } opacity Прохрачность кругов
      */
     function drawCircle( opacity ) {
@@ -385,8 +385,8 @@ var CanvasApp = function() {
      */
     function checkCanvasClick( event ) {
 
-        var clickX = event.pageX - html.canvas.offsetLeft;
-        var clickY = event.pageY - html.canvas.offsetTop;
+        var clickX = event.clientX - html.canvas.getBoundingClientRect().left;
+        var clickY = event.clientY - html.canvas.getBoundingClientRect().top;
 
         for( var i = circles.length - 1; i >= 0; i-- ) {
             var circle = circles[ i ];
@@ -421,8 +421,8 @@ var CanvasApp = function() {
         if( isDragging === true ) {
             clearTimeout( timeoutIDForFallBalls );
             if( previousSelectedCircle !== null ) {
-                var x = event.pageX - html.canvas.offsetLeft;
-                var y = event.pageY - html.canvas.offsetTop;
+                var x = event.clientX - html.canvas.getBoundingClientRect().left;
+                var y = event.clientY - html.canvas.getBoundingClientRect().top;
                 previousSelectedCircle.x = x;
                 previousSelectedCircle.y = y;
                 drawCircle();
@@ -441,23 +441,33 @@ var CanvasApp = function() {
 
         ctx.clearRect( 0, 0, html.canvas.width, html.canvas.height );
 
-        for ( var i = 0; i < circles.length; i++ ) {
+        for( var i = 0; i < circles.length; i++ ) {
             var circle = circles[ i ];
             // Ускорение
             circle.x += circle.dx;
             circle.y += circle.dy;
             // Гравитация
-            if ( ( circle.y ) < html.canvas.height ) {
+            if( (
+                    circle.y
+                ) < html.canvas.height ) {
                 circle.dy += 0.22;
             }
             // Трение
             circle.dx = circle.dx * 0.998;
             // Если мяч натолкнулся на край холста отбиваем его
-            if ( ( circle.x + circle.radius > html.canvas.width ) || ( circle.x - circle.radius < 0 ) ) {
+            if( (
+                circle.x + circle.radius > html.canvas.width
+                ) || (
+                circle.x - circle.radius < 0
+                ) ) {
                 circle.dx = -circle.dx;
             }
             // Если мяч упал вниз - отбиваем его, слегка уменьшив скорость
-            if ( ( circle.y + circle.radius > html.canvas.height ) || ( circle.y - circle.radius < 0 ) ) {
+            if( (
+                circle.y + circle.radius > html.canvas.height
+                ) || (
+                circle.y - circle.radius < 0
+                ) ) {
                 circle.dy = -circle.dy * 0.6;
             }
             // Рисуем текущий мячик
@@ -470,13 +480,16 @@ var CanvasApp = function() {
         isDrawing = true;
         ctx.beginPath();
         // Устанавливаем координаты куда рисовать
-        ctx.moveTo( event.pageX - html.canvas.offsetLeft, event.pageY - html.canvas.offsetTop);
+        ctx.moveTo(
+            event.clientX - html.canvas.getBoundingClientRect().left,
+            event.clientY - html.canvas.getBoundingClientRect().top
+        );
     }
 
     function draw( event ) {
-        if ( isDrawing === true ) {
-            var x = event.pageX - html.canvas.offsetLeft;
-            var y = event.pageY - html.canvas.offsetTop;
+        if( isDrawing === true ) {
+            var x = event.clientX - html.canvas.getBoundingClientRect().left;
+            var y = event.clientY - html.canvas.getBoundingClientRect().top;
             ctx.lineTo( x, y );
             ctx.stroke();
         }
@@ -552,16 +565,16 @@ var CanvasApp = function() {
 };
 
 var id = {
-    canvasId: 'canvas-field',
-    consoleId: 'console',
-    cheetArea: 'cheet-area',
-    runBtnId: 'run-btn',
-    imgContainer: 'img-container',
-    imgCopy: 'img-copy',
+    canvasId       : 'canvas-field',
+    consoleId      : 'console',
+    cheetArea      : 'cheet-area',
+    runBtnId       : 'run-btn',
+    imgContainer   : 'img-container',
+    imgCopy        : 'img-copy',
     randomCircleBtn: 'random-circle',
-    ballSize: 'ball-size',
-    animateCircle: 'animate-circles',
-    resetCanvasBtn: 'reset-canvas-btn'
+    ballSize       : 'ball-size',
+    animateCircle  : 'animate-circles',
+    resetCanvasBtn : 'reset-canvas-btn'
 };
 
 // Создаем приложение

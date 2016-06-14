@@ -1,4 +1,11 @@
 @import url(https://fonts.googleapis.com/css?family=BenchNine:700);
+.boxed {
+  padding: 10px;
+  margin: 0;
+}
+canvas {
+  background-color: #82b556;
+}
 .desc {
   display: none;
 }
