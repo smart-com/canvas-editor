@@ -1,16 +1,33 @@
-@import url(https://fonts.googleapis.com/css?family=BenchNine:700);
+//@import url(https://fonts.googleapis.com/css?family=BenchNine:700);
+body {
+  padding: 20px;
+  width: fit-content;
+  background: url( '../img/blue.jpeg' );
+}
 
-.boxed {
+pre code.language-js {
+  display: block;
+  min-height: 400px;
+  max-height: 400px;
+  overflow: auto;
+  padding-left: 20px;
+  background-color: #2d6987;
+}
+
+p.desc {
+  margin-top: 20px;
+}
+
+p.desc code {
+  display: block;
+  margin-top: 20px;
   padding: 10px;
-  margin: 0;
+  background-color: green;
 }
 
-canvas {
-  background-color: #82b556;
-}
-
-
-
-.desc {
+// Покажем, если пользователь
+// захочет сохранить картинку из канваса
+.desc,
+.saved-image {
   display: none;
 }

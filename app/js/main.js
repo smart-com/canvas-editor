@@ -35,74 +35,75 @@ var CanvasApp = function() {
          * при нажатии пользователем на кнопку с этим идентификатором
          */
         canvasBtnVal           = {
-            'begin-path'   : 'ctx.beginPath();\n',
-            'close-path'   : 'ctx.closePath();\n',
-            'move-canvas'  : 'ctx.translate( 100, 100 );\n',
-            'rotate-canvas': 'ctx.rotate( 5 );\n',
+            'begin-path'   : 'ctx.beginPath();',
+            'close-path'   : 'ctx.closePath();',
+            'move-canvas'  : 'ctx.translate( 100, 100 );',
+            'rotate-canvas': 'ctx.rotate( 5 );',
 
-            'move-to': 'ctx.moveTo( 100, 100 );\n',
-            'line-to': 'ctx.lineTo( 200, 100 );\n',
-            'stroke' : 'ctx.stroke();\n',
+            'move-to': 'ctx.moveTo( 100, 100 );',
+            'line-to': 'ctx.lineTo( 200, 100 );',
+            'stroke' : 'ctx.stroke();',
 
-            'line-width': 'ctx.lineWidth = 10;\n',
+            'line-width': 'ctx.lineWidth = 10;',
 
-            'line-cap-round': 'ctx.lineCap = "round";\n',
-            'border-radius' : 'ctx.lineWidth = 20;\n' +
-                              'ctx.lineJoin = "round";\n',
+            'line-cap-round': 'ctx.lineCap = "round";',
+            'line-join'     : 'ctx.lineJoin = "round";',
+            'border-radius' : 'ctx.lineWidth = 20;' +
+                              'ctx.lineJoin = "round";',
 
-            'stroke-style': 'ctx.strokeStyle = "blue";\n',
+            'stroke-style': 'ctx.strokeStyle = "blue";',
 
-            'bg-color'       : 'ctx.fillStyle = "green";\n' +
-                               'ctx.fillRect( 10, 10, 100, 100 );\n',
-            'shadow-color'   : 'ctx.shadowColor = "red";\n',
-            'shadow-blur'    : 'ctx.shadowBlur = 10;\n',
-            'shadow-position': 'ctx.shadowOffsetY = 10;\n' +
-                               'ctx.shadowOffsetX = 10;\n',
-            'opacity'        : 'ctx.globalAlpha = 0.5;\n',
+            'bg-color'       : 'ctx.fillStyle = "green";' +
+                               'ctx.fillRect( 10, 10, 100, 100 );',
+            'shadow-color'   : 'ctx.shadowColor = "red";',
+            'shadow-blur'    : 'ctx.shadowBlur = 10;',
+            'shadow-position': 'ctx.shadowOffsetY = 10;' +
+                               'ctx.shadowOffsetX = 10;',
+            'opacity'        : 'ctx.globalAlpha = 0.5;',
 
-            'fill-shape' : 'ctx.fill();\n',
-            'fill-text'  : 'ctx.font = "48px serif";\n' +
-                           'ctx.fillStyle = "gray";\n' +
-                           'ctx.fillText( "Hello world", 20, 100 );\n',
-            'stroke-text': 'ctx.font = "48px serif";\n' +
-                           'ctx.fillStyle = "darkgray";\n' +
-                           'ctx.strokeText( "Hello world", 20, 100 );\n',
+            'fill-shape' : 'ctx.fill();',
+            'fill-text'  : 'ctx.font = "48px serif";' +
+                           'ctx.fillStyle = "gray";' +
+                           'ctx.fillText( "Hello world", 20, 100 );',
+            'stroke-text': 'ctx.font = "48px serif";' +
+                           'ctx.fillStyle = "darkgray";' +
+                           'ctx.strokeText( "Hello world", 20, 100 );',
 
-            'straight-line': 'ctx.moveTo( 100, 100 );\n' +
-                             'ctx.lineTo( 200, 100 );\n' +
-                             'ctx.stroke();\n',
-            'bezier'       : 'ctx.beginPath();\n' +
-                             'ctx.bezierCurveTo( 50, 100, 180, 10, 20, 10 );\n' +
-                             'ctx.stroke();\n',
-            'arc'          : 'ctx.arc( 100, 30, 50, 0.2 * Math.PI, 1.1 * Math.PI );\n' +
-                             'ctx.stroke();\n',
+            'straight-line': 'ctx.moveTo( 100, 100 );' +
+                             'ctx.lineTo( 200, 100 );' +
+                             'ctx.stroke();',
+            'bezier'       : 'ctx.beginPath();' +
+                             'ctx.bezierCurveTo( 50, 100, 180, 10, 20, 10 );' +
+                             'ctx.stroke();',
+            'arc'          : 'ctx.arc( 100, 30, 50, 0.2 * Math.PI, 1.1 * Math.PI );' +
+                             'ctx.stroke();',
 
-            'round'                 : 'ctx.arc( 50, 50, 50, 0, 2 * Math.PI, false );\n' +
-                                      'ctx.stroke();\n',
-            'fill-rectangle'        : 'ctx.fillRect( 10, 10, 100, 100 );\n',
-            'empty-rectangle'       : 'ctx.strokeRect( 10, 10, 100, 100 );\n',
+            'round'                 : 'ctx.arc( 50, 50, 50, 0, 2 * Math.PI, false );' +
+                                      'ctx.stroke();',
+            'fill-rectangle'        : 'ctx.fillRect( 10, 10, 100, 100 );',
+            'empty-rectangle'       : 'ctx.strokeRect( 10, 10, 100, 100 );',
             'create-linear-gradient': 'gradient = ctx.createLinearGradient( 0, 0, 200, 0 );\n' +
-                                      'gradient.addColorStop( 0, "green" );\n' +
-                                      'gradient.addColorStop( 1, "white" );\n' +
-                                      'ctx.fillStyle = gradient;\n' +
-                                      'ctx.fillRect( 10, 10, 200, 100 );\n',
+                                      'gradient.addColorStop( 0, "green" )\n;' +
+                                      'gradient.addColorStop( 1, "white" )\n;' +
+                                      'ctx.fillStyle = gradient\n;' +
+                                      'ctx.fillRect( 10, 10, 200, 100 )\n;',
             'create-radial-gradient': 'gradient = ctx.createRadialGradient(100, 100, 100, 100, 100, 0);\n' +
                                       'gradient.addColorStop( 0, "green" );\n' +
-                                      'gradient.addColorStop( 1, "white" );\n' +
+                                      'gradient.addColorStop( 1, "white" );' +
                                       'ctx.fillStyle = gradient;\n' +
                                       'ctx.fillRect( 0, 0, 200, 100 );\n',
             'create-image'          : 'var image = new Image();\n' +
-                                      'image.src="app/img/present.png";\n' +
+                                      'image.src="app/img/present.png";' +
                                       // Таймаут необходим, чтобы картинка успела подгрузиться за один клик
                                       // Его нужно увеличить, если требуется подгрузить картинку большего размера
-                                      'setTimeout( function() { ctx.drawImage( image, 10, 50, 50, 50 ) }, 8 );\n',
+                                      'setTimeout( function() { ctx.drawImage( image, 10, 50, 50, 50 ) }, 8 );',
             'tile-canvas'           : 'var image = new Image();\n' +
-                                      'image.src="app/img/present.png";\n' +
+                                      'image.src="app/img/present.png";\n\n' +
                                       'image.onload = function() {\n' +
-                                      'var pattern = ctx.createPattern( image, "repeat" );\n' +
-                                      'ctx.fillStyle = pattern;\n' +
-                                      'ctx.fillRect( 0, 0, 300, 300 );\n' +
-                                      '}\n',
+                                      '  var pattern = ctx.createPattern( image, "repeat" );\n' +
+                                      '  ctx.fillStyle = pattern;\n' +
+                                      '  ctx.fillRect( 0, 0, 300, 300 );\n' +
+                                      '}',
             ''                      : '' // Это бесполезная штука, чтобы легче копировать кнопки
         },
 
@@ -112,21 +113,22 @@ var CanvasApp = function() {
          * @description
          * Эта группа кнопок расположена отдельно в HTML
          * Они запускают код, который не требует редактирования,
-         * минуя консоль
-         * Ключ - идентификатор кнопки
+         * Ключ - идентификатор кнопки,
          * Значение - код, который должен выполниться
          * при нажатии пользователем на кнопку с этим идентификатором
          */
         ctrlBtnVal             = {
             'clear-console-btn'  : 'html.console.innerText = "";',
             'clear-canvas-btn'   : 'ctx.clearRect( 0, 0, html.canvas.width, html.canvas.height );',
-            'clear-cheet-btn'    : 'html.cheetArea.innerHTML = "";',
+            'clear-cheet-btn'    : 'html.cheetArea.innerText = "";',
+            'save-context-btn'   : 'ctx.save();',
             'restore-context-btn': 'ctx.restore();',
             ''                   : ''  // Это бесполезная штука, чтобы легче копировать кнопки
         },
 
         /**
-         * NOT USE: @summary Объект с кнопками для запуска и в консоли и без
+         * @summary Объект с кнопками код которых выполняется
+         * частично в консоли, частично без нее ( там правки не нужны...)
          */
         additionalBtnVal       = {
             'save-image': 'var imageCopy = html.imgCopy;\n' +
@@ -154,40 +156,104 @@ var CanvasApp = function() {
             'blueviolet', 'crimson'
         ],
 
+        // Вспомогательные переменные
+
+        // Предыдущий выбранный круг
         previousSelectedCircle = {},
+        // Звук проигрывается во время клика по кругу
         clickSound             = new Audio( 'app/media/popup.mp3' ),
+        // Флаг показывает возможность перетаскивания
         isDragging             = false,
+        // Таймаут для анимации надо подбирать
+        // Эта зараза зависит еще и от количества 
+        // созданных кругов - если их слишком много, 
+        // то эффект замедленной съемки...
         timeout                = 10,
         timeoutIDForFallBalls,
         isDrawing              = false;
 
+    /**
+     * @summary Показывает подсказку для используемых в консоли функций
+     * @param event
+     */
     function showCheet( event ) {
         var event = event || window.event;
-        var cheet = event.target.nextElementSibling;
-        cheet.style.display = 'block';
-        html.cheetArea.appendChild( cheet );
-    }
-
-    function deleteCheet() {
-        html.cheetArea.innerHTML = '';
-    }
-
-    /**
-     * @summary Устанавливает строку для редактирования в консоль
-     * @listens click:MouseEvents
-     *
-     * @param { object } event Клик на группе кнопок
-     */
-    var setConsoleValue = function( event ) {
-        event = event || window.event;
-        var parentParent = event.target.parentElement.parentElement;
-        if( parentParent.classList.contains( 'animate-buttons' ) ) {
+        // Клики срабатывают только на кнопках
+        if( event.srcElement.classList.contains( 'widget-container' ) ) {
             return;
         }
 
-        html.console.innerText += canvasBtnVal[ event.target.id ];
+        // Подсказка - следующий элемент после родителя источника события
+        var cheet = event.target.parentElement.nextElementSibling;
+        // Если следующий элемент не подсказка, то уходим
+        if( !cheet.classList.contains( 'desc') ) {
+            return;
+        }
 
-        var descriptionElem = event.target.nextElementSibling;
+        // Показываем подсказку
+        // Если она вообще существует
+        if( cheet ) {
+            cheet.style.display = 'block';
+            html.cheetArea.appendChild( cheet );
+        }
+    }
+
+    /**
+     * @summary При нажатии кнопки устанавливает код в консоль
+     */
+    var setConsoleValue = function( event ) {
+
+        event = event || window.event;
+
+        // Это все касается исключительно кнопок
+        if( event.srcElement.parentElement.classList.contains( 'btn' ) ) {
+
+            if( window.getSelection ) {
+                // Где курсор
+                var caret = window.getSelection().anchorOffset;
+                // Объект Selection
+                var selObj = window.getSelection();
+
+                // Удаляет выделенный участок из дома
+                // если закомментировать эту строку, 
+                // то текст будет вставлен после выделенного
+                selObj.deleteFromDocument();
+                // Считываем HTML из консоли
+                var text = html.console.innerHTML;
+                // Вставляем код из нажатой кнопки
+                text =
+                    text.substring( 0, caret ) + '\n' +
+                    canvasBtnVal[ event.target.id ] +
+                    text.substring( caret );
+                // Выводим результат в консоль
+                html.console.innerHTML = text;
+
+                // Создаем объект Range для управления положением курсора
+                var range = document.createRange();
+                // Он целиком в консоли
+                var start = html.console.childNodes[ 0 ];
+                var end = html.console.childNodes[ 0 ];
+                // Задаем верхнюю границу, передав контейнер и смещение
+                range.setStart( start, caret );
+                // Устанавливаем нижнюю границу выделения
+                range.setEnd( end, text.length );
+                // Совмещаем начало и конец на старте.
+                // В примере должно было быть true
+                // Передав false мне каким-то чудом удалось 
+                // установить курсор в конец выделенного текста
+                range.collapse( false );
+                // Создаем новое выделение
+                var sel = window.getSelection();
+                // Удаляем все предыдущие
+                sel.removeAllRanges();
+                // Добавляем новое выделение
+                // С курсором все хорошо
+                sel.addRange( range );
+            }
+        }
+
+        // После всего этого, показываем подсказку
+        var descriptionElem = event.target.parentElement.nextElementSibling;
         if( descriptionElem && descriptionElem.classList.contains( 'desc' ) ) {
             showCheet( event );
         }
@@ -260,11 +326,15 @@ var CanvasApp = function() {
      * @listens click:MouseEvents
      */
     function runConsoleCode() {
-        var consoleCode = getConsoleValue( 'ctx.' );
+        var consoleCode = getConsoleValue();
         var runConsole = new Function( 'ctx', consoleCode );
         runConsole( ctx );
     }
 
+    /**
+     * @summary В отличие от обычной очистки холста
+     * Это полный сброс канваса вместе с анимацией
+     */
     function resetCanvas() {
         clearTimeout( timeoutIDForFallBalls );
         circles = [];
@@ -279,9 +349,12 @@ var CanvasApp = function() {
      */
     function runCode( event ) {
         event = event || window.event;
+        /** TODO: Я уже не помню, зачем я разделила эти кнопки на два объекта... */
         var code = ctrlBtnVal[ event.target.id ] || additionalBtnVal[ event.target.id ];
+        // Запускаем код, показываем подсказку
         var run = new Function( 'html, ctx', code );
         run( html, ctx );
+        showCheet();
     }
 
     /**
@@ -356,7 +429,7 @@ var CanvasApp = function() {
 
     /**
      * @summary Рисует круги из массива
-     * @param { Number } opacity Прохрачность кругов
+     * @param { Number } [ opacity = 0.65 ] Прозрачность кругов
      */
     function drawCircle( opacity ) {
 
@@ -365,7 +438,6 @@ var CanvasApp = function() {
         ctx.clearRect( 0, 0, html.canvas.width, html.canvas.height );
 
         for( var i = 0; i < circles.length; i++ ) {
-
             var circle = circles[ i ];
             ctx.globalAlpha = opacity || defaultOpacity;
             ctx.beginPath();
@@ -389,16 +461,19 @@ var CanvasApp = function() {
         var clickY = event.clientY - html.canvas.getBoundingClientRect().top;
 
         for( var i = circles.length - 1; i >= 0; i-- ) {
+
             var circle = circles[ i ];
             // Расстояние от клика до центра круга
             var distanceFromCenter = Math.sqrt( Math.pow( circle.x - clickX, 2 ) + Math.pow( circle.y - clickY, 2 ) );
 
             // Если расстояние меньше, то клик был внутри круга
             if( distanceFromCenter <= circle.radius ) {
+
                 if( previousSelectedCircle != null ) {
                     previousSelectedCircle.isSelected = false;
                     clearTimeout( timeoutIDForFallBalls );
                 }
+
                 previousSelectedCircle = circle;
                 circle.isSelected = true;
                 drawCircle();
@@ -420,6 +495,7 @@ var CanvasApp = function() {
 
         if( isDragging === true ) {
             clearTimeout( timeoutIDForFallBalls );
+
             if( previousSelectedCircle !== null ) {
                 var x = event.clientX - html.canvas.getBoundingClientRect().left;
                 var y = event.clientY - html.canvas.getBoundingClientRect().top;
@@ -437,6 +513,9 @@ var CanvasApp = function() {
         isDragging = false;
     }
 
+    /**
+     * @summary Анимирует все круги из массива
+     */
     function animateCircles() {
 
         ctx.clearRect( 0, 0, html.canvas.width, html.canvas.height );
@@ -456,17 +535,17 @@ var CanvasApp = function() {
             circle.dx = circle.dx * 0.998;
             // Если мяч натолкнулся на край холста отбиваем его
             if( (
-                circle.x + circle.radius > html.canvas.width
+                    circle.x + circle.radius > html.canvas.width
                 ) || (
-                circle.x - circle.radius < 0
+                    circle.x - circle.radius < 0
                 ) ) {
                 circle.dx = -circle.dx;
             }
             // Если мяч упал вниз - отбиваем его, слегка уменьшив скорость
             if( (
-                circle.y + circle.radius > html.canvas.height
+                    circle.y + circle.radius > html.canvas.height
                 ) || (
-                circle.y - circle.radius < 0
+                    circle.y - circle.radius < 0
                 ) ) {
                 circle.dy = -circle.dy * 0.6;
             }
@@ -476,7 +555,13 @@ var CanvasApp = function() {
         timeoutIDForFallBalls = setTimeout( animateCircles, timeout );
     }
 
+    /**
+     * @summary Рисуем мышкой
+     * @listens click:MouseEvent
+     * @param event:MouseEvent - двойной клик по канвасу
+     */
     function startDrawing( event ) {
+        // Говорим всем, что мы рисуем
         isDrawing = true;
         ctx.beginPath();
         // Устанавливаем координаты куда рисовать
@@ -486,6 +571,12 @@ var CanvasApp = function() {
         );
     }
 
+    /**
+     * @summary Пока мышка двигается, рисуем по канвасу
+     * Останавливаемся после одинарного клика.
+     * @listens click:MouseEvent
+     * @param event:MouseMove - одинарный клик по канвасу
+     */
     function draw( event ) {
         if( isDrawing === true ) {
             var x = event.clientX - html.canvas.getBoundingClientRect().left;
@@ -495,6 +586,9 @@ var CanvasApp = function() {
         }
     }
 
+    /**
+     * @summary Больше не рисуем по канвасу
+     */
     function stopDrawing() {
         isDrawing = false;
     }

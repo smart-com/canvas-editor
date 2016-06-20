@@ -26,16 +26,12 @@
     <!-- Font Awesome-->
     <!-- link( rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css")-->
     <!-- Main JS libs-->
-    <script src="vendor/vanilla-cream/vanilla-cream-less/js/libs/modernizr.min.js"></script>
-    <script src="vendor/vanilla-cream/vanilla-cream-less/js/libs/jquery-1.10.0.js"></script>
-    <script src="vendor/vanilla-cream/vanilla-cream-less/js/libs/jquery-ui.min.js"></script>
-    <script src="vendor/vanilla-cream/vanilla-cream-less/js/libs/bootstrap.min.js"></script>
+    <script src="vendor/modernizr/modernizr.min.js"></script>
+    <script src="vendor/jquery/jquery-1.10.0.js"></script>
+    <script src="vendor/jquery/jquery-ui.min.js"></script>
+    <script src="vendor/bootstrap/bootstrap.min.js"></script>
     <!-- Style CSS-->
-    <link href="vendor/vanilla-cream/vanilla-cream-css/css/bootstrap.css" media="screen" rel="stylesheet">
-    <link href="vendor/vanilla-cream/vanilla-cream-css/style.css" media="screen" rel="stylesheet">
-    <link href="vendor/vanilla-cream/docs/css/docs.css" media="screen" rel="stylesheet">
-    <!-- Scripts-->
-    <script src="vendor/vanilla-cream/docs/js/general.js"></script>
+    <link href="vendor/bootstrap/bootstrap.css" media="screen" rel="stylesheet">
     <!-- Мои стили-->
     <link rel="stylesheet" href="app/css/main.css"><!--[if lt IE 9]><script src="js/respond.min.js"></script><![endif]-->
     <!--[if gte IE 9]>
@@ -44,12 +40,12 @@
     <![endif]-->
   </header>
   <body>
-    <main>
+    <main class="container-fluid">
       <div class="row">
-        <div class="tabs_framed styled col-md-12">
+        <div class="tabs col-md-12">
           <div class="btn-field inner">
             <!-- Список с названиями табов-->
-            <ul class="tabs clearfix active_bookmark1">
+            <ul class="nav nav-tabs nav-justified">
               <li class="active"><a href="#drawing-properties" data-toggle="tab">Опции рисования</a></li>
               <li><a href="#line-drawing" data-toggle="tab">Линии</a></li>
               <li><a href="#shadow-drawing" data-toggle="tab">Тени</a></li>
@@ -64,29 +60,40 @@
           <!-- Содержимое всех вкладок-->
           <section id="canvas-btn-field" class="canvas-btn-field tab-content clearfix">
             <!-- Первая акти.вная вкладка-->
-            <section id="drawing-properties" class="tab-pane fade in active widget-container boxed">
-              <div class="btn btn-hover"><span id="begin-path">Begin Path</span></div>
+            <section id="drawing-properties" class="tab-pane fade in active well">
+              <div class="btn btn-default"><span id="begin-path">Begin Path</span></div>
               <p class="desc">
-                Creates a new path. Once created, future drawing
-                commands are directed into the path and used
-                to build the path up.
-                <code class="language-js">void ctx.beginPath();</code>
+                Начать путь - это значит начать рисовать новую часть общей картины.
+                Канвас все рисует одной непрерывной линией.
+                Все нарисованные фигуры будут соединены между собой до тех пор,
+                пока вы не начнете новый путь.<br>
+                
+                <code class="language-js">
+                    ctx.strokeRect( 10, 10, 100, 100 );<br>
+                    ctx.strokeRect( 20, 20, 120, 120 );<br>
+                    void ctx.beginPath();<br>
+                    ctx.strokeRect( 40, 40, 140, 140 );<br>
+                </code>
               </p>
-              <div class="btn btn-hover"><span id="close-path">Close Path</span></div>
+              <div class="btn btn-default"><span id="close-path">Close Path</span></div>
               <p class="desc">
-                Closes the path so that future drawing commands
-                are once again directed to the context.
-                void ctx.closePath();
+                Закрыть путь это значит завершить фигуру в начальной точке.
+                Канвас попытается начертить прямую линию от текущей точки до начала.
+                Если фигура уже была закрыта или имеет только одну точку,
+                то просто ничего не произойдет.<br>
+                <code class="language-js example">
+                    void ctx.closePath();
+                </code>
               </p>
-              <div class="btn btn-hover"><span id="move-canvas">Move Canvas</span></div>
+              <div class="btn btn-default"><span id="move-canvas">Move Canvas</span></div>
               <p class="desc">
-                The CanvasRenderingContext2D.translate() method of
-                the Canvas 2D API adds a translation transformation
-                by moving the canvas and its origin x horizontally
-                and y vertically on the grid.
-                void ctx.translate(x, y);
+                Сдвигает систему координат канваса на х по горизонтали
+                и у по вертикали.
+                 <code class="language-js example">
+                    void ctx.translate( x, y );
+                 </code>
               </p>
-              <div class="btn btn-hover"><span id="rotate-canvas">Rotate Canvas</span></div>
+              <div class="btn btn-default"><span id="rotate-canvas">Rotate Canvas</span></div>
               <p class="desc">
                 The CanvasRenderingContext2D.rotate() method of the
                 Canvas 2D API adds a rotation to the transformation
@@ -94,7 +101,7 @@
                 rotation angle and is expressed in radians.
                 void ctx.rotate(angle);
               </p>
-              <div class="btn btn-hover"><span id="bezier">Bezier Curve</span></div>
+              <div class="btn btn-default"><span id="bezier">Bezier Curve</span></div>
               <p class="desc">
                 The CanvasRenderingContext2D.bezierCurveTo() method
                 of the Canvas 2D API adds a cubic Bézier curve to the path.
@@ -112,15 +119,15 @@
               </p>
             </section>
             <!-- ============================================================-->
-            <section id="line-drawing" class="line-drawing tab-pane fade widget-container boxed">
-              <div class="btn btn-hover"><span id="move-to">Move To</span></div>
+            <section id="line-drawing" class="line-drawing tab-pane fade well">
+              <div class="btn btn-default"><span id="move-to">Move To</span></div>
               <p class="desc">
                 The CanvasRenderingContext2D.moveTo() method of the
                 Canvas 2D API moves the starting point of a new
                 sub-path to the (x, y) coordinates.
                 void ctx.moveTo(x, y);
               </p>
-              <div class="btn btn-hover"><span id="line-to">Line To</span></div>
+              <div class="btn btn-default"><span id="line-to">Line To</span></div>
               <p class="desc">
                 The CanvasRenderingContext2D.lineTo() method of the
                 Canvas 2D API connects the last point in the
@@ -128,7 +135,7 @@
                 line (but does not actually draw it).
                 void ctx.lineTo(x, y);
               </p>
-              <div class="btn btn-hover"><span id="stroke">Stroke</span></div>
+              <div class="btn btn-default"><span id="stroke">Stroke</span></div>
               <p class="desc">
                 The CanvasRenderingContext2D.stroke() method of the
                 Canvas 2D API strokes the current or given path
@@ -137,28 +144,39 @@
                 void ctx.stroke();
                 void ctx.stroke(path);
               </p>
-              <div class="btn btn-hover"><span id="line-width">Line Width</span></div>
+              <div class="btn btn-default"><span id="line-width">Line Width</span></div>
               <p class="desc">
-                The CanvasRenderingContext2D.lineWidth property of
-                the Canvas 2D API sets the thickness of lines in
-                space units. When getting, it returns the current
-                value (1.0 by default). When setting, zero,
-                negative, Infinity and NaN values are ignored;
-                otherwise the current value is set to the new value.
-                ctx.lineWidth = value;
+                Ширина линии. По умолчанию 1.0.
+                Дробные, отрицательные значения и ноль игнорируются.
+                <code class="language-js">
+                    // Пример<br>
+                    ctx.lineWidth = value;<br>
+                </code>
               </p>
-              <div class="btn btn-hover"><span id="line-cap-round">End Of Line</span></div>
+              <div class="btn btn-default"><span id="line-cap-round">End Of Line</span></div>
               <p class="desc">
-                The CanvasRenderingContext2D.lineCap property of
-                the Canvas 2D API determines how the end points of
-                every line are drawn. There are three possible
-                values for this property and those are: butt, round
-                and square. By default this property is set to butt.
-                ctx.lineCap = "butt";
-                ctx.lineCap = "round";
-                ctx.lineCap = "square";
+                Стиль окончания линии. По умолчанию 'butt'.
+                <code class="language-js">
+                    // Пример<br>
+                    ctx.lineCap = "butt";<br>
+                    ctx.lineCap = "round";<br>
+                    ctx.lineCap = "square";<br>
+                </code>
               </p>
-              <div class="btn btn-hover"><span id="border-radius">Border Radius</span></div>
+              <div class="btn btn-default"><span id="line-join">Join Style</span></div>
+              <p class="desc">
+                Стиль соединения линий. По умолчанию 'miter'.
+                Длина соединения - miter limit ratio может быть задано
+                атрибутом miterLimit ( 10.0 - по умолчанию ).
+                <code class="language-js">
+                    // Пример<br>
+                    ctx.lineJoin  = "bevel";<br>
+                    ctx.lineJoin = "round";<br>
+                    ctx.lineJoin = "miter";<br>
+                    ctx.miterLimin = 5.2;
+                </code>
+              </p>
+              <div class="btn btn-default"><span id="border-radius">Border Radius</span></div>
               <p class="desc">
                 Don't working with the filled shapes.
                 The CanvasRenderingContext2D.lineJoin property of the Canvas 2D API determines
@@ -169,7 +187,7 @@
                 ctx.lineJoin = "round";
                 ctx.lineJoin = "miter";
               </p>
-              <div class="btn btn-hover"><span id="stroke-style">Border Style</span></div>
+              <div class="btn btn-default"><span id="stroke-style">Border Style</span></div>
               <p class="desc">
                 The CanvasRenderingContext2D.strokeStyle property of
                 the Canvas 2D API specifies the color or style to
@@ -179,9 +197,9 @@
                 ctx.strokeStyle = gradient;
                 ctx.strokeStyle = pattern;
               </p>
-              <div class="btn btn-hover"><span id="straight-line">Straight Line</span></div>
+              <div class="btn btn-default"><span id="straight-line">Straight Line</span></div>
               <p class="desc">...</p>
-              <div class="btn btn-hover"><span id="arc">Arc Line</span></div>
+              <div class="btn btn-default"><span id="arc">Arc Line</span></div>
               <p class="desc">
                 The CanvasRenderingContext2D.arc() method of the Canvas 2D API
                 adds an arc to the path which is centered at (x, y) position
@@ -202,14 +220,14 @@
               </p>
             </section>
             <!-- ===================================================================-->
-            <section id="shadow-drawing" class="shadow-drawing tab-pane fade widget-container boxed">
-              <div class="btn btn-hover"><span id="shadow-color">Shadow Color</span></div>
+            <section id="shadow-drawing" class="shadow-drawing tab-pane fade well">
+              <div class="btn btn-default"><span id="shadow-color">Shadow Color</span></div>
               <p class="desc">
                 The CanvasRenderingContext2D.shadowColor property of the Canvas 2D API
                 specifies the color of the shadow.
                 ctx.shadowColor = color;
               </p>
-              <div class="btn btn-hover"><span id="shadow-blur">Shadow Blur</span></div>
+              <div class="btn btn-default"><span id="shadow-blur">Shadow Blur</span></div>
               <p class="desc">
                 The CanvasRenderingContext2D.shadowBlur property of the Canvas 2D API
                 specifies the level of the blurring effect; this value doesn't correspond
@@ -217,7 +235,7 @@
                 The default value is 0.
                 ctx.shadowBlur = level;
               </p>
-              <div class="btn btn-hover"><span id="shadow-position">Shadow Position</span></div>
+              <div class="btn btn-default"><span id="shadow-position">Shadow Position</span></div>
               <p class="desc">
                 The CanvasRenderingContext2D.shadowOffsetX property of the Canvas 2D API
                 specifies the distance that the shadow will be offset in horizontal distance.
@@ -225,8 +243,8 @@
               </p>
             </section>
             <!-- ===========================================================================-->
-            <section id="bg-drawing" class="bg-drawing tab-pane fade widget-container boxed">
-              <div class="btn btn-hover"><span id="bg-color">Background Color</span></div>
+            <section id="bg-drawing" class="bg-drawing tab-pane fade well">
+              <div class="btn btn-default"><span id="bg-color">Background Color</span></div>
               <p class="desc">
                 The CanvasRenderingContext2D.fillStyle property of the Canvas 2D API
                 specifies the color or style to use inside shapes. The default is #000 (black).
@@ -235,7 +253,7 @@
                 ctx.fillStyle = gradient;
                 ctx.fillStyle = pattern;
               </p>
-              <div class="btn btn-hover"><span id="opacity">Opacity</span></div>
+              <div class="btn btn-default"><span id="opacity">Opacity</span></div>
               <p class="desc">
                 The CanvasRenderingContext2D.globalAlpha property of the Canvas 2D API
                 specifies the alpha value that is applied to shapes and images
@@ -243,7 +261,7 @@
                 The value is in the range from 0.0 (fully transparent) to 1.0 (fully opaque).
                 ctx.globalAlpha = value;
               </p>
-              <div class="btn btn-hover"><span id="create-linear-gradient">Create Linear Gradient</span></div>
+              <div class="btn btn-default"><span id="create-linear-gradient">Create Linear Gradient</span></div>
               <p class="desc">
                 The CanvasRenderingContext2D.createLinearGradient() method of the Canvas 2D API
                 creates a gradient along the line given by the coordinates represented by the parameters.
@@ -251,7 +269,7 @@
                 CanvasGradient ctx.createLinearGradient(x0, y0, x1, y1);
                 
               </p>
-              <div class="btn btn-hover"><span id="create-radial-gradient">Create Radial Gradient</span></div>
+              <div class="btn btn-default"><span id="create-radial-gradient">Create Radial Gradient</span></div>
               <p class="desc">
                 The CanvasRenderingContext2D.createRadialGradient() method of the Canvas 2D API
                 creates a radial gradient given by the coordinates of the two circles
@@ -268,8 +286,8 @@
               </p>
             </section>
             <!-- ===========================================================================-->
-            <section id="shapes-drawing" class="shapes-drawing tab-pane fade widget-container boxed">
-              <div class="btn btn-hover"><span id="fill-shape">Fill Shape</span></div>
+            <section id="shapes-drawing" class="shapes-drawing tab-pane fade well">
+              <div class="btn btn-default"><span id="fill-shape">Fill Shape</span></div>
               <p class="desc">
                 The CanvasRenderingContext2D.fill() method of the Canvas 2D API
                 fills the current or given path with the current fill style
@@ -278,16 +296,16 @@
                 void ctx.fill(fillRule);
                 void ctx.fill(path, fillRule);
               </p>
-              <div class="btn btn-hover"><span id="round">Round</span></div>
+              <div class="btn btn-default"><span id="round">Round</span></div>
               <p class="desc">...</p>
-              <div class="btn btn-hover"><span id="empty-rectangle">Empty Rectangle</span></div>
+              <div class="btn btn-default"><span id="empty-rectangle">Empty Rectangle</span></div>
               <p class="desc">
                 The CanvasRenderingContext2D.strokeRect() method of the Canvas 2D API paints
                 a rectangle which has a starting point at (x, y) and has a w width and an h
                 height onto the canvas, using the current stroke style.
                 void ctx.strokeRect(x, y, width, height);
               </p>
-              <div class="btn btn-hover"><span id="fill-rectangle">Fill Rectangle</span></div>
+              <div class="btn btn-default"><span id="fill-rectangle">Fill Rectangle</span></div>
               <p class="desc">
                 The CanvasRenderingContext2D.fillRect() method of the Canvas 2D API draws
                 a filled rectangle at (x, y) position whose size is determined by width
@@ -298,8 +316,8 @@
               </p>
             </section>
             <!-- ================================================================-->
-            <section id="text-drawing" class="text-drawing tab-pane fade widget-container boxed">
-              <div class="btn btn-hover"><span id="fill-text">Fill Text</span></div>
+            <section id="text-drawing" class="text-drawing tab-pane fade well">
+              <div class="btn btn-default"><span id="fill-text">Fill Text</span></div>
               <p class="desc">
                 The CanvasRenderingContext2D.fillText() method
                 of the Canvas 2D API fills a given text
@@ -308,7 +326,7 @@
                 is provided, the text will be scaled to fit that width.
                 void ctx.fillText(text, x, y [, maxWidth]);
               </p>
-              <div class="btn btn-hover"><span id="stroke-text">Border Text</span></div>
+              <div class="btn btn-default"><span id="stroke-text">Border Text</span></div>
               <p class="desc">
                 The CanvasRenderingContext2D.strokeText() method
                 of the Canvas 2D API strokes a given text
@@ -319,8 +337,8 @@
               </p>
             </section>
             <!-- ==================================================================================-->
-            <section id="images-drawing" class="images-drawing tab-pane fade widget-container boxed">
-              <div class="btn btn-hover"><span id="create-image">Create an image</span></div>
+            <section id="images-drawing" class="images-drawing tab-pane fade well">
+              <div class="btn btn-default"><span id="create-image">Create an image</span></div>
               <p class="desc">
                 The CanvasRenderingContext2D.drawImage() method of the Canvas 2D API
                 provides different ways to draw an image onto the canvas.
@@ -350,7 +368,7 @@
                 sHeight - The height of the sub-rectangle of the source image to draw into the
                 destination context.
               </p>
-              <div class="btn btn-hover"><span id="tile-canvas">Tile Canvas</span></div>
+              <div class="btn btn-default"><span id="tile-canvas">Tile Canvas</span></div>
               <p class="desc">
                 The CanvasRenderingContext2D.createPattern() method of the Canvas 2D API
                 creates a pattern using the specified image (a CanvasImageSource).
@@ -367,50 +385,64 @@
               </p>
             </section>
             <!-- ===================================================================-->
-            <section id="animation-field" class="animate-buttons tab-pane fade widget-container boxed">
-              <div class="btn btn-hover"><span id="random-circle">Random Circle</span></div>
-              <p>Создает круг с заданным радиусом. Усли радиус равер 0, то он будет случайным</p>
+            <section id="animation-field" class="animate-buttons tab-pane fade well">
               <input id="ball-size" type="number" value="15" class="boxed">
-              <div class="btn btn-hover"><span id="animate-circles">Animate Circles</span></div>
+              <div class="btn btn-default"><span id="random-circle">Random Circle</span></div>
+              <p class="desc">Создает круг с заданным радиусом. Если радиус равер 0, то он будет случайным</p>
+              <div class="btn btn-default"><span id="animate-circles">Animate Circles</span></div>
             </section>
           </section>
         </div>
+        <!-- ===================================================================-->
+        <section id="control-btn-field" class="widget-container boxed">
+          <div class="btn btn-default"><span id="restore-context-btn">Restore Context</span></div>
+          <p class="desc">
+            Восстанавливаем из стека верхнее состояние контекста
+            Если мы предварительно не сделали ctx.save(),
+            ничего не произойдет.
+            <code class="language-js">
+                // Пример<br>
+                void ctx.save();<br>
+                void ctx.restore();<br>
+            </code>
+          </p>
+          <div class="btn btn-default"><span id="save-context-btn">Save Context</span></div>
+          <p class="desc">
+            Контекст - это все настройки рисования.
+            Метод save() сохраняет копию текущего состояния контекста
+            на вершину стека состояния.
+            <code class="language-js">
+                // Пример<br>
+                void ctx.save();<br>
+                void ctx.restore();<br>
+            </code>
+          </p>
+          <div class="btn btn-default"><span id="clear-canvas-btn">Clear Canvas</span></div>
+          <div class="btn btn-default"><span id="clear-cheet-btn">Clear Cheet</span></div>
+          <div class="btn btn-default"><span id="clear-console-btn">Clear Console</span></div>
+          <!-- ===================================================================--><span class="single-buttons">
+            <div class="btn btn-default"><span id="run-btn">Run Canvas</span></div>
+            <div class="btn btn-default"><span id="reset-canvas-btn">Reset Canvas</span></div></span>
+          <!-- ===================================================================--><span id="additional-objects-field" class="additional-objects-field">
+            <div class="btn btn-default"><span id="save-image">Save Image</span></div>
+            <p class="desc"></p></span>
+        </section>
       </div>
-      <!-- ===================================================================-->
-      <section id="control-btn-field" class="widget-container boxed">
-        <div class="btn btn-white"><span id="restore-context-btn">Restore Context</span></div>
-        <p class="desc">
-          The CanvasRenderingContext2D.restore() method
-          of the Canvas 2D API restores the most recently
-          saved canvas state by popping the top entry in the
-          drawing state stack. If there is no saved state,
-          this method does nothing.
-          void ctx.restore();
-        </p>
-        <div class="btn btn-white"><span id="clear-canvas-btn">Clear Canvas</span></div>
-        <div class="btn btn-white"><span id="clear-cheet-btn">Clear Cheet</span></div>
-        <div class="btn btn-white"><span id="clear-console-btn">Clear Console</span></div>
-        <!-- ===================================================================--><span class="single-buttons">
-          <div class="btn btn-white"><span id="run-btn">Run Canvas</span></div>
-          <div class="btn btn-white"><span id="reset-canvas-btn">Reset Canvas</span></div></span>
-        <!-- ===================================================================--><span id="additional-objects-field" class="additional-objects-field tab-pane fade">
-          <div class="btn btn-hover"><span id="save-image">Save Image</span></div>
-          <p class="desc"></p></span>
-      </section>
       <div class="row">
-        <section class="widget-container boxed canvas-field col-md-6">
+        <section class="canvas-field col-md-6">
           <canvas id="canvas-field" width="800" height="480"></canvas>
           <div id="img-container" class="saved-image"><img id="img-copy" class="image-copy">
             <p>Щелкните правой кнопкой мыши для сохранения ...</p>
           </div>
         </section>
-        <section class="widget-container boxed textarea-field col-md-6">
-          <pre><code id="console" contenteditable="true" class="language-css"></code></pre>
+        <section class="textarea-field col-md-6">
+          <pre><code id="console" contenteditable="true" autofocus class="language-js"></code></pre>
           <div id="cheet-area" class="cheet-area"></div>
         </section>
       </div>
-      <script src="app/js/main.js"></script>
       <script src="vendor/prism/prism.js"></script>
+      <script src="app/js/jquery.js"></script>
+      <script src="app/js/main.js"></script>
     </main>
   </body>
 </html>
