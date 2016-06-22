@@ -30,6 +30,19 @@
     <script src="vendor/jquery/jquery-1.10.0.js"></script>
     <script src="vendor/jquery/jquery-ui.min.js"></script>
     <script src="vendor/bootstrap/bootstrap.min.js"></script>
+    <!-- Fancy Box-->
+    <!-- Add fancyBox-->
+    <script src="vendor/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+    <link rel="stylesheet" href="vendor/fancybox/source/jquery.fancybox.css?v=2.1.5">
+    <!-- Optionally add helpers - button, thumbnail and / or media-->
+    <link rel="stylesheet" href="vendor/fancybox/source/helpers/jquery.fancybox-buttons.css?v=1.0.5">
+    <!--script( src="vendor/fancybox/source/helpers/jquery.fancybox-buttons.js?v=1.0.5" )-->
+    <script src="vendor/fancybox/source/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+    <!-- Add mousewheel plugin (this is optional)-->
+    <script src="vendor/fancybox/lib/jquery.mousewheel-3.0.6.pack.js"></script>
+    <!-- Fancy Box Preview-->
+    <script src="vendor/fancybox/source/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+    <link rel="stylesheet" href="vendor/fancybox/source/helpers/jquery.fancybox-thumbs.css?v=1.0.7">
     <!-- Style CSS-->
     <link href="vendor/bootstrap/bootstrap.css" media="screen" rel="stylesheet">
     <!-- Мои стили-->
@@ -63,16 +76,22 @@
             <section id="drawing-properties" class="tab-pane fade in active well">
               <div class="btn btn-default"><span id="begin-path">Begin Path</span></div>
               <p class="desc">
-                Начать путь - это значит начать рисовать новую часть общей картины.
-                Канвас все рисует одной непрерывной линией.
-                Все нарисованные фигуры будут соединены между собой до тех пор,
-                пока вы не начнете новый путь.<br>
+                Объявляем, что начинаем новый контур. Это нужно, 
+                если мы хотим задать новый стиль объекту,
+                который будет нарисован следующим.
                 
                 <code class="language-js">
-                    ctx.strokeRect( 10, 10, 100, 100 );<br>
-                    ctx.strokeRect( 20, 20, 120, 120 );<br>
-                    void ctx.beginPath();<br>
-                    ctx.strokeRect( 40, 40, 140, 140 );<br>
+                    ctx.lineWidth = 7;<br>
+                    ctx.strokeStyle = "red";<br>
+                    ctx.strokeRect( 50, 50, 100, 100 );<br>
+                    /* Смена стиля */<br>
+                    ctx.beginPath();<br>                                    
+                    ctx.strokeStyle = "green";<br>
+                    ctx.strokeRect( 70, 70, 150, 150 );<br>
+                    /* Смена стиля */<br>
+                    ctx.beginPath();<br>                                    
+                    ctx.strokeStyle = "orange";<br>
+                    ctx.strokeRect( 100, 100, 200, 200 );<br>
                 </code>
               </p>
               <div class="btn btn-default"><span id="close-path">Close Path</span></div>
@@ -100,22 +119,6 @@
                 matrix. The angle argument represents a clockwise
                 rotation angle and is expressed in radians.
                 void ctx.rotate(angle);
-              </p>
-              <div class="btn btn-default"><span id="bezier">Bezier Curve</span></div>
-              <p class="desc">
-                The CanvasRenderingContext2D.bezierCurveTo() method
-                of the Canvas 2D API adds a cubic Bézier curve to the path.
-                It requires three points. The first two points are control points
-                and the third one is the end point.
-                The starting point is the last point in the current path,
-                which can be changed using moveTo() before creating the Bézier curve.
-                void ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y);
-                cp1x - The x axis of the coordinate for the first control point.
-                cp1y - The y axis of the coordinate for first control point.
-                cp2x - The x axis of the coordinate for the second control point.
-                cp2y - The y axis of the coordinate for the second control point.
-                x - The x axis of the coordinate for the end point.
-                y - The y axis of the coordinate for the end point.
               </p>
             </section>
             <!-- ============================================================-->
@@ -201,22 +204,40 @@
               <p class="desc">...</p>
               <div class="btn btn-default"><span id="arc">Arc Line</span></div>
               <p class="desc">
-                The CanvasRenderingContext2D.arc() method of the Canvas 2D API
-                adds an arc to the path which is centered at (x, y) position
-                with radius r starting at startAngle and ending at endAngle
-                going in the given direction by anticlockwise (defaulting to clockwise).
-                void ctx.arc(x, y, radius, startAngle, endAngle, anticlockwise);
+                <a class="fancybox" href="app/img/arc-big.jpg">
+                    <img class='visual-cheet' src='app/img/arc.jpg' alt='arc visual cheet'>
+                </a>
+                Рисует дугу вдоль окружности с центром в позиции ( x, y ) радиусом ( r ).
+                Дуга начинается в startAngle и заканчивается в endAngle ( в радианах ). 
+                Необязательный параметр antiClockwise — направление соединения точек 
+                начала и конца дуги. По умолчанию - false — направление 
+                по часовой стрелке. Значение true — против часовой.
                 
-                x - The x coordinate of the arc's center.
-                y - The y coordinate of the arc's center.
-                radius - The arc's radius.
-                startAngle - The angle at which the arc starts, measured clockwise
-                from the positive x axis and expressed in radians.
-                endAngle - The angle at which the arc ends, measured clockwise
-                from the positive x axis and expressed in radians.
-                anticlockwise Optional - An optional Boolean
-                which, if true, causes the arc to be drawn counter-clockwise between the two angles.
-                By default it is drawn clockwise.
+                <code class="language-js">
+                    // Синтаксис<br>
+                    void ctx.arc( x, y, radius, startAngle, endAngle, anticlockwise );<br>       
+                </code>
+                
+              </p>
+              <div class="btn btn-default"><span id="bezier">Bezier Curve</span></div>
+              <p class="desc">
+                <a class="fancybox" href="app/img/bezier-big.jpg">
+                    <img class='visual-cheet' src='app/img/bezier.jpg' alt='bezier visual cheet'>
+                </a>
+                The CanvasRenderingContext2D.bezierCurveTo() method
+                of the Canvas 2D API adds a cubic Bézier curve to the path.
+                It requires three points. The first two points are control points
+                and the third one is the end point.
+                The starting point is the last point in the current path,
+                which can be changed using moveTo() before creating the Bézier curve.
+                void ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y);
+                cp1x - The x axis of the coordinate for the first control point.
+                cp1y - The y axis of the coordinate for first control point.
+                cp2x - The x axis of the coordinate for the second control point.
+                cp2y - The y axis of the coordinate for the second control point.
+                x - The x axis of the coordinate for the end point.
+                y - The y axis of the coordinate for the end point.
+                
               </p>
             </section>
             <!-- ===================================================================-->
@@ -282,6 +303,31 @@
                 y1 - The y axis of the coordinate of the end circle.
                 r1 - The radius of the end circle.
                 CanvasGradient ctx.createRadialGradient(x0, y0, r0, x1, y1, r1);
+                
+              </p>
+              <div class="btn btn-default"><span id="add-color-stop">Add Color Stop</span></div>
+              <p class="desc">
+                Добавляет стоп цвет объекту градиента. Можно использовать как с линейным, 
+                так и с радиальным градиентами. Принимает в параметры позицию градиента 
+                ( от 0.0 до 0.1) и цвет ( название, код цвета или его rgb/rgba представление. 
+                Стоп-цветов может быть сколько угодно. 
+                
+                
+                <code class="language-js">
+                    // Пример<br>
+                    var linearGradient = ctx.createLinearGradient( 50, 50, 150, 250 );<br>
+                
+                    linearGradient.addColorStop( 0, "green" );<br>
+                    linearGradient.addColorStop( 0.5, "blue" );<br>
+                    linearGradient.addColorStop( 1, "yellow" );<br>
+                
+                    ctx.strokeStyle = linearGradient;<br>
+                
+                    ctx.moveTo( 50, 50 );<br>
+                    ctx.lineTo( 150, 250 );<br>
+                    ctx.stroke();<br>
+                </code>
+                
                 
               </p>
             </section>
@@ -395,22 +441,22 @@
         </div>
         <!-- ===================================================================-->
         <section id="control-btn-field" class="widget-container boxed">
-          <div class="btn btn-default"><span id="restore-context-btn">Restore Context</span></div>
+          <div class="btn btn-default"><span id="save-context-btn">Save Context</span></div>
           <p class="desc">
-            Восстанавливаем из стека верхнее состояние контекста
-            Если мы предварительно не сделали ctx.save(),
-            ничего не произойдет.
+            Контекст - это все настройки рисования.
+            Метод save() сохраняет копию текущего состояния контекста
+            на вершину стека состояния.
             <code class="language-js">
                 // Пример<br>
                 void ctx.save();<br>
                 void ctx.restore();<br>
             </code>
           </p>
-          <div class="btn btn-default"><span id="save-context-btn">Save Context</span></div>
+          <div class="btn btn-default"><span id="restore-context-btn">Restore Context</span></div>
           <p class="desc">
-            Контекст - это все настройки рисования.
-            Метод save() сохраняет копию текущего состояния контекста
-            на вершину стека состояния.
+            Восстанавливаем из стека верхнее состояние контекста
+            Если мы предварительно не сделали ctx.save(),
+            ничего не произойдет.
             <code class="language-js">
                 // Пример<br>
                 void ctx.save();<br>
@@ -425,7 +471,21 @@
             <div class="btn btn-default"><span id="reset-canvas-btn">Reset Canvas</span></div></span>
           <!-- ===================================================================--><span id="additional-objects-field" class="additional-objects-field">
             <div class="btn btn-default"><span id="save-image">Save Image</span></div>
-            <p class="desc"></p></span>
+            <p class="desc">
+              Сохраняем содержимое холста. Это можно сделать
+              несколькими способами.
+              
+              <code class="language-js">
+                  // В data url  изображение целиком<br>
+                  canvas.toDataURL( 'image/jpeg' );<br>
+                  // Массив пикселей. В параметрах координаты и размер изображения.<br>
+                  ctx.getImageData( x, y, width, height );<br>                                
+              </code>
+              
+              Кроме этого, можно сохранить последовательность действий, 
+              выполняемых при рисовании. 
+              
+            </p></span>
         </section>
       </div>
       <div class="row">

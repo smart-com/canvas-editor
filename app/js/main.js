@@ -80,30 +80,33 @@ var CanvasApp = function() {
 
             'round'                 : 'ctx.arc( 50, 50, 50, 0, 2 * Math.PI, false );' +
                                       'ctx.stroke();',
-            'fill-rectangle'        : 'ctx.fillRect( 10, 10, 100, 100 );',
-            'empty-rectangle'       : 'ctx.strokeRect( 10, 10, 100, 100 );',
+            'fill-rectangle'        : 'ctx.fillRect( 10, 10, 100, 100 );\n',
+            'empty-rectangle'       : 'ctx.strokeRect( 10, 10, 100, 100 );\n',
             'create-linear-gradient': 'gradient = ctx.createLinearGradient( 0, 0, 200, 0 );\n' +
-                                      'gradient.addColorStop( 0, "green" )\n;' +
-                                      'gradient.addColorStop( 1, "white" )\n;' +
-                                      'ctx.fillStyle = gradient\n;' +
-                                      'ctx.fillRect( 10, 10, 200, 100 )\n;',
+                                      'gradient.addColorStop( 0, "green" );\n' +
+                                      'gradient.addColorStop( 1, "white" );\n' +
+                                      'ctx.fillStyle = gradient;\n' +
+                                      'ctx.fillRect( 10, 10, 200, 100 );\n',
             'create-radial-gradient': 'gradient = ctx.createRadialGradient(100, 100, 100, 100, 100, 0);\n' +
                                       'gradient.addColorStop( 0, "green" );\n' +
-                                      'gradient.addColorStop( 1, "white" );' +
+                                      'gradient.addColorStop( 1, "white" );\n' +
                                       'ctx.fillStyle = gradient;\n' +
                                       'ctx.fillRect( 0, 0, 200, 100 );\n',
+            'add-color-stop'        : 'gradient.addColorStop( 0.3, "orange" );',
             'create-image'          : 'var image = new Image();\n' +
-                                      'image.src="app/img/present.png";' +
+                                      'image.src="app/img/present.png";\n\n' +
                                       // Таймаут необходим, чтобы картинка успела подгрузиться за один клик
                                       // Его нужно увеличить, если требуется подгрузить картинку большего размера
-                                      'setTimeout( function() { ctx.drawImage( image, 10, 50, 50, 50 ) }, 8 );',
-            'tile-canvas'           : 'var image = new Image();\n' +
-                                      'image.src="app/img/present.png";\n\n' +
-                                      'image.onload = function() {\n' +
-                                      '  var pattern = ctx.createPattern( image, "repeat" );\n' +
+                                      'setTimeout( function() {\n' +
+                                      '  ctx.drawImage( image, 10, 50, 50, 50 );\n' +
+                                      '}, 10 );\n',
+            'tile-canvas'           : 'var tileImage = new Image();\n' +
+                                      'tileImage.src="app/img/present.png";\n\n' +
+                                      'tileImage.onload = function() {\n' +
+                                      '  var pattern = ctx.createPattern( tileImage, "repeat" );\n' +
                                       '  ctx.fillStyle = pattern;\n' +
                                       '  ctx.fillRect( 0, 0, 300, 300 );\n' +
-                                      '}',
+                                      '}\n',
             ''                      : '' // Это бесполезная штука, чтобы легче копировать кнопки
         },
 
@@ -185,16 +188,13 @@ var CanvasApp = function() {
 
         // Подсказка - следующий элемент после родителя источника события
         var cheet = event.target.parentElement.nextElementSibling;
-        // Если следующий элемент не подсказка, то уходим
-        if( !cheet.classList.contains( 'desc') ) {
-            return;
-        }
-
-        // Показываем подсказку
-        // Если она вообще существует
-        if( cheet ) {
+        // Если подсказка есть, и это точно она
+        if( cheet && cheet.classList.contains( 'desc') ) {
+            // Показываем подсказку
             cheet.style.display = 'block';
-            html.cheetArea.appendChild( cheet );
+            html.cheetArea.appendChild( cheet );           
+        } else {
+            return;
         }
     }
 
@@ -232,11 +232,12 @@ var CanvasApp = function() {
                 var range = document.createRange();
                 // Он целиком в консоли
                 var start = html.console.childNodes[ 0 ];
+                console.log( text.length );
                 var end = html.console.childNodes[ 0 ];
                 // Задаем верхнюю границу, передав контейнер и смещение
                 range.setStart( start, caret );
                 // Устанавливаем нижнюю границу выделения
-                range.setEnd( end, text.length );
+                range.setEnd( end, caret + canvasBtnVal[ event.target.id ].length + 1 );
                 // Совмещаем начало и конец на старте.
                 // В примере должно было быть true
                 // Передав false мне каким-то чудом удалось 

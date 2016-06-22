@@ -1,33 +1,58 @@
-//@import url(https://fonts.googleapis.com/css?family=BenchNine:700);
+/*@importurl(https://fonts.googleapis.com/css?family=BenchNine:700) */
+
+/* Переменные */
+@code-block-height:400px;
+@padding-default:20px;
+@img-src: '../img/blue.jpeg';
+@main-color: gray;
+@code-font-size: 2rem;
+@main-font-color: white;
+
 body {
-  padding: 20px;
   width: fit-content;
-  background: url( '../img/blue.jpeg' );
+  padding: @padding-default;
+  background: url( @img-src );
+  color: @main-font-color;
 }
+
+/* Консоль с кодом для выполнения */
 
 pre code.language-js {
   display: block;
-  min-height: 400px;
-  max-height: 400px;
   overflow: auto;
-  padding-left: 20px;
-  background-color: #2d6987;
+  min-height: @code-block-height;
+  max-height: @code-block-height;
+  padding-left: @padding-default;
+  background-color: @main-color;
+  font-size: @code-font-size;
 }
 
 p.desc {
-  margin-top: 20px;
+  margin-top: @padding-default;
+  font-size: @code-font-size;
+
+  .visual-cheet {
+    float: left;
+    width: 250px;
+    padding-right: @padding-default;
+  }
 }
+
+/* Блок с подсказками */
 
 p.desc code {
   display: block;
-  margin-top: 20px;
-  padding: 10px;
+  margin-top: @padding-default;
+  margin-bottom: @padding-default;
+  padding: @padding-default;
   background-color: green;
 }
 
-// Покажем, если пользователь
-// захочет сохранить картинку из канваса
-.desc,
-.saved-image {
+/*
+ * Покажем, если пользователь
+ * захочет сохранить картинку из канваса
+ */
+
+.desc, .saved-image {
   display: none;
 }

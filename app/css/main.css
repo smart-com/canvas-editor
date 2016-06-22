@@ -1,25 +1,42 @@
+/*@importurl(https://fonts.googleapis.com/css?family=BenchNine:700) */
+/* Переменные */
 body {
-  padding: 20px;
   width: fit-content;
+  padding: 20px;
   background: url('../img/blue.jpeg');
+  color: white;
 }
+/* Консоль с кодом для выполнения */
 pre code.language-js {
   display: block;
+  overflow: auto;
   min-height: 400px;
   max-height: 400px;
-  overflow: auto;
   padding-left: 20px;
-  background-color: #2d6987;
+  background-color: gray;
+  font-size: 2rem;
 }
 p.desc {
   margin-top: 20px;
+  font-size: 2rem;
 }
+p.desc .visual-cheet {
+  float: left;
+  width: 250px;
+  padding-right: 20px;
+}
+/* Блок с подсказками */
 p.desc code {
   display: block;
   margin-top: 20px;
-  padding: 10px;
+  margin-bottom: 20px;
+  padding: 20px;
   background-color: green;
 }
+/*
+ * Покажем, если пользователь
+ * захочет сохранить картинку из канваса
+ */
 .desc,
 .saved-image {
   display: none;
