@@ -23,20 +23,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.0.0/normalize.css">
     <!-- Highlighter-->
     <link rel="stylesheet" href="vendor/prism/prism.css">
+    <!-- Icons-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <!-- Font Awesome-->
-    <!-- link( rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css")-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <!-- Main JS libs-->
     <script src="vendor/modernizr/modernizr.min.js"></script>
     <script src="vendor/jquery/jquery-1.10.0.js"></script>
     <script src="vendor/jquery/jquery-ui.min.js"></script>
-    <script src="vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <!-- Fancy Box-->
     <!-- Add fancyBox-->
     <script src="vendor/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
     <link rel="stylesheet" href="vendor/fancybox/source/jquery.fancybox.css?v=2.1.5">
     <!-- Optionally add helpers - button, thumbnail and / or media-->
     <link rel="stylesheet" href="vendor/fancybox/source/helpers/jquery.fancybox-buttons.css?v=1.0.5">
-    <!--script( src="vendor/fancybox/source/helpers/jquery.fancybox-buttons.js?v=1.0.5" )-->
+    <!-- script( src="vendor/fancybox/source/helpers/jquery.fancybox-buttons.js?v=1.0.5" )-->
     <script src="vendor/fancybox/source/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
     <!-- Add mousewheel plugin (this is optional)-->
     <script src="vendor/fancybox/lib/jquery.mousewheel-3.0.6.pack.js"></script>
@@ -44,7 +46,7 @@
     <script src="vendor/fancybox/source/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
     <link rel="stylesheet" href="vendor/fancybox/source/helpers/jquery.fancybox-thumbs.css?v=1.0.7">
     <!-- Style CSS-->
-    <link href="vendor/bootstrap/bootstrap.css" media="screen" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" media="screen" rel="stylesheet">
     <!-- Мои стили-->
     <link rel="stylesheet" href="app/css/main.css"><!--[if lt IE 9]><script src="js/respond.min.js"></script><![endif]-->
     <!--[if gte IE 9]>
@@ -55,8 +57,8 @@
   <body>
     <main class="container-fluid">
       <div class="row">
-        <div class="tabs col-md-12">
-          <div class="btn-field inner">
+        <div class="panel panel-default col-lg-12">
+          <div class="panel-body btn-field">
             <!-- Список с названиями табов-->
             <ul class="nav nav-tabs nav-justified">
               <li class="active"><a href="#drawing-properties" data-toggle="tab">Опции рисования</a></li>
@@ -68,439 +70,590 @@
               <li><a href="#images-drawing" data-toggle="tab">Изображения</a></li>
               <li><a href="#animation-field" data-toggle="tab">Анимация</a></li>
             </ul>
+            <!-- ===================================================================-->
+            <!-- Содержимое всех вкладок-->
+            <section id="canvas-btn-field" class="canvas-btn-field tab-content">
+              <!-- Первая активная вкладка-->
+              <section id="drawing-properties" class="tab-pane fade in active well">
+                <div class="btn btn-default"><span id="begin-path">Begin Path</span></div>
+                <p class="desc">
+                  Объявляем, что начинаем новый контур. Это нужно,
+                  если мы хотим задать новый стиль объекту,
+                  который будет нарисован следующим.
+                  
+                  <code class="language-js">
+                      // Пример<br>
+                      ctx.lineWidth = 7;<br>
+                      ctx.strokeStyle = "red";<br>
+                      ctx.strokeRect( 50, 50, 100, 100 );<br>
+                      /* Смена стиля */<br>
+                      ctx.beginPath();<br>
+                      ctx.strokeStyle = "green";<br>
+                      ctx.strokeRect( 70, 70, 150, 150 );<br>
+                      /* Смена стиля */<br>
+                      ctx.beginPath();<br>
+                      ctx.strokeStyle = "orange";<br>
+                      ctx.strokeRect( 100, 100, 200, 200 );<br>
+                  </code>
+                </p>
+                <div class="btn btn-default"><span id="close-path">Close Path</span></div>
+                <p class="desc">
+                  Закрыть путь это значит завершить фигуру в начальной точке,
+                  которая была задана методом beginPath().
+                  Канвас попытается начертить прямую линию от текущей точки до начала.
+                  Если фигура уже была закрыта или имеет только одну точку,
+                  то просто ничего не произойдет.<br>
+                  
+                  <code class="language-js example">
+                      void ctx.closePath();
+                  </code>
+                </p>
+                <div class="btn btn-default"><span id="move-canvas">Move Canvas</span></div>
+                <p class="desc">
+                  Сдвигает систему координат канваса на х по горизонтали
+                  и у по вертикали.
+                   <code class="language-js example">
+                      void ctx.translate( x, y );
+                   </code>
+                </p>
+                <div class="btn btn-default"><span id="rotate-canvas">Rotate Canvas</span></div>
+                <p class="desc">
+                  The CanvasRenderingContext2D.rotate() method of the
+                  Canvas 2D API adds a rotation to the transformation
+                  matrix. The angle argument represents a clockwise
+                  rotation angle and is expressed in radians.
+                          void ctx.rotate(angle);
+                </p>
+                <div class="btn btn-default"><span id="clear-rect">Clear Rect</span></div>
+                <p class="desc">
+                  Очищает прямоугольник с указанными координатами. Отрицательные
+                  координаты не принимаются. В параметры передаем x и y — координаты
+                  левого верхнего угла прямоугольника, который надо очистить, его width
+                  и height.
+                  
+                  <code class="language-js">
+                      // Синтаксис<br>
+                      void clearRect( x, y, width, height );<br>
+                  </code>
+                  
+                </p>
+                <div class="btn btn-default"><span id="clear-shape">Clip</span></div>
+                <p class="desc">
+                  <a class="fancybox" href="app/img/clip.png">
+                      <img class='visual-cheet' src='app/img/clip.png' alt='clip visual cheet'>
+                  </a>
+                  
+                  Как и clearRect() метод Clip() тоже служит для очистки холста. Но здесь
+                  все наоборот - пространство в заданной фигуре останется нетронутым.
+                  Будет очищено все, что снаружи. Сама фигура может быть любой сложности,
+                  и ее нужно нарисовать перед вызовом метода. В примере на картинке очистится все,
+                  кроме того, что внутри звезды.
+                  
+                  <code class="language-js">
+                      // Синтаксис<br>
+                      void ctx.clip();<br>
+                  </code>
+                </p>
+              </section>
+              <!-- ============================================================-->
+              <section id="line-drawing" class="line-drawing tab-pane fade well">
+                <div class="btn btn-default"><span id="move-to">Move To</span></div>
+                <p class="desc">
+                  The CanvasRenderingContext2D.moveTo() method of the
+                  Canvas 2D API moves the starting point of a new
+                  sub-path to the (x, y) coordinates.
+                  void ctx.moveTo(x, y);
+                </p>
+                <div class="btn btn-default"><span id="line-to">Line To</span></div>
+                <p class="desc">
+                  The CanvasRenderingContext2D.lineTo() method of the
+                  Canvas 2D API connects the last point in the
+                  sub-path to the x, y coordinates with a straight
+                  line (but does not actually draw it).
+                  void ctx.lineTo(x, y);
+                </p>
+                <div class="btn btn-default"><span id="stroke">Stroke</span></div>
+                <p class="desc">
+                  The CanvasRenderingContext2D.stroke() method of the
+                  Canvas 2D API strokes the current or given path
+                  with the current stroke style using the non-zero
+                  winding rule.
+                  void ctx.stroke();
+                  void ctx.stroke(path);
+                </p>
+                <div class="btn btn-default"><span id="line-width">Line Width</span></div>
+                <p class="desc">
+                  Ширина линии. По умолчанию 1.0.
+                  Дробные, отрицательные значения и ноль игнорируются.
+                  <code class="language-js">
+                      // Синтаксис<br>
+                      ctx.lineWidth = value;<br>
+                  </code>
+                </p>
+                <div class="btn btn-default"><span id="line-cap-round">End Of Line</span></div>
+                <p class="desc">
+                  Стиль окончания линии. По умолчанию 'butt'.
+                  <code class="language-js">
+                      // Синтаксис<br>
+                      ctx.lineCap = "butt";<br>
+                      ctx.lineCap = "round";<br>
+                      ctx.lineCap = "square";<br>
+                  </code>
+                </p>
+                <div class="btn btn-default"><span id="line-join">Join Style</span></div>
+                <p class="desc">
+                  Стиль соединения линий. По умолчанию 'miter'.
+                  Длина соединения - miter limit ratio может быть задано
+                  атрибутом miterLimit ( 10.0 - по умолчанию ).
+                  <code class="language-js">
+                      // Синтаксис<br>
+                      ctx.lineJoin  = "bevel";<br>
+                      ctx.lineJoin = "round";<br>
+                      ctx.lineJoin = "miter";<br>
+                      ctx.miterLimin = 5.2;
+                  </code>
+                </p>
+                <div class="btn btn-default"><span id="border-radius">Border Radius</span></div>
+                <p class="desc">
+                  Don't working with the filled shapes.
+                  The CanvasRenderingContext2D.lineJoin property of the Canvas 2D API determines
+                  how two connecting segments (of lines, arcs or curves) with non-zero lengths in
+                  a shape are joined together (degenerate segments with zero lengths, whose
+                  specified endpoints and control points are exactly at the same position, are skipped).
+                  ctx.lineJoin = "bevel";
+                  ctx.lineJoin = "round";
+                  ctx.lineJoin = "miter";
+                </p>
+                <div class="btn btn-default"><span id="stroke-style">Border Style</span></div>
+                <p class="desc">
+                  The CanvasRenderingContext2D.strokeStyle property of
+                  the Canvas 2D API specifies the color or style to
+                  use for the lines around shapes. The default is #000
+                  (black).
+                  ctx.strokeStyle = color;
+                  ctx.strokeStyle = gradient;
+                  ctx.strokeStyle = pattern;
+                </p>
+                <div class="btn btn-default"><span id="straight-line">Straight Line</span></div>
+                <p class="desc">...</p>
+                <div class="btn btn-default"><span id="arc">Arc Line</span></div>
+                <p class="desc">
+                  <a class="fancybox f-box" href="app/img/arc.jpg">
+                      <img class='visual-cheet' src='app/img/arc.jpg' alt='arc visual cheet'>
+                  </a>
+                  Рисует дугу вдоль окружности с центром в позиции ( x, y ) радиусом ( r ).
+                  Дуга начинается в startAngle и заканчивается в endAngle ( в радианах ).
+                  Необязательный параметр antiClockwise — направление соединения точек
+                  начала и конца дуги. По умолчанию - false — направление
+                  по часовой стрелке. Значение true — против часовой.
+                  
+                  <code class="language-js">
+                      // Синтаксис<br>
+                      void ctx.arc( x, y, radius, startAngle, endAngle, anticlockwise );<br>
+                  </code>
+                  
+                </p>
+                <div class="btn btn-default"><span id="bezier">Bezier Curve</span></div>
+                <p class="desc">
+                  <a class="fancybox f-box" href="app/img/bezier.jpg">
+                      <img class='visual-cheet' src='app/img/bezier.jpg' alt='bezier visual cheet'>
+                  </a>
+                  Рисует кривую Безье от текущей точки на холсте до указанной через промежуточные (
+                  контрольные ) точки. Если нужно передвинуть начало кривой, можно воспользоваться методом
+                  ctx.moveTo(), который нужно вызвать перед созданием кривой.
+                  Контрольных точек может быть сколько угодно, и задаются они
+                  координатами в параметрах ( controlX, controlY, ... , control-10-X, control-10-Y ). endX,
+                  endY — координаты окончания кривой. Требуются как минимум три точки - первые две, чтобы
+                  задать направление и третья, чтобы закончить кривую.
+                  
+                  <code class="language-js">
+                      // Синтаксис<br>
+                      void bezierCurveTo( control-1-X, control-1-Y, control-2-X, control-2-Y, endX, endY );<br>
+                  </code>
+                  
+                </p>
+              </section>
+              <!-- ===================================================================-->
+              <section id="shadow-drawing" class="shadow-drawing tab-pane fade well">
+                <div class="btn btn-default"><span id="shadow-color">Shadow Color</span></div>
+                <p class="desc">
+                  The CanvasRenderingContext2D.shadowColor property of the Canvas 2D API
+                  specifies the color of the shadow.
+                  ctx.shadowColor = color;
+                </p>
+                <div class="btn btn-default"><span id="shadow-blur">Shadow Blur</span></div>
+                <p class="desc">
+                  The CanvasRenderingContext2D.shadowBlur property of the Canvas 2D API
+                  specifies the level of the blurring effect; this value doesn't correspond
+                  to a number of pixels and is not affected by the current transformation matrix.
+                  The default value is 0.
+                  ctx.shadowBlur = level;
+                </p>
+                <div class="btn btn-default"><span id="shadow-position">Shadow Position</span></div>
+                <p class="desc">
+                  The CanvasRenderingContext2D.shadowOffsetX property of the Canvas 2D API
+                  specifies the distance that the shadow will be offset in horizontal distance.
+                  ctx.shadowOffsetX = offset;
+                </p>
+              </section>
+              <!-- ===========================================================================-->
+              <section id="bg-drawing" class="bg-drawing tab-pane fade well">
+                <div class="btn btn-default"><span id="bg-color">Background Color</span></div>
+                <p class="desc">
+                  The CanvasRenderingContext2D.fillStyle property of the Canvas 2D API
+                  specifies the color or style to use inside shapes. The default is #000 (black).
+                  
+                  ctx.fillStyle = color;
+                  ctx.fillStyle = gradient;
+                  ctx.fillStyle = pattern;
+                </p>
+                <div class="btn btn-default"><span id="opacity">Opacity</span></div>
+                <p class="desc">
+                  The CanvasRenderingContext2D.globalAlpha property of the Canvas 2D API
+                  specifies the alpha value that is applied to shapes and images
+                  before they are drawn onto the canvas.
+                  The value is in the range from 0.0 (fully transparent) to 1.0 (fully opaque).
+                  ctx.globalAlpha = value;
+                </p>
+                <div class="btn btn-default"><span id="create-linear-gradient">Create Linear Gradient</span></div>
+                <p class="desc">
+                  Создает объект линейного градиента. В параметры передаем координаты
+                  начальной и конечной точек. В метод addColor кроме цвета нужно передать
+                  положение цвета. Значение - положительное число от 0 до 1.
+                  
+                  <code class="language-js">
+                      // Синтаксис<br>
+                      ctx.createLinearGradient( x0, y0, x1, y1 );<br>
+                  </code>
+                  
+                  После создания объекта градиента, можно ему присвоить любое количество цветов с помощью метода addColorStop. Градиент появится на холсте после применения метода fill() или stroke().
+                  
+                </p>
+                <div class="btn btn-default"><span id="create-radial-gradient">Create Radial Gradient</span></div>
+                <p class="desc">
+                  Создает объект радиального градиента, полученный при помощи двух
+                  окружностей, с координатами, переданными в параметры. x0, y0, r1 -
+                  координаты центра и радиус первой окружности, x1, y1, r2 - аналогично
+                  для второй. Если нужно, можно добавить цвета при помощи addColor().
+                  Градиент появится на холсте после применения метода fill() или stroke().
+                  
+                  <code class="language-js">
+                      // Синтаксис<br>
+                      ctx.createLinearGradient( x0, y0, r1, x1, y1, r2 );<br>
+                  </code>
+                  
+                </p>
+                <div class="btn btn-default"><span id="add-color-stop">Add Color Stop</span></div>
+                <p class="desc">
+                  Добавляет стоп цвет объекту градиента. Можно использовать как с линейным,
+                  так и с радиальным градиентами. Принимает в параметры позицию градиента
+                  ( от 0.0 до 0.1) и цвет ( название, код цвета или его rgb/rgba представление.
+                  Стоп-цветов может быть сколько угодно.
+                  
+                  <code class="language-js">
+                      // Пример<br>
+                      var linearGradient = ctx.createLinearGradient( 50, 50, 150, 250 );<br>
+                  
+                      linearGradient.addColorStop( 0, "green" );<br>
+                      linearGradient.addColorStop( 0.5, "blue" );<br>
+                      linearGradient.addColorStop( 1, "yellow" );<br>
+                  
+                      ctx.strokeStyle = linearGradient;<br>
+                  
+                      ctx.moveTo( 50, 50 );<br>
+                      ctx.lineTo( 150, 250 );<br>
+                      ctx.stroke();<br>
+                  </code>
+                  
+                </p>
+              </section>
+              <!-- ===========================================================================-->
+              <section id="shapes-drawing" class="shapes-drawing tab-pane fade well">
+                <div class="btn btn-default"><span id="fill-shape">Fill</span></div>
+                <p class="desc">
+                  Делает заливку фигуры. Цвет заливки сохраняем в свойство
+                  fillStyle. При вызове метода fill() все открытые фигуры будут закрыты автоматически,
+                  поэтому в таком случае можно не вызывать метод closePath().
+                  
+                  <code class="language-js">
+                      // Пример<br>
+                      ctx.fillStyle = "blue";<br>
+                      ctx.arc( 100, 120, 50, 0, 2 * Math.PI, false );<br>
+                      ctx.fill();<br>
+                  </code>
+                </p>
+                <div class="btn btn-default"><span id="fill-rectangle">Fill Rectangle</span></div>
+                <p class="desc">
+                  Рисует залитый прямоугольник. Цвет будет тот, который определен
+                  в свойстве fillStyle или черный по умолчанию. В параметрах -
+                  координаты верхнего левого угла прямоугольника и его размеры.
+                  
+                  <code class="language-js">
+                      // Синтаксис<br>
+                      fillRect( x, y, width, height );<br>
+                  </code>
+                  
+                  Кроме этого, этот метод часто используется для быстрой очистки
+                  поверхности холста с сохранением всех настроек контекста.
+                  Это можно сделать, например, так:
+                  
+                  <code class="language-js">
+                      // Пример<br>
+                      ctx.fillRect( 0, 0, canvas.width, canvas.height );<br>
+                  </code>
+                  
+                </p>
+                <div class="btn btn-default"><span id="round">Round</span></div>
+                <p class="desc">...</p>
+                <div class="btn btn-default"><span id="empty-rectangle">Empty Rectangle</span></div>
+                <p class="desc">
+                  The CanvasRenderingContext2D.strokeRect() method of the Canvas 2D API paints
+                  a rectangle which has a starting point at (x, y) and has a w width and an h
+                  height onto the canvas, using the current stroke style.
+                  void ctx.strokeRect(x, y, width, height);
+                </p>
+              </section>
+              <!-- ================================================================-->
+              <section id="text-drawing" class="text-drawing tab-pane fade well">
+                <div class="btn btn-default"><span id="fill-text">Fill Text</span></div>
+                <p class="desc">
+                  The CanvasRenderingContext2D.fillText() method
+                  of the Canvas 2D API fills a given text
+                  at the given (x, y) position.
+                  If the optional fourth parameter for a maximum width
+                  is provided, the text will be scaled to fit that width.
+                  void ctx.fillText(text, x, y [, maxWidth]);
+                </p>
+                <div class="btn btn-default"><span id="stroke-text">Border Text</span></div>
+                <p class="desc">
+                  The CanvasRenderingContext2D.strokeText() method
+                  of the Canvas 2D API strokes a given text
+                  at the given (x, y) position. If the optional fourth
+                  parameter for a maximum width is provided,
+                  the text will be scaled to fit that width.
+                  void ctx.strokeText(text, x, y [, maxWidth]);
+                </p>
+              </section>
+              <!-- ==================================================================================-->
+              <section id="images-drawing" class="images-drawing tab-pane fade well">
+                <div class="btn btn-default"><span id="create-image">Create image</span></div>
+                <p class="desc">
+                  Выводит изображение на хосте. Делает это по-разному.
+                  В простейшем варианте просто отобразит картинку.
+                  
+                  <code class="language-js">
+                      // Синтаксис<br>
+                      ctx.drawImage( image, x, y );<br>
+                  </code>
+                  
+                  В параметры передаем предварительно созданный JS объект изображения
+                  и координаты холста, где должен быть верхний левый угол картинки. Будут
+                  сохранены реальные размеры.
+                  
+                  Второй способ - аналогично, но с изменением размера изображения. Соответственно
+                  параметров должно быть немного больше. К первоначальному комплекту добавляем
+                  желаемые размеры изображения. Понятно, что качество картинки при этом может
+                  несколько пострадать.
+                  
+                  <code class="language-js">
+                      // Синтаксис<br>
+                      ctx.drawImage( image, x, y, width, height );<br>
+                  </code>
+                  
+                  Кроме этого есть возможность вывести кусок изображения. К параметрам добавляем
+                  sx, sy — координаты верхнего левого угла вырезаемого слайса. sWidth, sHeight - его
+                  размеры. dx, dy — координаты верхнего левого угла обрезанного изображения и
+                  dWidth, dHeight — размеры обрезанного изображения на холсте.
+                  
+                  <code class="language-js">
+                      // Синтаксис<br>
+                      ctx.drawImage( image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight );<br>
+                  </code>
+                  
+                  <a class="fancybox" href="app/img/drawimage1.jpg">
+                      <img class='visual-cheet' src='app/img/drawimage1.jpg' alt='draw image visual cheet'>
+                  </a>
+                  
+                  <a class="fancybox" href="app/img/drawimage2.jpg">
+                      <img class='visual-cheet' src='app/img/drawimage2.jpg' alt='draw image visual cheet'>
+                  </a>
+                  
+                  Будет немного понятнее, если посмотреть на картинку. Спецификация позволяет любые
+                  изображения - это может быть обычная картинка, картинка созданная при помощи методов
+                  из Canvas Api, ImageBitmap HTMLImageElement или вообще видео. Насчет видео - есть нюанс.
+                  Оно не будет проигрываться в Канвасе. На холсте будет зафиксирован один отдельный кадр.
+                  Чтобы видео пошло, нужно будет собрать эти кадры, например, в массив и как-нибудь
+                  показывать их по очереди. Вероятно, это будет довольно странным решением с точки зрения
+                  производительности, несмотря на то, что холст довольно быстр...
+                  
+                </p>
+                <div class="btn btn-default"><span id="create-image-data">Create imageData</span></div>
+                <p class="desc">
+                  Создает объект imageData. В width и height передаем
+                  размеры создаваемого объекта. В результате получим объект
+                  imageData с RGBA = ( 0, 0, 0, 0) и размером width x height.
+                  
+                  <code class="language-js">
+                      // Синтаксис<br>
+                      ctx.createImageData( width, height );<br>
+                      // или
+                      createImageData( OldImageData );<br>
+                  </code>
+                  
+                  Второй способ позволяет передать в параметры уже существующий
+                  объект OldImageData, который был получен с помощью getImageData
+                  или созданный с помощью createImageData. Таким образом можно
+                  получить новый объект изображения, полностью идентичный OldImageData.
+                  Цвета можно установить при помощи свойства data, где i — позиция в массиве,
+                  и value — значение для данного канала RGBA (число от 0 до 255):
+                  
+                  <code class="language-js">
+                      // Синтаксис
+                      imageData.data[i] = value,<br>
+                  </code>
+                </p>
+                <div class="btn btn-default"><span id="tile-canvas">Tile Canvas</span></div>
+                <p class="desc">
+                  При помощи метода createPattern() можно размножить изображение.
+                  В параметры передаем объект Image() и способ, которым хотить замостить канвас.
+                  Возможные значения: repeat, repeat-x, repeat-y и no-repeat. Пустая строка будет
+                  означать "repeat". Результат появится на холсте после применения метода fill() или stroke().
+                  Перед применением метода следует убедиться, что изображение загружено. Так бывает далеко не
+                  всегда, поэтому или таймаут или выполнение двумя разными командами.
+                  
+                  <code class="language-js">
+                      // Синтаксис<br>
+                      ctx.createPattern( image, type );
+                  </code>
+                  
+                </p>
+              </section>
+              <!-- ===================================================================-->
+              <section id="animation-field" class="animate-buttons tab-pane fade well">
+                <input id="ball-size" type="number" value="15" class="boxed">
+                <div class="btn btn-default"><span id="random-circle">Random Circle</span></div>
+                <p class="desc">Создает круг с заданным радиусом. Если радиус равер 0, то он будет случайным</p>
+                <div class="btn btn-default"><span id="animate-circles">Animate Circles</span></div>
+              </section>
+            </section>
           </div>
-          <!-- ===================================================================-->
-          <!-- Содержимое всех вкладок-->
-          <section id="canvas-btn-field" class="canvas-btn-field tab-content clearfix">
-            <!-- Первая акти.вная вкладка-->
-            <section id="drawing-properties" class="tab-pane fade in active well">
-              <div class="btn btn-default"><span id="begin-path">Begin Path</span></div>
-              <p class="desc">
-                Объявляем, что начинаем новый контур. Это нужно, 
-                если мы хотим задать новый стиль объекту,
-                который будет нарисован следующим.
-                
-                <code class="language-js">
-                    ctx.lineWidth = 7;<br>
-                    ctx.strokeStyle = "red";<br>
-                    ctx.strokeRect( 50, 50, 100, 100 );<br>
-                    /* Смена стиля */<br>
-                    ctx.beginPath();<br>                                    
-                    ctx.strokeStyle = "green";<br>
-                    ctx.strokeRect( 70, 70, 150, 150 );<br>
-                    /* Смена стиля */<br>
-                    ctx.beginPath();<br>                                    
-                    ctx.strokeStyle = "orange";<br>
-                    ctx.strokeRect( 100, 100, 200, 200 );<br>
-                </code>
-              </p>
-              <div class="btn btn-default"><span id="close-path">Close Path</span></div>
-              <p class="desc">
-                Закрыть путь это значит завершить фигуру в начальной точке.
-                Канвас попытается начертить прямую линию от текущей точки до начала.
-                Если фигура уже была закрыта или имеет только одну точку,
-                то просто ничего не произойдет.<br>
-                <code class="language-js example">
-                    void ctx.closePath();
-                </code>
-              </p>
-              <div class="btn btn-default"><span id="move-canvas">Move Canvas</span></div>
-              <p class="desc">
-                Сдвигает систему координат канваса на х по горизонтали
-                и у по вертикали.
-                 <code class="language-js example">
-                    void ctx.translate( x, y );
-                 </code>
-              </p>
-              <div class="btn btn-default"><span id="rotate-canvas">Rotate Canvas</span></div>
-              <p class="desc">
-                The CanvasRenderingContext2D.rotate() method of the
-                Canvas 2D API adds a rotation to the transformation
-                matrix. The angle argument represents a clockwise
-                rotation angle and is expressed in radians.
-                void ctx.rotate(angle);
-              </p>
-            </section>
-            <!-- ============================================================-->
-            <section id="line-drawing" class="line-drawing tab-pane fade well">
-              <div class="btn btn-default"><span id="move-to">Move To</span></div>
-              <p class="desc">
-                The CanvasRenderingContext2D.moveTo() method of the
-                Canvas 2D API moves the starting point of a new
-                sub-path to the (x, y) coordinates.
-                void ctx.moveTo(x, y);
-              </p>
-              <div class="btn btn-default"><span id="line-to">Line To</span></div>
-              <p class="desc">
-                The CanvasRenderingContext2D.lineTo() method of the
-                Canvas 2D API connects the last point in the
-                sub-path to the x, y coordinates with a straight
-                line (but does not actually draw it).
-                void ctx.lineTo(x, y);
-              </p>
-              <div class="btn btn-default"><span id="stroke">Stroke</span></div>
-              <p class="desc">
-                The CanvasRenderingContext2D.stroke() method of the
-                Canvas 2D API strokes the current or given path
-                with the current stroke style using the non-zero
-                winding rule.
-                void ctx.stroke();
-                void ctx.stroke(path);
-              </p>
-              <div class="btn btn-default"><span id="line-width">Line Width</span></div>
-              <p class="desc">
-                Ширина линии. По умолчанию 1.0.
-                Дробные, отрицательные значения и ноль игнорируются.
-                <code class="language-js">
-                    // Пример<br>
-                    ctx.lineWidth = value;<br>
-                </code>
-              </p>
-              <div class="btn btn-default"><span id="line-cap-round">End Of Line</span></div>
-              <p class="desc">
-                Стиль окончания линии. По умолчанию 'butt'.
-                <code class="language-js">
-                    // Пример<br>
-                    ctx.lineCap = "butt";<br>
-                    ctx.lineCap = "round";<br>
-                    ctx.lineCap = "square";<br>
-                </code>
-              </p>
-              <div class="btn btn-default"><span id="line-join">Join Style</span></div>
-              <p class="desc">
-                Стиль соединения линий. По умолчанию 'miter'.
-                Длина соединения - miter limit ratio может быть задано
-                атрибутом miterLimit ( 10.0 - по умолчанию ).
-                <code class="language-js">
-                    // Пример<br>
-                    ctx.lineJoin  = "bevel";<br>
-                    ctx.lineJoin = "round";<br>
-                    ctx.lineJoin = "miter";<br>
-                    ctx.miterLimin = 5.2;
-                </code>
-              </p>
-              <div class="btn btn-default"><span id="border-radius">Border Radius</span></div>
-              <p class="desc">
-                Don't working with the filled shapes.
-                The CanvasRenderingContext2D.lineJoin property of the Canvas 2D API determines
-                how two connecting segments (of lines, arcs or curves) with non-zero lengths in
-                a shape are joined together (degenerate segments with zero lengths, whose
-                specified endpoints and control points are exactly at the same position, are skipped).
-                ctx.lineJoin = "bevel";
-                ctx.lineJoin = "round";
-                ctx.lineJoin = "miter";
-              </p>
-              <div class="btn btn-default"><span id="stroke-style">Border Style</span></div>
-              <p class="desc">
-                The CanvasRenderingContext2D.strokeStyle property of
-                the Canvas 2D API specifies the color or style to
-                use for the lines around shapes. The default is #000
-                (black).
-                ctx.strokeStyle = color;
-                ctx.strokeStyle = gradient;
-                ctx.strokeStyle = pattern;
-              </p>
-              <div class="btn btn-default"><span id="straight-line">Straight Line</span></div>
-              <p class="desc">...</p>
-              <div class="btn btn-default"><span id="arc">Arc Line</span></div>
-              <p class="desc">
-                <a class="fancybox" href="app/img/arc-big.jpg">
-                    <img class='visual-cheet' src='app/img/arc.jpg' alt='arc visual cheet'>
-                </a>
-                Рисует дугу вдоль окружности с центром в позиции ( x, y ) радиусом ( r ).
-                Дуга начинается в startAngle и заканчивается в endAngle ( в радианах ). 
-                Необязательный параметр antiClockwise — направление соединения точек 
-                начала и конца дуги. По умолчанию - false — направление 
-                по часовой стрелке. Значение true — против часовой.
-                
-                <code class="language-js">
-                    // Синтаксис<br>
-                    void ctx.arc( x, y, radius, startAngle, endAngle, anticlockwise );<br>       
-                </code>
-                
-              </p>
-              <div class="btn btn-default"><span id="bezier">Bezier Curve</span></div>
-              <p class="desc">
-                <a class="fancybox" href="app/img/bezier-big.jpg">
-                    <img class='visual-cheet' src='app/img/bezier.jpg' alt='bezier visual cheet'>
-                </a>
-                The CanvasRenderingContext2D.bezierCurveTo() method
-                of the Canvas 2D API adds a cubic Bézier curve to the path.
-                It requires three points. The first two points are control points
-                and the third one is the end point.
-                The starting point is the last point in the current path,
-                which can be changed using moveTo() before creating the Bézier curve.
-                void ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y);
-                cp1x - The x axis of the coordinate for the first control point.
-                cp1y - The y axis of the coordinate for first control point.
-                cp2x - The x axis of the coordinate for the second control point.
-                cp2y - The y axis of the coordinate for the second control point.
-                x - The x axis of the coordinate for the end point.
-                y - The y axis of the coordinate for the end point.
-                
-              </p>
-            </section>
-            <!-- ===================================================================-->
-            <section id="shadow-drawing" class="shadow-drawing tab-pane fade well">
-              <div class="btn btn-default"><span id="shadow-color">Shadow Color</span></div>
-              <p class="desc">
-                The CanvasRenderingContext2D.shadowColor property of the Canvas 2D API
-                specifies the color of the shadow.
-                ctx.shadowColor = color;
-              </p>
-              <div class="btn btn-default"><span id="shadow-blur">Shadow Blur</span></div>
-              <p class="desc">
-                The CanvasRenderingContext2D.shadowBlur property of the Canvas 2D API
-                specifies the level of the blurring effect; this value doesn't correspond
-                to a number of pixels and is not affected by the current transformation matrix.
-                The default value is 0.
-                ctx.shadowBlur = level;
-              </p>
-              <div class="btn btn-default"><span id="shadow-position">Shadow Position</span></div>
-              <p class="desc">
-                The CanvasRenderingContext2D.shadowOffsetX property of the Canvas 2D API
-                specifies the distance that the shadow will be offset in horizontal distance.
-                ctx.shadowOffsetX = offset;
-              </p>
-            </section>
-            <!-- ===========================================================================-->
-            <section id="bg-drawing" class="bg-drawing tab-pane fade well">
-              <div class="btn btn-default"><span id="bg-color">Background Color</span></div>
-              <p class="desc">
-                The CanvasRenderingContext2D.fillStyle property of the Canvas 2D API
-                specifies the color or style to use inside shapes. The default is #000 (black).
-                
-                ctx.fillStyle = color;
-                ctx.fillStyle = gradient;
-                ctx.fillStyle = pattern;
-              </p>
-              <div class="btn btn-default"><span id="opacity">Opacity</span></div>
-              <p class="desc">
-                The CanvasRenderingContext2D.globalAlpha property of the Canvas 2D API
-                specifies the alpha value that is applied to shapes and images
-                before they are drawn onto the canvas.
-                The value is in the range from 0.0 (fully transparent) to 1.0 (fully opaque).
-                ctx.globalAlpha = value;
-              </p>
-              <div class="btn btn-default"><span id="create-linear-gradient">Create Linear Gradient</span></div>
-              <p class="desc">
-                The CanvasRenderingContext2D.createLinearGradient() method of the Canvas 2D API
-                creates a gradient along the line given by the coordinates represented by the parameters.
-                This method returns a linear CanvasGradient.
-                CanvasGradient ctx.createLinearGradient(x0, y0, x1, y1);
-                
-              </p>
-              <div class="btn btn-default"><span id="create-radial-gradient">Create Radial Gradient</span></div>
-              <p class="desc">
-                The CanvasRenderingContext2D.createRadialGradient() method of the Canvas 2D API
-                creates a radial gradient given by the coordinates of the two circles
-                represented by the parameters. This method returns a CanvasGradient.
-                CanvasGradient ctx.createRadialGradient(x0, y0, r0, x1, y1, r1);
-                x0 - The x axis of the coordinate of the start circle.
-                y0 - The y axis of the coordinate of the start circle.
-                r0 - The radius of the start circle.
-                x1 - The x axis of the coordinate of the end circle.
-                y1 - The y axis of the coordinate of the end circle.
-                r1 - The radius of the end circle.
-                CanvasGradient ctx.createRadialGradient(x0, y0, r0, x1, y1, r1);
-                
-              </p>
-              <div class="btn btn-default"><span id="add-color-stop">Add Color Stop</span></div>
-              <p class="desc">
-                Добавляет стоп цвет объекту градиента. Можно использовать как с линейным, 
-                так и с радиальным градиентами. Принимает в параметры позицию градиента 
-                ( от 0.0 до 0.1) и цвет ( название, код цвета или его rgb/rgba представление. 
-                Стоп-цветов может быть сколько угодно. 
-                
-                
-                <code class="language-js">
-                    // Пример<br>
-                    var linearGradient = ctx.createLinearGradient( 50, 50, 150, 250 );<br>
-                
-                    linearGradient.addColorStop( 0, "green" );<br>
-                    linearGradient.addColorStop( 0.5, "blue" );<br>
-                    linearGradient.addColorStop( 1, "yellow" );<br>
-                
-                    ctx.strokeStyle = linearGradient;<br>
-                
-                    ctx.moveTo( 50, 50 );<br>
-                    ctx.lineTo( 150, 250 );<br>
-                    ctx.stroke();<br>
-                </code>
-                
-                
-              </p>
-            </section>
-            <!-- ===========================================================================-->
-            <section id="shapes-drawing" class="shapes-drawing tab-pane fade well">
-              <div class="btn btn-default"><span id="fill-shape">Fill Shape</span></div>
-              <p class="desc">
-                The CanvasRenderingContext2D.fill() method of the Canvas 2D API
-                fills the current or given path with the current fill style
-                using the non-zero or even-odd winding rule.
-                void ctx.fill();
-                void ctx.fill(fillRule);
-                void ctx.fill(path, fillRule);
-              </p>
-              <div class="btn btn-default"><span id="round">Round</span></div>
-              <p class="desc">...</p>
-              <div class="btn btn-default"><span id="empty-rectangle">Empty Rectangle</span></div>
-              <p class="desc">
-                The CanvasRenderingContext2D.strokeRect() method of the Canvas 2D API paints
-                a rectangle which has a starting point at (x, y) and has a w width and an h
-                height onto the canvas, using the current stroke style.
-                void ctx.strokeRect(x, y, width, height);
-              </p>
-              <div class="btn btn-default"><span id="fill-rectangle">Fill Rectangle</span></div>
-              <p class="desc">
-                The CanvasRenderingContext2D.fillRect() method of the Canvas 2D API draws
-                a filled rectangle at (x, y) position whose size is determined by width
-                and height and whose style is determined by the fillStyle attribute.
-                void ctx.fillRect(x, y, width, height);
-                // fill the whole canvas
-                // ctx.fillRect(0, 0, canvas.width, canvas.height);
-              </p>
-            </section>
-            <!-- ================================================================-->
-            <section id="text-drawing" class="text-drawing tab-pane fade well">
-              <div class="btn btn-default"><span id="fill-text">Fill Text</span></div>
-              <p class="desc">
-                The CanvasRenderingContext2D.fillText() method
-                of the Canvas 2D API fills a given text
-                at the given (x, y) position.
-                If the optional fourth parameter for a maximum width
-                is provided, the text will be scaled to fit that width.
-                void ctx.fillText(text, x, y [, maxWidth]);
-              </p>
-              <div class="btn btn-default"><span id="stroke-text">Border Text</span></div>
-              <p class="desc">
-                The CanvasRenderingContext2D.strokeText() method
-                of the Canvas 2D API strokes a given text
-                at the given (x, y) position. If the optional fourth
-                parameter for a maximum width is provided,
-                the text will be scaled to fit that width.
-                void ctx.strokeText(text, x, y [, maxWidth]);
-              </p>
-            </section>
-            <!-- ==================================================================================-->
-            <section id="images-drawing" class="images-drawing tab-pane fade well">
-              <div class="btn btn-default"><span id="create-image">Create an image</span></div>
-              <p class="desc">
-                The CanvasRenderingContext2D.drawImage() method of the Canvas 2D API
-                provides different ways to draw an image onto the canvas.
-                void ctx.drawImage(image, dx, dy);
-                void ctx.drawImage(image, dx, dy, dWidth, dHeight);
-                void ctx.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
-                image - An element to draw into the context. The specification permits any canvas
-                image source (CanvasImageSource), such as an HTMLImageElement, an HTMLVideoElement,
-                an HTMLCanvasElement or an ImageBitmap.
-                dx - The X coordinate in the destination canvas at which to place
-                the top-left corner of the source image.
-                dy - The Y coordinate in the destination canvas at which to place the top-left
-                corner of the source image.
-                dWidth - The width to draw the image in the destination canvas.
-                This allows scaling of the drawn image. If not specified, the image is not scaled
-                in width when drawn.
-                dHeight - The height to draw the image in the destination canvas.
-                This allows scaling of the drawn image. If not specified, the image is not
-                scaled in height when drawn.
-                sx - The X coordinate of the top left corner of the sub-rectangle of the source
-                image to draw into the destination context.
-                sy - The Y coordinate of the top left corner of the sub-rectangle of the source
-                image to draw into the destination context.
-                sWidth - The width of the sub-rectangle of the source image to draw into the
-                destination context. If not specified, the entire rectangle from the
-                coordinatesspecified by sx and sy to the bottom-right corner of the image is used.
-                sHeight - The height of the sub-rectangle of the source image to draw into the
-                destination context.
-              </p>
-              <div class="btn btn-default"><span id="tile-canvas">Tile Canvas</span></div>
-              <p class="desc">
-                The CanvasRenderingContext2D.createPattern() method of the Canvas 2D API
-                creates a pattern using the specified image (a CanvasImageSource).
-                It repeats the source in the directions specified by the repetition argument.
-                This method returns a CanvasPattern.
-                CanvasPattern ctx.createPattern(image, repetition);
-                "repeat" (both directions),
-                "repeat-x" (horizontal only),
-                "repeat-y" (vertical only), or
-                "no-repeat" (neither).
-                If repetition is an empty string ('') or null (but not undefined),
-                repetition will be "repeat".
-                
-              </p>
-            </section>
-            <!-- ===================================================================-->
-            <section id="animation-field" class="animate-buttons tab-pane fade well">
-              <input id="ball-size" type="number" value="15" class="boxed">
-              <div class="btn btn-default"><span id="random-circle">Random Circle</span></div>
-              <p class="desc">Создает круг с заданным радиусом. Если радиус равер 0, то он будет случайным</p>
-              <div class="btn btn-default"><span id="animate-circles">Animate Circles</span></div>
-            </section>
-          </section>
         </div>
-        <!-- ===================================================================-->
-        <section id="control-btn-field" class="widget-container boxed">
-          <div class="btn btn-default"><span id="save-context-btn">Save Context</span></div>
-          <p class="desc">
-            Контекст - это все настройки рисования.
-            Метод save() сохраняет копию текущего состояния контекста
-            на вершину стека состояния.
-            <code class="language-js">
-                // Пример<br>
-                void ctx.save();<br>
-                void ctx.restore();<br>
-            </code>
-          </p>
-          <div class="btn btn-default"><span id="restore-context-btn">Restore Context</span></div>
-          <p class="desc">
-            Восстанавливаем из стека верхнее состояние контекста
-            Если мы предварительно не сделали ctx.save(),
-            ничего не произойдет.
-            <code class="language-js">
-                // Пример<br>
-                void ctx.save();<br>
-                void ctx.restore();<br>
-            </code>
-          </p>
-          <div class="btn btn-default"><span id="clear-canvas-btn">Clear Canvas</span></div>
-          <div class="btn btn-default"><span id="clear-cheet-btn">Clear Cheet</span></div>
-          <div class="btn btn-default"><span id="clear-console-btn">Clear Console</span></div>
-          <!-- ===================================================================--><span class="single-buttons">
-            <div class="btn btn-default"><span id="run-btn">Run Canvas</span></div>
-            <div class="btn btn-default"><span id="reset-canvas-btn">Reset Canvas</span></div></span>
-          <!-- ===================================================================--><span id="additional-objects-field" class="additional-objects-field">
-            <div class="btn btn-default"><span id="save-image">Save Image</span></div>
+      </div>
+      <!-- ===================================================================-->
+      <div class="row">
+        <div class="panel panel-default">
+          <section id="control-btn-field" class="panel-body">
+            <div class="btn btn-default"><span id="save-context-btn">Save Context</span></div>
             <p class="desc">
-              Сохраняем содержимое холста. Это можно сделать
-              несколькими способами.
+              Контекст - это все настройки рисования.
+              Метод save() сохраняет копию текущего состояния контекста
+              на вершину стека состояния. Потом его можно оттуда восстановить,
+              если написать что-нибудь вроде ctx.restore().
+              <code class="language-js">
+                  // Пример<br>
+                  void ctx.save();<br>
+                  void ctx.restore();<br>
+              </code>
+            </p>
+            <div class="btn btn-default"><span id="restore-context-btn">Restore Context</span></div>
+            <p class="desc">
+              Восстанавливаем из стека верхнее состояние контекста
+              Если мы предварительно не сделали ctx.save(),
+              ничего не произойдет.
+              <code class="language-js">
+                  // Пример<br>
+                  void ctx.save();<br>
+                  void ctx.restore();<br>
+              </code>
+            </p>
+            <div class="btn btn-default"><span id="clear-canvas-btn">Clear Canvas</span></div>
+            <p class="desc">
+              Здесь всего лишь запустился метод clearRect(), который
+              очищает прямоугольник размером с целый холст. Я вынесла его
+              сюда просто для удобства экспериментов. В примере кода внизу
+              код, который реально выполняется при нажатии на эту кнопку.
+              Если вы хотите поиграться с ним самостоятельно, то нужная для
+              этого кнопка есть в разделе "Опции рисования". Там все как обычно.
+              ...или можно просто скопировать в консоль код из примера.
               
               <code class="language-js">
-                  // В data url  изображение целиком<br>
-                  canvas.toDataURL( 'image/jpeg' );<br>
-                  // Массив пикселей. В параметрах координаты и размер изображения.<br>
-                  ctx.getImageData( x, y, width, height );<br>                                
+                  // Синтаксис<br>
+                  void clearRect( 0, 0, html.canvas.width, html.canvas.height );<br>
               </code>
-              
-              Кроме этого, можно сохранить последовательность действий, 
-              выполняемых при рисовании. 
-              
-            </p></span>
-        </section>
+            </p>
+            <div class="btn btn-default"><span id="clear-cheet-btn">Clear Cheet</span></div>
+            <div class="btn btn-default"><span id="clear-console-btn">Clear Console</span></div>
+            <!-- ===================================================================--><span class="single-buttons">
+              <div class="btn btn-default"><span id="run-btn">Run Canvas</span></div>
+              <div class="btn btn-default"><span id="reset-canvas-btn">Reset Canvas</span></div></span>
+            <!-- ===================================================================--><span id="additional-objects-field" class="additional-objects-field">
+              <div class="btn btn-default"><span id="save-image">Save Image</span></div>
+              <p class="desc">
+                Сохраняем содержимое холста. Это можно сделать
+                несколькими способами.
+                
+                <code class="language-js">
+                    // В data url  изображение целиком<br>
+                    canvas.toDataURL( 'image/jpeg' );<br>
+                    // Массив пикселей. В параметрах координаты и размер изображения.<br>
+                    ctx.getImageData( x, y, width, height );<br>
+                </code>
+                
+                Кроме этого, можно сохранить последовательность действий,
+                выполняемых при рисовании.
+                
+              </p></span>
+          </section>
+        </div>
       </div>
       <div class="row">
-        <section class="canvas-field col-md-6">
-          <canvas id="canvas-field" width="800" height="480"></canvas>
-          <div id="img-container" class="saved-image"><img id="img-copy" class="image-copy">
-            <p>Щелкните правой кнопкой мыши для сохранения ...</p>
+        <section class="col-md-6">
+          <div class="canvas-panel">
+            <div class="row">
+              <div class="panel panel-default col-lg-12">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Canvas Panel<span><i data-toggle="collapse" data-target="#collapsed-canvas" class="glyphicon glyphicon-chevron-up pull-right"></i></span></h3>
+                </div>
+                <div id="collapsed-canvas" class="canvas-wrapper panel-body well">
+                  <canvas id="canvas-field" width="800" height="400" class="center-block"></canvas>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div id="img-container" class="saved-image col-lg-12"><img id="img-copy" class="image-copy">
+                <p>Щелкните правой кнопкой мыши для сохранения ...</p>
+              </div>
+            </div>
           </div>
         </section>
-        <section class="textarea-field col-md-6">
-          <pre><code id="console" contenteditable="true" autofocus class="language-js"></code></pre>
-          <div id="cheet-area" class="cheet-area"></div>
+        <section class="col-md-6">
+          <div class="code-panel">
+            <div class="row">
+              <div class="panel panel-default col-lg-12">
+                <div class="panel-heading">
+                  <h3 class="panel-title clearfix">Code Panel<span><i data-toggle="collapse" data-target="#collapseCodePanel" class="glyphicon glyphicon-chevron-up pull-right"></i></span></h3>
+                </div>
+                <div id="collapseCodePanel" class="panel-body collapse well in">
+                  <div class="textarea-field">
+                    <pre class="language-js"><code id="console" contenteditable="true"></code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="panel panel-default col-lg-12 cheet-wrapper">
+                <div class="panel-heading">
+                  <h3 class="panel-title clearfix">Cheet Panel<span><i data-toggle="collapse" data-target="#cheet-area" class="glyphicon glyphicon-chevron-down pull-right"></i></span></h3>
+                </div>
+                <div class="panel-body well">
+                  <div id="cheet-area" class="cheet-area collapse"></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
       </div>
-      <script src="vendor/prism/prism.js"></script>
+      <script src="vendor/prism/prism.js" data-manual></script>
       <script src="app/js/jquery.js"></script>
       <script src="app/js/main.js"></script>
     </main>

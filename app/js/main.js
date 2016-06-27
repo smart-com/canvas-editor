@@ -7,7 +7,6 @@ var CanvasApp = function() {
 
     // Объявляем основные объекты приложения
     // Для упрощения доступа и установки обработчиков
-
     /**
      * @summary HTML-Элементы приложения
      * @type { Object }
@@ -36,13 +35,40 @@ var CanvasApp = function() {
          */
         canvasBtnVal           = {
             'begin-path'   : 'ctx.beginPath();',
-            'close-path'   : 'ctx.closePath();',
+            'close-path'   : 'ctx.beginPath();\n' +
+                             'ctx.moveTo( 50, 50 );\n' +
+                             'ctx.lineTo( 50, 100 );\n' +
+                             'ctx.lineTo( 100, 100 );\n' +
+                             'ctx.lineWidth = 1;\n' +
+                             'ctx.strokeStyle = "black";\n' +
+                             'ctx.stroke();\n\n' +
+                             'ctx.beginPath();\n' +
+                             'ctx.moveTo( 100, 100 );\n' +
+                             'ctx.lineTo( 100, 200 );\n' +
+                             'ctx.lineTo( 200, 200 );\n' +
+                             'ctx.closePath();\n' +
+                             'ctx.lineWidth = 5;\n' +
+                             'ctx.strokeStyle = "red";\n' +
+                             'ctx.stroke();',
             'move-canvas'  : 'ctx.translate( 100, 100 );',
             'rotate-canvas': 'ctx.rotate( 5 );',
-
-            'move-to': 'ctx.moveTo( 100, 100 );',
-            'line-to': 'ctx.lineTo( 200, 100 );',
-            'stroke' : 'ctx.stroke();',
+            'clear-rect'   : 'ctx.fillRect( 50, 50, 100, 50 );\n' +
+                             'ctx.strokeRect( 120, 100, 100, 50 );\n' +
+                             'ctx.clearRect( 100, 70, 50, 50 );',
+            'clear-shape'  : 'ctx.arc( 200, 200, 100, 0, 2 * Math.PI, false );\n' +
+                             'ctx.stroke();\n' +
+                             'ctx.clip();\n\n' +
+                             'ctx.beginPath();\n' +
+                             'ctx.arc( 100, 100, 150, 0, 2 * Math.PI, false );\n' +
+                             'ctx.fillStyle = "red";\n' +
+                             'ctx.fill();\n\n' +
+                             'ctx.beginPath();\n' +
+                             'ctx.arc( 300, 400, 250, 0, 2 * Math.PI, false );\n' +
+                             'ctx.fillStyle = "green";\n' +
+                             'ctx.fill();',
+            'move-to'      : 'ctx.moveTo( 100, 100 );',
+            'line-to'      : 'ctx.lineTo( 200, 100 );',
+            'stroke'       : 'ctx.stroke();',
 
             'line-width': 'ctx.lineWidth = 10;',
 
@@ -72,26 +98,35 @@ var CanvasApp = function() {
             'straight-line': 'ctx.moveTo( 100, 100 );' +
                              'ctx.lineTo( 200, 100 );' +
                              'ctx.stroke();',
-            'bezier'       : 'ctx.beginPath();' +
-                             'ctx.bezierCurveTo( 50, 100, 180, 10, 20, 10 );' +
+            'bezier'       : 'ctx.moveTo( 50, 20 );\n' +
+                             'ctx.lineWidth = 10;\n' +
+                             'ctx.strokeStyle = "red";\n' +
+                             'ctx.bezierCurveTo( 75, 37, 70, 25, 50, 25 );\n' +
+                             'ctx.bezierCurveTo( 20, 25, 20, 62.5, 20, 62.5 );\n' +
+                             'ctx.bezierCurveTo( 20, 80, 40, 102, 75, 120 );\n' +
+                             'ctx.bezierCurveTo( 110, 102, 130, 80, 130, 62.5 );\n' +
+                             'ctx.bezierCurveTo( 130, 62.5, 130, 25, 100, 25 );\n' +
+                             'ctx.bezierCurveTo( 85, 25, 75, 37, 75, 40 );\n' +
                              'ctx.stroke();',
-            'arc'          : 'ctx.arc( 100, 30, 50, 0.2 * Math.PI, 1.1 * Math.PI );' +
+            'arc'          : 'ctx.arc( 100, 30, 50, 0.2 * Math.PI, 1.1 * Math.PI );\n' +
                              'ctx.stroke();',
 
             'round'                 : 'ctx.arc( 50, 50, 50, 0, 2 * Math.PI, false );' +
                                       'ctx.stroke();',
             'fill-rectangle'        : 'ctx.fillRect( 10, 10, 100, 100 );\n',
             'empty-rectangle'       : 'ctx.strokeRect( 10, 10, 100, 100 );\n',
-            'create-linear-gradient': 'gradient = ctx.createLinearGradient( 0, 0, 200, 0 );\n' +
+            'create-linear-gradient': 'gradient = ctx.createLinearGradient( 50, 50, 300, 0 );\n' +
                                       'gradient.addColorStop( 0, "green" );\n' +
+                                      'gradient.addColorStop( 0.5, "yellow" );\n' +
                                       'gradient.addColorStop( 1, "white" );\n' +
                                       'ctx.fillStyle = gradient;\n' +
-                                      'ctx.fillRect( 10, 10, 200, 100 );\n',
-            'create-radial-gradient': 'gradient = ctx.createRadialGradient(100, 100, 100, 100, 100, 0);\n' +
-                                      'gradient.addColorStop( 0, "green" );\n' +
-                                      'gradient.addColorStop( 1, "white" );\n' +
+                                      'ctx.fillRect( 50, 50, 300, 150 );',
+            'create-radial-gradient': 'gradient = ctx.createRadialGradient( 105, 105, 20, 112, 120, 50); \n' +
+                                      'gradient.addColorStop( 0, "#FF5F98" );\n' +
+                                      'gradient.addColorStop( 0.75, "#FF0188" );\n' +
+                                      'gradient.addColorStop( 1, "rgba( 255, 1, 136, 0 )" );\n' +
                                       'ctx.fillStyle = gradient;\n' +
-                                      'ctx.fillRect( 0, 0, 200, 100 );\n',
+                                      'ctx.fillRect( 50, 50, 300, 300 );',
             'add-color-stop'        : 'gradient.addColorStop( 0.3, "orange" );',
             'create-image'          : 'var image = new Image();\n' +
                                       'image.src="app/img/present.png";\n\n' +
@@ -99,14 +134,28 @@ var CanvasApp = function() {
                                       // Его нужно увеличить, если требуется подгрузить картинку большего размера
                                       'setTimeout( function() {\n' +
                                       '  ctx.drawImage( image, 10, 50, 50, 50 );\n' +
-                                      '}, 10 );\n',
+                                      '}, 10 );',
+            'create-image-data'     : '// Черный квадрат 50 x 50 полностью прозрачный\n' +
+                                      'var pixelSet = ctx.createImageData( 150, 150 );\n' +
+                                      'var pixelSetLen = 4 * 150 * 150,\n' +
+                                      '    i;\n\n' +
+                                      'for( i = 3; i < pixelSetLen; i += 4 ) {\n' +
+                                      '    // Делаем его непрозрачным\n' +
+                                      '    pixelSet.data[i] = 255;\n\n' +
+                                      '    // каждый 3-й пиксель делаем красным\n' +
+                                      '    if( (i - 3 ) % 20 == 0 ) {\n' +
+                                      '        pixelSet.data[ i - 3 ] = 255;\n' +
+                                      '    }\n' +
+                                      '}\n\n' +
+                                      '// выводим изображение\n' +
+                                      'ctx.putImageData( pixelSet, 20, 20 );',
             'tile-canvas'           : 'var tileImage = new Image();\n' +
                                       'tileImage.src="app/img/present.png";\n\n' +
                                       'tileImage.onload = function() {\n' +
                                       '  var pattern = ctx.createPattern( tileImage, "repeat" );\n' +
                                       '  ctx.fillStyle = pattern;\n' +
                                       '  ctx.fillRect( 0, 0, 300, 300 );\n' +
-                                      '}\n',
+                                      '}',
             ''                      : '' // Это бесполезная штука, чтобы легче копировать кнопки
         },
 
@@ -168,8 +217,8 @@ var CanvasApp = function() {
         // Флаг показывает возможность перетаскивания
         isDragging             = false,
         // Таймаут для анимации надо подбирать
-        // Эта зараза зависит еще и от количества 
-        // созданных кругов - если их слишком много, 
+        // Эта зараза зависит еще и от количества
+        // созданных кругов - если их слишком много,
         // то эффект замедленной съемки...
         timeout                = 10,
         timeoutIDForFallBalls,
@@ -189,10 +238,10 @@ var CanvasApp = function() {
         // Подсказка - следующий элемент после родителя источника события
         var cheet = event.target.parentElement.nextElementSibling;
         // Если подсказка есть, и это точно она
-        if( cheet && cheet.classList.contains( 'desc') ) {
+        if( cheet && cheet.classList.contains( 'desc' ) ) {
             // Показываем подсказку
             cheet.style.display = 'block';
-            html.cheetArea.appendChild( cheet );           
+            html.cheetArea.appendChild( cheet );
         } else {
             return;
         }
@@ -204,9 +253,10 @@ var CanvasApp = function() {
     var setConsoleValue = function( event ) {
 
         event = event || window.event;
+        console.log( event );
 
         // Это все касается исключительно кнопок
-        if( event.srcElement.parentElement.classList.contains( 'btn' ) ) {
+        if( !event.path[ 2 ].classList.contains( 'animate-buttons' ) && event.srcElement.parentElement.classList.contains( 'btn' ) ) {
 
             if( window.getSelection ) {
                 // Где курсор
@@ -215,7 +265,7 @@ var CanvasApp = function() {
                 var selObj = window.getSelection();
 
                 // Удаляет выделенный участок из дома
-                // если закомментировать эту строку, 
+                // если закомментировать эту строку,
                 // то текст будет вставлен после выделенного
                 selObj.deleteFromDocument();
                 // Считываем HTML из консоли
@@ -232,7 +282,6 @@ var CanvasApp = function() {
                 var range = document.createRange();
                 // Он целиком в консоли
                 var start = html.console.childNodes[ 0 ];
-                console.log( text.length );
                 var end = html.console.childNodes[ 0 ];
                 // Задаем верхнюю границу, передав контейнер и смещение
                 range.setStart( start, caret );
@@ -240,7 +289,7 @@ var CanvasApp = function() {
                 range.setEnd( end, caret + canvasBtnVal[ event.target.id ].length + 1 );
                 // Совмещаем начало и конец на старте.
                 // В примере должно было быть true
-                // Передав false мне каким-то чудом удалось 
+                // Передав false мне каким-то чудом удалось
                 // установить курсор в конец выделенного текста
                 range.collapse( false );
                 // Создаем новое выделение
@@ -648,6 +697,7 @@ var CanvasApp = function() {
         html.canvas.onmousemove = draw;
     }
 
+       
     /**
      * @summary Выполняет подготовку к запуску приложения
      * 1. Устанавливает обработчики в HTML
@@ -675,3 +725,4 @@ var id = {
 // Создаем приложение
 var app = new CanvasApp( id );
 app.init( id );
+
