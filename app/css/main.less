@@ -3,42 +3,52 @@
 /* Layout */
 
 * {
-  font-size: @code-font-size;
+  font-size : @code-font-size;
 }
 
 body {
-  padding: @padding-default;
-  background: url( @bg-pattern-src );
-  color: @main-font-color;
+  padding                     : @padding-default;
+  background                  : url(@bg-pattern-src);
+  color                       : @main-font-color;
+
+  /* ScrollBar for IE */
+  scrollbar-base-color        : #c0c0c0;
+  scrollbar-base-color        : #c0c0c0;
+  scrollbar-3dlight-color     : #c0c0c0;
+  scrollbar-highlight-color   : #c0c0c0;
+  scrollbar-track-color       : #ebebeb;
+  scrollbar-arrow-color       : black;
+  scrollbar-shadow-color      : #c0c0c0;
+  scrollbar-dark-shadow-color : #c0c0c0;
 
   /*  Общие стили */
 
   /* Все кнопки */
 
   .btn {
-    background-color: lighten( @tabs-color, 30% );
-    color: @main-font-color;
-    border: 2px solid @panel-body-from;
+    background-color : lighten(@tabs-color, 30%);
+    color            : @main-font-color;
+    border           : 2px solid @panel-body-from;
 
     &:hover {
       .dark-green-grad();
-      border: 2px solid @tabs-color;
-      color: @panel-body-from;
+      border : 2px solid @tabs-color;
+      color  : @panel-body-from;
     }
   }
 
   /* Все панели */
 
   .panel {
-    padding: 15px;
-    background: url( @panel-pattern-src );
+    padding    : 15px;
+    background : url(@panel-pattern-src);
 
     /* Заголовки панелей */
 
     .panel-heading {
-      background-color: @panel-heading;
+      background-color : @panel-heading;
       h3 {
-        font-size: @code-font-size;        
+        font-size : @code-font-size;
       }
     }
 
@@ -46,11 +56,11 @@ body {
 
     /* Активная вкладка */
     ul li {
-      border-radius: 4px;
+      border-radius : 4px;
       .active {
-        background-color: @panel-body-to;
+        background-color : @panel-body-to;
         a {
-          color: @main-font-color;
+          color : @main-font-color;
         }
       }
     }
@@ -59,46 +69,46 @@ body {
     .nav {
       .dark-green-grad();
 
-      a {        
-        color: @main-font-color;
-        border: 2px solid @panel-heading;
-        outline: 1px solid white;
+      a {
+        color   : @main-font-color;
+        border  : 2px solid @panel-heading;
+        outline : 1px solid white;
         .light-green-grad();
-        
+
         &:hover {
-          background-color: @tabs-color;
-          border: 2px solid @panel-body-from;
+          background-color : @tabs-color;
+          border           : 2px solid @panel-body-from;
         }
       }
     }
 
-    .panel-body {      
+    .panel-body {
       .light-green-grad();
     }
 
     /* Обертка для табов и панели с управляющими кнопками */
-    .well {      
+    .well {
       .light-green-grad();
     }
 
     /* Background инпута для анимации */
     .boxed {
-      width: 50px;
-      padding: 5px;
-      background-color: @btn-color;
-      border-radius: 5px;
+      width            : 50px;
+      padding          : 5px;
+      background-color : @btn-color;
+      border-radius    : 5px;
     }
   }
 }
 
 .canvas-wrapper {
-  overflow: auto;
+  overflow : auto;
 
   canvas {
-    margin: 0 auto;
-    border-radius: 4px;
-    background-color: @canvas-bg;
-    border-radius: 4px;
+    margin           : 0 auto;
+    border-radius    : 4px;
+    background-color : @canvas-bg;
+    border-radius    : 4px;
   }
 }
 
@@ -108,65 +118,118 @@ body {
    */
 
 .desc, .saved-image {
-  overflow: auto;
-  display: none;
+  overflow : auto;
+  display  : none;
+}
+
+.saved-image {
+  position : absolute;
+  bottom   : 0;
+  right    : 0;
+  height   : 300px;
+  width    : 500px;
+
+  p {
+    font-style : italic;
+    display    : inline-block;
+  }
 }
 
 /* Консоль с кодом для выполнения */
 
 .textarea-field {
-  margin-left: 10px;
+  margin-left : 10px;
 
   pre.language-js {
-    overflow: auto;
-    background-color: @tabs-color;
-    border: .3em solid @main-font-color;
+    overflow         : auto;
+    background-color : @tabs-color;
+    border           : .3em solid @main-font-color;
 
     code {
-      display: block;
-      height: @code-block-height;
-      overflow: auto;
-      padding-left: @padding-default;
-      background-color: @canvas-bg;
-      font-size: @code-font-size;
+      display          : block;
+      height           : @code-block-height;
+      overflow         : auto;
+      padding-left     : @padding-default;
+      background-color : @canvas-bg;
+      font-size        : @code-font-size;
     }
   }
 }
 
 .cheet-wrapper {
-  overflow: auto;
+  overflow : auto;
 
   .cheet-area {
-    height: 200px;
+    /*height: 200px;*/
   }
 }
 
 p.desc {
-      font-size: @code-font-size;
-      height: @code-block-height;
-      overflow: auto;
+  font-size : @code-font-size;
+  height    : @code-block-height;
+  overflow  : auto;
 
   /* Примеры кода в подсказках */
 
   code {
-    clear: both;
-    display: block;
-    overflow: auto;
-    padding: @padding-default;
-    margin: @padding-default;
-    background-color: green;
-  }/* Картинки в подсказках */
+    clear            : both;
+    display          : block;
+    overflow         : auto;
+    padding          : @padding-default;
+    margin           : @padding-default;
+    background-color : @tabs-color;
+  }
+  /* Картинки в подсказках */
 
   a {
     .visual-cheet {
-      float: left;
-      width: 200px;
-      margin: @padding-default;
+      float  : left;
+      width  : 200px;
+      margin : @padding-default;
     }
   }
 }
 
+/** Scroll Bar */
+/* Полностью к черту убрало скролл :)))
+ * Контент прокручивается мышкой,
+ * и дебильных полосок больше нет
+ */
+/* for Mac OS X support */
+/*::-webkit-scrollbar {
+        width: 0;
+    }*/
 
+::-webkit-scrollbar {
+  width  : 5px;
+  height : 5px;
+}
+
+::-webkit-scrollbar-button {
+  background-color : @tabs-color
+}
+
+::-webkit-scrollbar-track {
+  background-color : @panel-body-to;
+}
+
+::-webkit-scrollbar-track-piece {
+  background-color : @panel-body-from;
+}
+
+::-webkit-scrollbar-thumb {
+  height           : 50px;
+  background-color : @tabs-color;
+  border-radius    : 5px;
+}
+
+::-webkit-scrollbar-corner {
+  background-color : @panel-body-to;
+}
+
+::-webkit-resizer {
+  background-color : @tabs-color;
+}
 
 /* Переменные */
 @padding-default : 10px;
@@ -174,46 +237,46 @@ p.desc {
 
 /* Files */
 @bg-pattern-src : '../img/bg-pattern.png';
-@panel-pattern-src: '../img/crossword.png';
+@panel-pattern-src : '../img/crossword.png';
 
 /* Colors */
 @canvas-bg : @panel-body-to;
-@tabs-color: rgba( 62, 67, 59, .7 );
-@panel-heading: rgba( 211, 217, 199, .6 );
-@btn-color: rgba( 251, 250, 236, .6 );
+@tabs-color : rgba(62, 67, 59, .7);
+@panel-heading : rgba(211, 217, 199, .6);
+@btn-color : rgba(251, 250, 236, .6);
 
 /* Gradient Colors */
-@panel-body-from: rgb( 232, 232, 232 );
-@panel-body-to: rgba( 214, 219, 191, .5 );
+@panel-body-from : rgb(232, 232, 232);
+@panel-body-to : rgba(214, 219, 191, .5);
 
 /* Fonts */
-@main-font-color : rgb( 62, 67, 59 );
-@font-hover-color: rgb( 211, 217, 199 );
-@font-active-color: rgb( 103, 62, 90 );
+@main-font-color : rgb(62, 67, 59);
+@font-hover-color : rgb(211, 217, 199);
+@font-active-color : rgb(103, 62, 90);
 @code-font-size : 1.8rem;
 
 /* Mixins */
 
 .light-green-grad() {
 
-    background: @panel-body-from; /* Old browsers */
-    background: -moz-radial-gradient(center, ellipse cover, 
-          @panel-body-from 0%, @panel-body-to 100% ); /* FF3.6-15 */
-    background: -webkit-radial-gradient(center, ellipse cover, 
-          @panel-body-from 0%, @panel-body-to 100% ); /* Chrome10-25,Safari5.1-6 */
-    background: radial-gradient(ellipse at center, 
-          @panel-body-from 0%, @panel-body-to 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( 
-      startColorstr='#E8E8E8', endColorstr='#d6dbbf',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+  background : @panel-body-from; /* Old browsers */
+  background : -moz-radial-gradient(center, ellipse cover,
+  @panel-body-from 0%, @panel-body-to 100%); /* FF3.6-15 */
+  background : -webkit-radial-gradient(center, ellipse cover,
+  @panel-body-from 0%, @panel-body-to 100%); /* Chrome10-25,Safari5.1-6 */
+  background : radial-gradient(ellipse at center,
+  @panel-body-from 0%, @panel-body-to 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter     : progid:DXImageTransform.Microsoft.gradient(
+          startColorstr='#E8E8E8', endColorstr='#d6dbbf', GradientType=1); /* IE6-9 fallback on horizontal gradient */
 }
 
 .dark-green-grad() {
-  background: -moz-linear-gradient( top, 
-    @tabs-color 0%, lighten( @tabs-color, 20% ) 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, 
-    @tabs-color 0%, lighten( @tabs-color, 20% ) 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, 
-    @tabs-color 0%, lighten( @tabs-color, 20% ) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( 
-    startColorstr='#3e433b', endColorstr='#b3d6dbbf',GradientType=0 ); /* IE6-9 */
+  background : -moz-linear-gradient(top,
+  @tabs-color 0%, lighten(@tabs-color, 20%) 100%); /* FF3.6-15 */
+  background : -webkit-linear-gradient(top,
+  @tabs-color 0%, lighten(@tabs-color, 20%) 100%); /* Chrome10-25,Safari5.1-6 */
+  background : linear-gradient(to bottom,
+  @tabs-color 0%, lighten(@tabs-color, 20%) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter     : progid:DXImageTransform.Microsoft.gradient(
+          startColorstr='#3e433b', endColorstr='#b3d6dbbf', GradientType=0); /* IE6-9 */
 }

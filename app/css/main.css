@@ -1,177 +1,265 @@
 /*@importurl(https://fonts.googleapis.com/css?family=BenchNine:700) */
 /* Layout */
 * {
-  font-size: 1.8rem;
+    font-size : 1.8rem;
 }
+
 body {
-  padding: 10px;
-  background: url('../img/bg-pattern.png');
-  color: #3e433b;
-  /*  Общие стили */
-  /* Все кнопки */
-  /* Все панели */
+    padding                     : 10px;
+    background                  : url('../img/bg-pattern.png');
+    color                       : #3e433b;
+    /* ScrollBar for IE */
+    scrollbar-base-color        : #c0c0c0;
+    scrollbar-3dlight-color     : #c0c0c0;
+    scrollbar-highlight-color   : #c0c0c0;
+    scrollbar-track-color       : #ebebeb;
+    scrollbar-arrow-color       : black;
+    scrollbar-shadow-color      : #c0c0c0;
+    scrollbar-dark-shadow-color : #c0c0c0;
+    /*  Общие стили */
+    /* Все кнопки */
+    /* Все панели */
 }
+
 body .btn {
-  background-color: rgba(138, 147, 132, 0.7);
-  color: #3e433b;
-  border: 2px solid #e8e8e8;
+    background-color : rgba(138, 147, 132, 0.7);
+    color            : #3e433b;
+    border           : 2px solid #e8e8e8;
 }
+
 body .btn:hover {
-  background: -moz-linear-gradient(top, rgba(62, 67, 59, 0.7) 0%, rgba(112, 121, 107, 0.7) 100%);
-  /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, rgba(62, 67, 59, 0.7) 0%, rgba(112, 121, 107, 0.7) 100%);
-  /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, rgba(62, 67, 59, 0.7) 0%, rgba(112, 121, 107, 0.7) 100%);
-  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3e433b', endColorstr='#b3d6dbbf', GradientType=0);
-  /* IE6-9 */
-  border: 2px solid rgba(62, 67, 59, 0.7);
-  color: #e8e8e8;
+    background : -moz-linear-gradient(top, rgba(62, 67, 59, 0.7) 0%, rgba(112, 121, 107, 0.7) 100%);
+    /* FF3.6-15 */
+    background : -webkit-linear-gradient(top, rgba(62, 67, 59, 0.7) 0%, rgba(112, 121, 107, 0.7) 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background : linear-gradient(to bottom, rgba(62, 67, 59, 0.7) 0%, rgba(112, 121, 107, 0.7) 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter     : progid:DXImageTransform.Microsoft.gradient(startColorstr='#3e433b', endColorstr='#b3d6dbbf', GradientType=0);
+    /* IE6-9 */
+    border     : 2px solid rgba(62, 67, 59, 0.7);
+    color      : #e8e8e8;
 }
+
 body .panel {
-  padding: 15px;
-  background: url('../img/crossword.png');
-  /* Заголовки панелей */
-  /* Табы */
-  /* Активная вкладка */
-  /* Остальные вкладки */
-  /* Обертка для табов и панели с управляющими кнопками */
-  /* Background инпута для анимации */
+    padding    : 15px;
+    background : url('../img/crossword.png');
+    /* Заголовки панелей */
+    /* Табы */
+    /* Активная вкладка */
+    /* Остальные вкладки */
+    /* Обертка для табов и панели с управляющими кнопками */
+    /* Background инпута для анимации */
 }
+
 body .panel .panel-heading {
-  background-color: rgba(211, 217, 199, 0.6);
+    background-color : rgba(211, 217, 199, 0.6);
 }
+
 body .panel .panel-heading h3 {
-  font-size: 1.8rem;
+    font-size : 1.8rem;
 }
+
 body .panel ul li {
-  border-radius: 4px;
+    border-radius : 4px;
 }
+
 body .panel ul li .active {
-  background-color: rgba(214, 219, 191, 0.5);
+    background-color : rgba(214, 219, 191, 0.5);
 }
+
 body .panel ul li .active a {
-  color: #3e433b;
+    color : #3e433b;
 }
+
 body .panel .nav {
-  background: -moz-linear-gradient(top, rgba(62, 67, 59, 0.7) 0%, rgba(112, 121, 107, 0.7) 100%);
-  /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, rgba(62, 67, 59, 0.7) 0%, rgba(112, 121, 107, 0.7) 100%);
-  /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, rgba(62, 67, 59, 0.7) 0%, rgba(112, 121, 107, 0.7) 100%);
-  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3e433b', endColorstr='#b3d6dbbf', GradientType=0);
-  /* IE6-9 */
+    background : -moz-linear-gradient(top, rgba(62, 67, 59, 0.7) 0%, rgba(112, 121, 107, 0.7) 100%);
+    /* FF3.6-15 */
+    background : -webkit-linear-gradient(top, rgba(62, 67, 59, 0.7) 0%, rgba(112, 121, 107, 0.7) 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background : linear-gradient(to bottom, rgba(62, 67, 59, 0.7) 0%, rgba(112, 121, 107, 0.7) 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter     : progid:DXImageTransform.Microsoft.gradient(startColorstr='#3e433b', endColorstr='#b3d6dbbf', GradientType=0);
+    /* IE6-9 */
 }
+
 body .panel .nav a {
-  color: #3e433b;
-  border: 2px solid rgba(211, 217, 199, 0.6);
-  outline: 1px solid white;
-  background: #e8e8e8;
-  /* Old browsers */
-  background: -moz-radial-gradient(center, ellipse cover, #e8e8e8 0%, rgba(214, 219, 191, 0.5) 100%);
-  /* FF3.6-15 */
-  background: -webkit-radial-gradient(center, ellipse cover, #e8e8e8 0%, rgba(214, 219, 191, 0.5) 100%);
-  /* Chrome10-25,Safari5.1-6 */
-  background: radial-gradient(ellipse at center, #e8e8e8 0%, rgba(214, 219, 191, 0.5) 100%);
-  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#E8E8E8', endColorstr='#d6dbbf', GradientType=1);
-  /* IE6-9 fallback on horizontal gradient */
+    color      : #3e433b;
+    border     : 2px solid rgba(211, 217, 199, 0.6);
+    outline    : 1px solid white;
+    background : #e8e8e8;
+    /* Old browsers */
+    background : -moz-radial-gradient(center, ellipse cover, #e8e8e8 0%, rgba(214, 219, 191, 0.5) 100%);
+    /* FF3.6-15 */
+    background : -webkit-radial-gradient(center, ellipse cover, #e8e8e8 0%, rgba(214, 219, 191, 0.5) 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background : radial-gradient(ellipse at center, #e8e8e8 0%, rgba(214, 219, 191, 0.5) 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter     : progid:DXImageTransform.Microsoft.gradient(startColorstr='#E8E8E8', endColorstr='#d6dbbf', GradientType=1);
+    /* IE6-9 fallback on horizontal gradient */
 }
+
 body .panel .nav a:hover {
-  background-color: rgba(62, 67, 59, 0.7);
-  border: 2px solid #e8e8e8;
+    background-color : rgba(62, 67, 59, 0.7);
+    border           : 2px solid #e8e8e8;
 }
+
 body .panel .panel-body {
-  background: #e8e8e8;
-  /* Old browsers */
-  background: -moz-radial-gradient(center, ellipse cover, #e8e8e8 0%, rgba(214, 219, 191, 0.5) 100%);
-  /* FF3.6-15 */
-  background: -webkit-radial-gradient(center, ellipse cover, #e8e8e8 0%, rgba(214, 219, 191, 0.5) 100%);
-  /* Chrome10-25,Safari5.1-6 */
-  background: radial-gradient(ellipse at center, #e8e8e8 0%, rgba(214, 219, 191, 0.5) 100%);
-  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#E8E8E8', endColorstr='#d6dbbf', GradientType=1);
-  /* IE6-9 fallback on horizontal gradient */
+    background : #e8e8e8;
+    /* Old browsers */
+    background : -moz-radial-gradient(center, ellipse cover, #e8e8e8 0%, rgba(214, 219, 191, 0.5) 100%);
+    /* FF3.6-15 */
+    background : -webkit-radial-gradient(center, ellipse cover, #e8e8e8 0%, rgba(214, 219, 191, 0.5) 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background : radial-gradient(ellipse at center, #e8e8e8 0%, rgba(214, 219, 191, 0.5) 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter     : progid:DXImageTransform.Microsoft.gradient(startColorstr='#E8E8E8', endColorstr='#d6dbbf', GradientType=1);
+    /* IE6-9 fallback on horizontal gradient */
 }
+
 body .panel .well {
-  background: #e8e8e8;
-  /* Old browsers */
-  background: -moz-radial-gradient(center, ellipse cover, #e8e8e8 0%, rgba(214, 219, 191, 0.5) 100%);
-  /* FF3.6-15 */
-  background: -webkit-radial-gradient(center, ellipse cover, #e8e8e8 0%, rgba(214, 219, 191, 0.5) 100%);
-  /* Chrome10-25,Safari5.1-6 */
-  background: radial-gradient(ellipse at center, #e8e8e8 0%, rgba(214, 219, 191, 0.5) 100%);
-  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#E8E8E8', endColorstr='#d6dbbf', GradientType=1);
-  /* IE6-9 fallback on horizontal gradient */
+    background : #e8e8e8;
+    /* Old browsers */
+    background : -moz-radial-gradient(center, ellipse cover, #e8e8e8 0%, rgba(214, 219, 191, 0.5) 100%);
+    /* FF3.6-15 */
+    background : -webkit-radial-gradient(center, ellipse cover, #e8e8e8 0%, rgba(214, 219, 191, 0.5) 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background : radial-gradient(ellipse at center, #e8e8e8 0%, rgba(214, 219, 191, 0.5) 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter     : progid:DXImageTransform.Microsoft.gradient(startColorstr='#E8E8E8', endColorstr='#d6dbbf', GradientType=1);
+    /* IE6-9 fallback on horizontal gradient */
 }
+
 body .panel .boxed {
-  width: 50px;
-  padding: 5px;
-  background-color: rgba(251, 250, 236, 0.6);
-  border-radius: 5px;
+    width            : 50px;
+    padding          : 5px;
+    background-color : rgba(251, 250, 236, 0.6);
+    border-radius    : 5px;
 }
+
 .canvas-wrapper {
-  overflow: auto;
+    overflow : auto;
 }
+
 .canvas-wrapper canvas {
-  margin: 0 auto;
-  background-color: rgba(214, 219, 191, 0.5);
-  border-radius: 4px;
+    margin           : 0 auto;
+    background-color : rgba(214, 219, 191, 0.5);
+    border-radius    : 4px;
 }
+
 /*
    * Покажем, если пользователь
    * захочет сохранить картинку из канваса
    */
 .desc,
 .saved-image {
-  overflow: auto;
-  display: none;
+    overflow : auto;
+    display  : none;
 }
+
+.saved-image {
+    position : absolute;
+    bottom   : 0;
+    right    : 0;
+    height   : 300px;
+    width    : 500px;
+}
+
+.saved-image p {
+    font-style : italic;
+    display    : inline-block;
+}
+
 /* Консоль с кодом для выполнения */
 .textarea-field {
-  margin-left: 10px;
+    margin-left : 10px;
 }
+
 .textarea-field pre.language-js {
-  overflow: auto;
-  background-color: rgba(62, 67, 59, 0.7);
-  border: 0.3em solid #3e433b;
+    overflow         : auto;
+    background-color : rgba(62, 67, 59, 0.7);
+    border           : 0.3em solid #3e433b;
 }
+
 .textarea-field pre.language-js code {
-  display: block;
-  height: 203px;
-  overflow: auto;
-  padding-left: 10px;
-  background-color: rgba(214, 219, 191, 0.5);
-  font-size: 1.8rem;
+    display          : block;
+    height           : 203px;
+    overflow         : auto;
+    padding-left     : 10px;
+    background-color : rgba(214, 219, 191, 0.5);
+    font-size        : 1.8rem;
 }
+
 .cheet-wrapper {
-  overflow: auto;
+    overflow : auto;
 }
+
 .cheet-wrapper .cheet-area {
-  height: 200px;
+    /*height: 200px;*/
 }
+
 p.desc {
-  font-size: 1.8rem;
-  height: 203px;
-  overflow: auto;
-  /* Примеры кода в подсказках */
-  /* Картинки в подсказках */
+    font-size : 1.8rem;
+    height    : 203px;
+    overflow  : auto;
+    /* Примеры кода в подсказках */
+    /* Картинки в подсказках */
 }
+
 p.desc code {
-  clear: both;
-  display: block;
-  overflow: auto;
-  padding: 10px;
-  margin: 10px;
-  background-color: green;
+    clear            : both;
+    display          : block;
+    overflow         : auto;
+    padding          : 10px;
+    margin           : 10px;
+    background-color : rgba(62, 67, 59, 0.7);
 }
+
 p.desc a .visual-cheet {
-  float: left;
-  width: 200px;
-  margin: 10px;
+    float  : left;
+    width  : 200px;
+    margin : 10px;
 }
+
+/** Scroll Bar */
+/* Полностью к черту убрало скролл :)))
+ * Контент прокручивается мышкой,
+ * и дебильных полосок больше нет
+ */
+/* for Mac OS X support */
+/*::-webkit-scrollbar {
+        width: 0;
+    }*/
+::-webkit-scrollbar {
+    width  : 5px;
+    height : 5px;
+}
+
+::-webkit-scrollbar-button {
+    background-color : rgba(62, 67, 59, 0.7);
+}
+
+::-webkit-scrollbar-track {
+    background-color : rgba(214, 219, 191, 0.5);
+}
+
+::-webkit-scrollbar-track-piece {
+    background-color : #e8e8e8;
+}
+
+::-webkit-scrollbar-thumb {
+    height           : 50px;
+    background-color : rgba(62, 67, 59, 0.7);
+    border-radius    : 5px;
+}
+
+::-webkit-scrollbar-corner {
+    background-color : rgba(214, 219, 191, 0.5);
+}
+
+::-webkit-resizer {
+    background-color : rgba(62, 67, 59, 0.7);
+}
+
 /* Переменные */
 /* Files */
 /* Colors */

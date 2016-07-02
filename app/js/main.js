@@ -34,129 +34,127 @@ var CanvasApp = function() {
          * при нажатии пользователем на кнопку с этим идентификатором
          */
         canvasBtnVal           = {
-            'begin-path'   : 'ctx.beginPath();',
-            'close-path'   : 'ctx.beginPath();\n' +
-                             'ctx.moveTo( 50, 50 );\n' +
-                             'ctx.lineTo( 50, 100 );\n' +
-                             'ctx.lineTo( 100, 100 );\n' +
-                             'ctx.lineWidth = 1;\n' +
-                             'ctx.strokeStyle = "black";\n' +
-                             'ctx.stroke();\n\n' +
-                             'ctx.beginPath();\n' +
-                             'ctx.moveTo( 100, 100 );\n' +
-                             'ctx.lineTo( 100, 200 );\n' +
-                             'ctx.lineTo( 200, 200 );\n' +
-                             'ctx.closePath();\n' +
-                             'ctx.lineWidth = 5;\n' +
-                             'ctx.strokeStyle = "red";\n' +
-                             'ctx.stroke();',
-            'move-canvas'  : 'ctx.translate( 100, 100 );',
-            'rotate-canvas': 'ctx.rotate( 5 );',
-            'clear-rect'   : 'ctx.fillRect( 50, 50, 100, 50 );\n' +
-                             'ctx.strokeRect( 120, 100, 100, 50 );\n' +
-                             'ctx.clearRect( 100, 70, 50, 50 );',
-            'clear-shape'  : 'ctx.arc( 200, 200, 100, 0, 2 * Math.PI, false );\n' +
-                             'ctx.stroke();\n' +
-                             'ctx.clip();\n\n' +
-                             'ctx.beginPath();\n' +
-                             'ctx.arc( 100, 100, 150, 0, 2 * Math.PI, false );\n' +
-                             'ctx.fillStyle = "red";\n' +
-                             'ctx.fill();\n\n' +
-                             'ctx.beginPath();\n' +
-                             'ctx.arc( 300, 400, 250, 0, 2 * Math.PI, false );\n' +
-                             'ctx.fillStyle = "green";\n' +
-                             'ctx.fill();',
-            'move-to'      : 'ctx.moveTo( 100, 100 );',
-            'line-to'      : 'ctx.lineTo( 200, 100 );',
-            'stroke'       : 'ctx.stroke();',
-
-            'line-width': 'ctx.lineWidth = 10;',
-
+            'begin-path'    : 'ctx.beginPath();',
+            'close-path'    : 'ctx.closePath();',
+            'move-canvas'   : 'ctx.translate( 100, 100 );',
+            'rotate-canvas' : 'ctx.rotate( 5 );',
+            'set-transform' : 'ctx.setTransform( 1, 0, 0, 1, 0, 0 );',
+            'scale-canvas'  : 'ctx.scale( 0.33, 0.33 );',
+            'clear-rect'    : 'ctx.clearRect( 100, 70, 50, 50 );',
+            'clear-shape'   : 'ctx.clip();',
+            'move-to'       : 'ctx.moveTo( 100, 100 );',
+            'line-to'       : 'ctx.lineTo( 200, 100 );',
+            'stroke'        : 'ctx.stroke();',
+            'line-width'    : 'ctx.lineWidth = 10;',
             'line-cap-round': 'ctx.lineCap = "round";',
             'line-join'     : 'ctx.lineJoin = "round";',
-            'border-radius' : 'ctx.lineWidth = 20;' +
-                              'ctx.lineJoin = "round";',
+            'miter-limit'   : 'ctx.miterLimin = 5.2',
+            'border-radius' : 'ctx.lineJoin = "round";',
+            'stroke-style'  : 'ctx.strokeStyle = "rgb( 105, 96, 236 )";',
 
-            'stroke-style': 'ctx.strokeStyle = "blue";',
-
-            'bg-color'       : 'ctx.fillStyle = "green";' +
-                               'ctx.fillRect( 10, 10, 100, 100 );',
-            'shadow-color'   : 'ctx.shadowColor = "red";',
-            'shadow-blur'    : 'ctx.shadowBlur = 10;',
-            'shadow-position': 'ctx.shadowOffsetY = 10;' +
-                               'ctx.shadowOffsetX = 10;',
-            'opacity'        : 'ctx.globalAlpha = 0.5;',
-
-            'fill-shape' : 'ctx.fill();',
-            'fill-text'  : 'ctx.font = "48px serif";' +
-                           'ctx.fillStyle = "gray";' +
-                           'ctx.fillText( "Hello world", 20, 100 );',
-            'stroke-text': 'ctx.font = "48px serif";' +
-                           'ctx.fillStyle = "darkgray";' +
-                           'ctx.strokeText( "Hello world", 20, 100 );',
-
-            'straight-line': 'ctx.moveTo( 100, 100 );' +
-                             'ctx.lineTo( 200, 100 );' +
-                             'ctx.stroke();',
-            'bezier'       : 'ctx.moveTo( 50, 20 );\n' +
-                             'ctx.lineWidth = 10;\n' +
-                             'ctx.strokeStyle = "red";\n' +
-                             'ctx.bezierCurveTo( 75, 37, 70, 25, 50, 25 );\n' +
-                             'ctx.bezierCurveTo( 20, 25, 20, 62.5, 20, 62.5 );\n' +
-                             'ctx.bezierCurveTo( 20, 80, 40, 102, 75, 120 );\n' +
-                             'ctx.bezierCurveTo( 110, 102, 130, 80, 130, 62.5 );\n' +
-                             'ctx.bezierCurveTo( 130, 62.5, 130, 25, 100, 25 );\n' +
-                             'ctx.bezierCurveTo( 85, 25, 75, 37, 75, 40 );\n' +
-                             'ctx.stroke();',
-            'arc'          : 'ctx.arc( 100, 30, 50, 0.2 * Math.PI, 1.1 * Math.PI );\n' +
+            'straight-line': 'ctx.moveTo( 100, 100 );\n' +
+                             'ctx.lineTo( 200, 100 );\n' +
                              'ctx.stroke();',
 
-            'round'                 : 'ctx.arc( 50, 50, 50, 0, 2 * Math.PI, false );' +
-                                      'ctx.stroke();',
-            'fill-rectangle'        : 'ctx.fillRect( 10, 10, 100, 100 );\n',
-            'empty-rectangle'       : 'ctx.strokeRect( 10, 10, 100, 100 );\n',
+            'arc'         : 'ctx.arc( 100, 30, 50, 0.2 * Math.PI, 1.1 * Math.PI );',
+            'bezier'      : 'ctx.bezierCurveTo( 110, 102, 130, 80, 130, 62.5 );',
+            'shadow-color': 'ctx.shadowColor = "red";',
+
+            'shadow-offset': 'ctx.shadowOffsetX = 4;\n' +
+                             'ctx.shadowOffsetY = 4;',
+            'shadow-blur'  : 'ctx.shadowBlur = 10;\n',
+
+            'bg-color': 'ctx.fillStyle = "green";' +
+                        'ctx.fillRect( 10, 10, 100, 100 );',
+            'opacity' : 'ctx.globalAlpha = 0.5;',
+
             'create-linear-gradient': 'gradient = ctx.createLinearGradient( 50, 50, 300, 0 );\n' +
                                       'gradient.addColorStop( 0, "green" );\n' +
                                       'gradient.addColorStop( 0.5, "yellow" );\n' +
                                       'gradient.addColorStop( 1, "white" );\n' +
                                       'ctx.fillStyle = gradient;\n' +
                                       'ctx.fillRect( 50, 50, 300, 150 );',
+
             'create-radial-gradient': 'gradient = ctx.createRadialGradient( 105, 105, 20, 112, 120, 50); \n' +
-                                      'gradient.addColorStop( 0, "#FF5F98" );\n' +
-                                      'gradient.addColorStop( 0.75, "#FF0188" );\n' +
-                                      'gradient.addColorStop( 1, "rgba( 255, 1, 136, 0 )" );\n' +
+                                      'gradient.addColorStop( 0, "#FF66B6" );\n' +
+                                      'gradient.addColorStop( 0.75, "#FA16D8" );\n' +
+                                      'gradient.addColorStop( 1, "#8416FA" );\n' +
                                       'ctx.fillStyle = gradient;\n' +
                                       'ctx.fillRect( 50, 50, 300, 300 );',
-            'add-color-stop'        : 'gradient.addColorStop( 0.3, "orange" );',
-            'create-image'          : 'var image = new Image();\n' +
-                                      'image.src="app/img/present.png";\n\n' +
-                                      // Таймаут необходим, чтобы картинка успела подгрузиться за один клик
-                                      // Его нужно увеличить, если требуется подгрузить картинку большего размера
-                                      'setTimeout( function() {\n' +
-                                      '  ctx.drawImage( image, 10, 50, 50, 50 );\n' +
-                                      '}, 10 );',
-            'create-image-data'     : '// Черный квадрат 50 x 50 полностью прозрачный\n' +
-                                      'var pixelSet = ctx.createImageData( 150, 150 );\n' +
-                                      'var pixelSetLen = 4 * 150 * 150,\n' +
-                                      '    i;\n\n' +
-                                      'for( i = 3; i < pixelSetLen; i += 4 ) {\n' +
-                                      '    // Делаем его непрозрачным\n' +
-                                      '    pixelSet.data[i] = 255;\n\n' +
-                                      '    // каждый 3-й пиксель делаем красным\n' +
-                                      '    if( (i - 3 ) % 20 == 0 ) {\n' +
-                                      '        pixelSet.data[ i - 3 ] = 255;\n' +
-                                      '    }\n' +
-                                      '}\n\n' +
-                                      '// выводим изображение\n' +
-                                      'ctx.putImageData( pixelSet, 20, 20 );',
-            'tile-canvas'           : 'var tileImage = new Image();\n' +
-                                      'tileImage.src="app/img/present.png";\n\n' +
-                                      'tileImage.onload = function() {\n' +
-                                      '  var pattern = ctx.createPattern( tileImage, "repeat" );\n' +
-                                      '  ctx.fillStyle = pattern;\n' +
-                                      '  ctx.fillRect( 0, 0, 300, 300 );\n' +
-                                      '}',
-            ''                      : '' // Это бесполезная штука, чтобы легче копировать кнопки
+
+            'add-color-stop': 'gradient.addColorStop( 0.3, "orange" );',
+
+            'fill-shape'    : 'ctx.fill();\n',
+            'fill-rectangle': 'ctx.fillRect( 10, 10, 100, 100 );',
+
+            'round': 'ctx.arc( 50, 50, 50, 0, 2 * Math.PI, false );' +
+                     'ctx.stroke();\n',
+
+            'empty-rectangle'           : 'ctx.strokeRect( 50, 50, 100, 100 );',
+            'global-composite-operation': 'ctx.globalCompositeOperation="destination-over";',
+            'font'                      : 'ctx.font = "italic bold 32px Tahoma";',
+            'fill-text'                 : 'ctx.fillText( "Hello world", 20, 100 );',
+            'stroke-text'               : 'ctx.strokeText( "Учим canvas", 300, 200 );',
+            'text-align'                : 'ctx.textAlign = "center";',
+            'text-baseline'             : 'ctx.textBaseline = "Top";',
+
+            'create-image': 'var image = new Image();\n' +
+                            'image.src="app/img/present.png";',
+
+            'create-image-data': '// Черный квадрат 50 x 50 полностью прозрачный\n' +
+                                 'var pixelSet = ctx.createImageData( 150, 150 );\n' +
+                                 'var pixelSetLen = 4 * 150 * 150,\n' +
+                                 '    i;\n\n' +
+                                 'for( i = 3; i < pixelSetLen; i += 4 ) {\n' +
+                                 '    // Делаем его непрозрачным\n' +
+                                 '    pixelSet.data[i] = 255;\n\n' +
+                                 '    // каждый 3-й пиксель делаем красным\n' +
+                                 '    if( (i - 3 ) % 20 == 0 ) {\n' +
+                                 '        pixelSet.data[ i - 3 ] = 255;\n' +
+                                 '    }\n' +
+                                 '}\n\n' +
+                                 '// выводим изображение\n' +
+                                 'ctx.putImageData( pixelSet, 20, 20 );',
+
+            'get-image-data': 'ctx.fillStyle = "red";\n' +
+                              'ctx.fillRect( 10, 10, 100, 40 );\n' +
+                              'ctx.fillStyle = "green";\n' +
+                              'ctx.globalAlpha = "0.5";\n' +
+                              'ctx.fillRect( 90, 30, 50, 50 );\n\n' +
+                              'var Pixel = ctx.getImageData( 10, 10, 1, 1 );\n' +
+
+                              'alert(\n' +
+                              '  "Pixel 1:" + +Pixel.data[ 0 ]+ ","\n' +
+                              '     +Pixel.data[ 1 ]+ ","\n' +
+                              '     +Pixel.data[ 2 ]+ ","\n' +
+                              '     +Pixel.data[ 3 ]\n);\n\n' +
+
+                              'var Pixel = ctx.getImageData( 90, 30, 1, 1 );\n\n' +
+
+                              'alert(\n' +
+                              '  "Pixel 1:" + +Pixel.data[ 0 ]+ ","\n' +
+                              '     +Pixel.data[ 1 ]+ ","\n' +
+                              '     +Pixel.data[ 2 ]+ ","\n' +
+                              '     +Pixel.data[ 3 ]\n);\n\n',
+
+            'put-image-data': 'ctx.fillRect( 0, 0, 100, 100);\n' +
+                              'var imagedata = ctx.getImageData( 0, 0, 100, 100 );\n' +
+                              'ctx.putImageData( imagedata, 150, 0, 50, 50, 25, 25 );\n\n',
+
+            'tile-canvas': 'var tileImage = new Image();\n' +
+                           'tileImage.src="app/img/present.png";\n\n' +
+                           'tileImage.onload = function() {\n' +
+                           '  var pattern = ctx.createPattern( tileImage, "repeat" );\n' +
+                           '  ctx.fillStyle = pattern;\n' +
+                           '  ctx.fillRect( 0, 0, 300, 300 );\n' +
+                           '}',
+
+            'to-data-url': 'ctx.fillRect( 10, 10, 20, 20 );\n' +
+                           'ctx.fillStyle = "green";\n' +
+                           'ctx.fillRect( 40, 40, 20, 20 );\n' +
+                           'var scrImg = html.canvas.toDataURL();\n' +
+                           'alert( scrImg )\n\n',
+            ''           : '' // Это бесполезная штука, чтобы легче копировать кнопки
         },
 
         /**
@@ -222,7 +220,8 @@ var CanvasApp = function() {
         // то эффект замедленной съемки...
         timeout                = 10,
         timeoutIDForFallBalls,
-        isDrawing              = false;
+        isDrawing              = false,
+        gradient;
 
     /**
      * @summary Показывает подсказку для используемых в консоли функций
@@ -250,13 +249,14 @@ var CanvasApp = function() {
     /**
      * @summary При нажатии кнопки устанавливает код в консоль
      */
-    var setConsoleValue = function( event ) {
+    var setConsoleValue = function() {
 
         event = event || window.event;
         console.log( event );
 
         // Это все касается исключительно кнопок
-        if( !event.path[ 2 ].classList.contains( 'animate-buttons' ) && event.srcElement.parentElement.classList.contains( 'btn' ) ) {
+        if( !event.path[ 2 ].classList.contains( 'animate-buttons' ) &&
+            event.srcElement.parentElement.classList.contains( 'btn' ) ) {
 
             if( window.getSelection ) {
                 // Где курсор
@@ -278,6 +278,7 @@ var CanvasApp = function() {
                 // Выводим результат в консоль
                 html.console.innerHTML = text;
 
+                html.console.focus();
                 // Создаем объект Range для управления положением курсора
                 var range = document.createRange();
                 // Он целиком в консоли
@@ -337,32 +338,6 @@ var CanvasApp = function() {
     }
 
     /**
-     * @summary NOT USE Готовит строку из консолм к запуску
-     * @description
-     * 1. Удаляем все пробелы, так как понадобится удалить последнюю ;
-     * Если в строке кода случайно окажутся пробелы, то точка с запятой останется
-     * и будет заменена на вызов контекста ( будет ошибка )
-     * 2. Удаляем последнюю точку с запятой, чтобы она не заменялась на вызов контекста
-     * 3. Заменяем все оставшиеся ; вызоваом контекста канваса,
-     * (его пришлось предварительно присвоить в событие,
-     * так как из new Function() больше вообще ничего не было доступно,
-     * а все переданные ей параметры она бессовестно превращает в строку,
-     * с которой потом ничего нельзя сделать, так как это ни разу не JSON
-     *
-     * @param { string } str Строка из консоли для валидации
-     * @param { string } contextPropertyWithDot Название свойства, которое нужно передать в new Function()
-     *
-     * @returns { string } Готовая строка для выполнения
-
-     function validateStr( str, contextPropertyWithDot ) {
-        var replacer             = contextPropertyWithDot,
-            deletedSpaces        = str.replace( /^\s+|\s+$/g, '' ),
-            deletedLastSemicolon = deletedSpaces.slice( 0, -1 ),
-            insertContext        = deletedLastSemicolon.replace( /;/g, ';\n' + replacer );
-        return replacer + insertContext;
-    }*/
-
-    /**
      * @summary Получает строку кода из консоли
      * @returns { string } Строка
      */
@@ -377,8 +352,8 @@ var CanvasApp = function() {
      */
     function runConsoleCode() {
         var consoleCode = getConsoleValue();
-        var runConsole = new Function( 'ctx', consoleCode );
-        runConsole( ctx );
+        var runConsole = new Function( 'html', 'ctx', consoleCode );
+        runConsole( html, ctx );
     }
 
     /**
@@ -389,6 +364,7 @@ var CanvasApp = function() {
         clearTimeout( timeoutIDForFallBalls );
         circles = [];
         ctx.clearRect( 0, 0, html.canvas.width, html.canvas.height );
+        ctx.beginPath();
     }
 
     /**
@@ -650,7 +626,7 @@ var CanvasApp = function() {
      * Обработчики в разных группах,
      * так как у них немного рахное поведение
      */
-    function addListeners() {
+    function addListeners( event ) {
 
         // Обработчик для всех сразу кнопок рисования на холсте
         var btnSection = document.getElementById( 'canvas-btn-field' );
@@ -697,7 +673,6 @@ var CanvasApp = function() {
         html.canvas.onmousemove = draw;
     }
 
-       
     /**
      * @summary Выполняет подготовку к запуску приложения
      * 1. Устанавливает обработчики в HTML

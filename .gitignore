@@ -5,3 +5,8 @@
 /tests
 karma.conf.js
 package.json
+/vendor/baron
+/vendor/highlight
+.project
+.metadata
+

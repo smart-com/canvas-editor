@@ -40,8 +40,10 @@ html( lang="ru" )
                         // ===================================================================
                         // Содержимое всех вкладок
                         section#canvas-btn-field.canvas-btn-field.tab-content
+
                             // Первая активная вкладка
                             section#drawing-properties.tab-pane.fade.in.active.well
+
                                 div.btn.btn-default
                                     span#begin-path Begin Path
                                 p.desc.
@@ -54,15 +56,18 @@ html( lang="ru" )
                                         ctx.lineWidth = 7;<br>
                                         ctx.strokeStyle = "red";<br>
                                         ctx.strokeRect( 50, 50, 100, 100 );<br>
+
                                         /* Смена стиля */<br>
                                         ctx.beginPath();<br>
                                         ctx.strokeStyle = "green";<br>
                                         ctx.strokeRect( 70, 70, 150, 150 );<br>
+
                                         /* Смена стиля */<br>
                                         ctx.beginPath();<br>
                                         ctx.strokeStyle = "orange";<br>
                                         ctx.strokeRect( 100, 100, 200, 200 );<br>
                                     </code>
+
                                 div.btn.btn-default
                                     span#close-path Close Path
                                 p.desc.
@@ -73,24 +78,165 @@ html( lang="ru" )
                                     то просто ничего не произойдет.<br>
 
                                     <code class="language-js example">
+                                        // Синтаксис
                                         void ctx.closePath();
                                     </code>
+
+                                    <code class="language-js example">
+                                        // Пример
+                                        ctx.beginPath();<br>  
+                                        ctx.moveTo( 50, 50 );<br>  
+                                        ctx.lineTo( 50, 100 );<br>  
+                                        ctx.lineTo( 100, 100 );<br>  
+                                        ctx.lineWidth = 1;<br>  
+                                        ctx.strokeStyle = "rgb( 97, 64, 81 )";<br>  
+                                        ctx.stroke();<br>
+
+                                        ctx.beginPath();<br>  
+                                        ctx.moveTo( 100, 100 );<br>  
+                                        ctx.lineTo( 100, 200 );<br>  
+                                        ctx.lineTo( 200, 200 );<br> 
+
+                                        ctx.closePath();<br>
+                                        
+                                        ctx.lineWidth = 5;<br>  
+                                        ctx.strokeStyle = "rgb( 64, 97, 80 )";<br>  
+                                        ctx.stroke();<br>
+                                    </code>
+
                                 div.btn.btn-default
-                                    span#move-canvas Move Canvas
+                                    span#move-canvas Translate Canvas
                                 p.desc.
                                     Сдвигает систему координат канваса на х по горизонтали
                                     и у по вертикали.
-                                     <code class="language-js example">
+
+                                     <code class="language-js">
                                         void ctx.translate( x, y );
                                      </code>
+
+                                     <code class="language-js">
+                                        // Пример<br>
+                                        ctx.fillStyle = "rgb( 94, 90, 128 )";<br>            
+                                        ctx.fillRect( 50, 50, 300, 200 );<br>
+
+                                        ctx.translate( 100, 100 );<br>
+
+                                        ctx.fillStyle = "rgb( 44, 40, 78 )";<br>
+                                        ctx.fillRect( 50, 50, 300, 200 );<br>
+                                     </code>
+
                                 div.btn.btn-default
                                     span#rotate-canvas Rotate Canvas
                                 p.desc.
-                                    The CanvasRenderingContext2D.rotate() method of the
-                                    Canvas 2D API adds a rotation to the transformation
-                                    matrix. The angle argument represents a clockwise
-                                    rotation angle and is expressed in radians.
-                                            void ctx.rotate(angle);
+                                    Поворачивает полотно на заданный угол вокруг точки начала координат.
+                                    В параметры передаем угол поворота в радианах.
+
+                                    <code class="language-js">
+                                        // Синтаксис<br>
+                                        void ctx.rotate( angle );<br>
+                                    </code>
+
+                                    <code class="language-js">
+                                        // Пример<br>
+                                        // 45 градусов<br>
+                                        ctx.rotate( Math.PI / 4 );<br>
+
+                                        ctx.fillStyle = "rgb( 115, 124, 161 )";<br>
+                                        ctx.fillRect( 150, 10, 300, 100 );<br>
+                                    </code>
+
+                                div.btn.btn-default
+                                    span#rotate-canvas Transform Canvas
+                                p.desc.
+                                   Применяет нестандартную матрицу преобразования.
+
+                                   <code class="language-js">
+                                        // Синтаксис<br>
+                                        void ctx.transform( a, b, c, d, e, f );<br>
+                                    </code>
+
+                                    Чтобы применять этот метод придется вспомнить математику.
+
+
+                                    <a class="fancybox" href="app/img/transform.png">
+                                        <img class='visual-cheet' src='app/img/transform.png' alt='clip visual cheet'>
+                                    </a>
+
+                                    <code class="language-js">
+                                        // Пример<br>
+                                        var sin = Math.sin( Math.PI / 6 );<br>
+                                        var cos = Math.cos( Math.PI / 6 );<br>
+                                        ctx.translate( 200, 200 );<br>
+                                        var c = 0;
+                                        for( var i = 0; i <= 12; i++ ) {<br>
+                                          c = Math.floor( 255 / 12 * i );<br>
+                                          ctx.fillStyle = "rgb(" + c + "," + c + "," + c + ")";<br>
+                                          ctx.fillRect( 0, 0, 100, 10 );<br>
+                                          ctx.transform( cos, sin, -sin, cos, 0, 0 );<br>
+                                        }<br><br>
+                                        ctx.setTransform( -1, 0, 0, 1, 200, 200 );<br>
+                                        ctx.fillStyle = "rgba( 255, 128, 255, 0.5 )";<br>
+                                        ctx.fillRect() 0, 50, 100, 100 );<br>
+                                    </code>
+
+                                div.btn.btn-default
+                                    span#set-transform Set Transform
+                                p.desc.
+                                    Делает сброс матрицы преобразования к единичной матрице, 
+                                    а затем вызывается метод transform с параметрами указанными в setTransform.
+
+                                     <code class="language-js example">
+                                        // Синтаксис<br>
+                                        void ctx.setTransform( a, b, c, d, e, f );<br>
+                                     </code>
+
+                                     <code class="language-js example">
+                                        // Пример<br>
+                                        var rectWidth = 150;<br>
+                                        var rectHeight = 75;<br>
+
+                                        // перемещаем контекст к центру холста<br>
+                                        ctx.translate( html.canvas.width / 2, html.canvas.height / 2 );<br>
+                                        ctx.fillStyle = "rgb( 72, 99, 160 )";<br>
+                                        ctx.fillRect( -rectWidth / 2, -rectHeight / 2, rectWidth, rectHeight );<br>
+                                        // сбрасываем матрицу трансформаций<br>
+                                        // 1 0 0<br>
+                                        // 0 1 0<br>
+                                        // 0 0 1<br>
+                                        // применяем новую трансформацию<br>
+                                        ctx.setTransform( 1, 0, 0, 1, 0, 0 );<br>
+                                        ctx.fillStyle = "rgb( 99, 161, 72 )";<br>
+                                        ctx.fillRect( 0, 0, rectWidth, rectHeight );<br>
+                                     </code>
+
+                                div.btn.btn-default
+                                    span#scale-canvas Scale Canvas
+                                p.desc.
+                                    Масштабирует единицы измерения холста. В параметры передаем
+                                    коэффициенты масштаба по осям X и Y. Это могут быть 
+                                    любые действительные числа: числа больше 1.0 — увеличиваем масштаб, 
+                                    меньше 1, но больше 0 — уменьшаем. Значение 1.0 — масштаб остается без изменений.
+                                    По умолчанию единица измерения холста равна одному пикселю. 
+                                    Если мы применим коэффициент 0.5, тогда единица измерения уменьшится вдвое 
+                                    и соответственно изображение так же уменьшится.
+
+                                    <code class="language-js">
+                                        // Синтаксис<br>
+                                        void ctx.scale( x, y );<br>
+                                    </code>
+
+                                    <code class="language-js">
+                                        // Пример<br>
+                                        ctx.fillRect( 150, 10, 300, 100);<br>
+                                        // уменьшаем в три раза<br>
+                                        ctx.scale( 0.33, 0.33 );<br>
+                                        ctx.fillRect( 150, 10, 300, 100);<br>
+                                    </code>
+
+                                    Так же допускается использование отрицательных значений, 
+                                    с помощью которых можно добиться зеркальных отображений. Например, 
+                                    применив scale( 1; -1 ), получим зеркальное отражение по оси Y.
+                                            
                                 div.btn.btn-default
                                     span#clear-rect Clear Rect
                                 p.desc.
@@ -102,6 +248,13 @@ html( lang="ru" )
                                     <code class="language-js">
                                         // Синтаксис<br>
                                         void clearRect( x, y, width, height );<br>
+                                    </code>
+
+                                    <code class="language-js">
+                                        // Пример<br>
+                                        ctx.fillRect( 50, 50, 100, 50 );<br>
+                                        ctx.strokeRect( 120, 100, 100, 50 );<br>
+                                        ctx.clearRect( 100, 70, 50, 50 );<br>
                                     </code>
 
                                 div.btn.btn-default
@@ -119,90 +272,265 @@ html( lang="ru" )
 
                                     <code class="language-js">
                                         // Синтаксис<br>
-                                        void ctx.clip();<br>
+                                        void ctx.clip();БикЮ
                                     </code>
+
+                                    <code class="language-js">
+                                        // Пример<br>
+                                        ctx.arc( 200, 200, 100, 0, 2 * Math.PI, false );<br>
+                                        ctx.stroke();<br>
+                                        ctx.clip();<br>
+
+                                        ctx.beginPath();<br>
+                                        ctx.arc( 100, 100, 150, 0, 2 * Math.PI, false );<br>
+                                        ctx.fillStyle = "red";<br>
+                                        ctx.fill();<br>
+
+                                        ctx.beginPath();<br>
+                                        ctx.arc( 300, 400, 250, 0, 2 * Math.PI, false );<br>
+                                        ctx.fillStyle = "green";<br>
+                                        ctx.fill();<br>
+                                    </code>
+
                             // ============================================================
                             section#line-drawing.line-drawing.tab-pane.fade.well
                                 div.btn.btn-default
                                     span#move-to Move To
                                 p.desc.
-                                    The CanvasRenderingContext2D.moveTo() method of the
-                                    Canvas 2D API moves the starting point of a new
-                                    sub-path to the (x, y) coordinates.
-                                    void ctx.moveTo(x, y);
+                                    Перемещаем текущие положение на холсте к координатам ( x, y ).
+
+                                    <code class="language-js">
+                                        // Синтаксис<br>
+                                        void ctx.moveTo( x, y );<br>
+                                    </code>
+
+                                    <code class="language-js">
+                                        // Пример<br>
+                                        ctx.moveTo( 50, 50 );<br>
+                                        ctx.lineTo( 50, 100 );<br>
+                                        ctx.lineTo( 100, 100 );<br>
+                                        ctx.stroke();<br>
+                                    </code>
+
                                 div.btn.btn-default
                                     span#line-to Line To
                                 p.desc.
-                                    The CanvasRenderingContext2D.lineTo() method of the
-                                    Canvas 2D API connects the last point in the
-                                    sub-path to the x, y coordinates with a straight
-                                    line (but does not actually draw it).
-                                    void ctx.lineTo(x, y);
+                                    &quot;Рисует&quot; прямую линию от текущего положения на холсте до точки ( x, y ).
+                                    По этим координатам так же будет новое текущее положение на холсте.
+
+                                    <code class="language-js">
+                                        // Синтаксис<br>
+                                        ctx.lineTo( x, y );<br>
+                                    </code>
+
+                                    Цвет линии определяется свойством strokeStyle, толщина — lineWidth. Чтобы увидеть
+                                    нарисованную линию, нужно воспольщоваться методом stroke();
+
+                                    <code class="language-js">
+                                        // Пример<br>
+                                        ctx.beginPath();
+                                        ctx.moveTo( 50, 50 );<br>
+                                        ctx.lineTo( 50, 100 );<br>
+                                        ctx.lineTo( 100, 100 );<br>
+                                        ctx.stroke();<br>
+                                    </code>
+
                                 div.btn.btn-default
                                     span#stroke Stroke
                                 p.desc.
-                                    The CanvasRenderingContext2D.stroke() method of the
-                                    Canvas 2D API strokes the current or given path
-                                    with the current stroke style using the non-zero
-                                    winding rule.
-                                    void ctx.stroke();
-                                    void ctx.stroke(path);
+                                    Делает нарисованные контуры видимыми.
+
+                                    <code class="language-js">
+                                        // Синтаксис<br>                                        
+                                        void ctx.stroke();<br>
+                                    </code>
+
+                                    <code class="language-js">
+                                        // Пример<br>                                        
+                                        ctx.moveTo( 50, 50 );<br>           
+                                        ctx.lineTo( 50, 100 );<br>            
+                                        ctx.lineTo( 100, 100 );<br>           
+                                        ctx.stroke();<br>
+                                    </code>
+
                                 div.btn.btn-default
                                     span#line-width Line Width
                                 p.desc.
                                     Ширина линии. По умолчанию 1.0.
                                     Дробные, отрицательные значения и ноль игнорируются.
+
                                     <code class="language-js">
                                         // Синтаксис<br>
                                         ctx.lineWidth = value;<br>
                                     </code>
+
+                                    <code class="language-js">
+                                        // Пример<br>
+                                        ctx.moveTo( 100, 150 );<br>
+                                        ctx.lineTo( 450, 50 );<br>
+                                        ctx.lineWidth = 15;<br>
+                                        ctx.stroke();
+                                    </code>
+
                                 div.btn.btn-default
                                     span#line-cap-round End Of Line
                                 p.desc.
                                     Стиль окончания линии. По умолчанию 'butt'.
+
                                     <code class="language-js">
                                         // Синтаксис<br>
                                         ctx.lineCap = "butt";<br>
                                         ctx.lineCap = "round";<br>
                                         ctx.lineCap = "square";<br>
                                     </code>
+
+                                    При использовании значений round или squre, фактическая длина линии увеличивается на значение lineWidth ( с двух сторон лини добавляются отрезки длинной lineWidth / 2 ).
+
+                                    <code class="language-js">
+
+                                        var lineCap = [ 'butt', 'round', 'square' ];<br>
+
+                                        // Направляющие<br>
+                                        ctx.strokeStyle = '#09f';<br>
+                                        ctx.beginPath();<br>
+                                        ctx.moveTo( 100, 100 );<br>
+                                        ctx.lineTo( 300, 100 );<br>
+                                        ctx.moveTo( 100, 300 );<br>
+                                        ctx.lineTo( 300, 300 );<br>
+                                        ctx.stroke();<br>
+
+                                        // Линии<br>
+                                        ctx.strokeStyle = 'black';<br>
+                                        for ( var i = 0; i < lineCap.length; i++ ) {<br>
+                                          ctx.lineWidth = 15;<br>
+                                          ctx.lineCap = lineCap[ i ];<br>
+                                          ctx.beginPath();<br>
+                                          ctx.moveTo( 125 + i * 75, 100 );<br>
+                                          ctx.lineTo( 125 + i * 75, 300 );<br>
+                                          ctx.stroke();<br>
+                                        }<br>
+                                    </code>
+
                                 div.btn.btn-default
                                     span#line-join Join Style
                                 p.desc.
-                                    Стиль соединения линий. По умолчанию 'miter'.
-                                    Длина соединения - miter limit ratio может быть задано
-                                    атрибутом miterLimit ( 10.0 - по умолчанию ).
+                                    Стиль соединения линий. Доступны три значения: miter ( по умолчанию),
+                                    round, bevel. Можно настроить длину соединения - miter limit ratio.
+                                    Значение может быть задано атрибутом miterLimit ( 10.0 - по умолчанию ).
+
                                     <code class="language-js">
                                         // Синтаксис<br>
                                         ctx.lineJoin  = "bevel";<br>
                                         ctx.lineJoin = "round";<br>
                                         ctx.lineJoin = "miter";<br>
-                                        ctx.miterLimin = 5.2;
+                                        ctx.miterLimit = 5.2;
                                     </code>
+
+                                    <code class="language-js">
+                                        // Пример<br>
+
+                                        // miter<br>
+                                        ctx.beginPath();<br>
+                                        ctx.moveTo( html.canvas.width / 2 - 50 - 140, html.canvas.height - 50 );<br>
+                                        ctx.lineTo( html.canvas.width / 2 - 140, 50 );<br>
+                                        ctx.lineTo( html.canvas.width / 2 + 50 - 140, html.canvas.height - 50 );<br>
+                                        ctx.lineWidth = 25;<br>
+                                        ctx.lineJoin = "miter";<br>
+                                        ctx.stroke();<br>
+
+                                        // round
+                                        ctx.beginPath();<br>
+                                        ctx.moveTo( html.canvas.width / 2 - 50, html.canvas.height - 50 );<br>
+                                        ctx.lineTo( html.canvas.width / 2, 50 );<br>
+                                        ctx.lineTo( html.canvas.width / 2 + 50, html.canvas.height - 50 );<br>
+                                        ctx.lineWidth = 25;<br>
+                                        ctx.lineJoin = "round";<br>
+                                        ctx.stroke();<br>
+
+                                        // bevel<br>
+                                        ctx.beginPath();<br>
+                                        ctx.moveTo( html.canvas.width / 2 - 50 + 140, html.canvas.height - 50 );<br>
+                                        ctx.lineTo( html.canvas.width / 2 + 140, 50 );<br><br>
+                                        ctx.lineTo( html.canvas.width / 2 + 50 + 140, html.canvas.height - 50 );<br>
+                                        ctx.lineWidth = 25;<br>
+                                        ctx.lineJoin = "bevel";<br>
+                                        ctx.stroke();<br>
+                                    </code>
+
+
                                 div.btn.btn-default
-                                    span#border-radius Border Radius
+                                    span#miter-limit Miter Limit
                                 p.desc.
-                                    Don't working with the filled shapes.
-                                    The CanvasRenderingContext2D.lineJoin property of the Canvas 2D API determines
-                                    how two connecting segments (of lines, arcs or curves) with non-zero lengths in
-                                    a shape are joined together (degenerate segments with zero lengths, whose
-                                    specified endpoints and control points are exactly at the same position, are skipped).
-                                    ctx.lineJoin = "bevel";
-                                    ctx.lineJoin = "round";
-                                    ctx.lineJoin = "miter";
+                                    При соединении линий с опцией miter, концы линий продлеваются на определенное расстояние чтобы соединиться. Это расстояние будет небольшим для больших углов и в разы больше для острых.
+                                    Свойство miterLimit задает максимально допустимое расстояние для "дорисовки". Если для соединения линий требуется большее расстояние, тогда они будут соединены как bevel.
+
+                                    <code class="language-js">
+                                        // Синтаксис<br>
+                                        ctx.miterLimit [ =value ];<br>
+                                    </code>
+
+                                    Значение — число не менее 1.0 ( значение меньше будет восприниматься как 1.0 ). По умолчанию
+                                    miterLimit = 10.0. Значение 1.0 означает отсутствие удлинения.
+
+                                    <code class="language-js">
+                                        // Пример<br>
+                                        ctx.miterLimin = 5.2;<br>
+                                        ctx.moveTo( 20, 10 );<br>
+                                        ctx.lineTo( 30, 30 );<br>
+                                        ctx.lineTo( 40, 40 );<br>
+                                        ctx.stroke();<br>
+                                    </code>
+
                                 div.btn.btn-default
-                                    span#stroke-style Border Style
+                                    span#border-radius Line Join
                                 p.desc.
-                                    The CanvasRenderingContext2D.strokeStyle property of
-                                    the Canvas 2D API specifies the color or style to
-                                    use for the lines around shapes. The default is #000
-                                    (black).
-                                    ctx.strokeStyle = color;
-                                    ctx.strokeStyle = gradient;
-                                    ctx.strokeStyle = pattern;
+                                    Свойство lineJoin определяет как будут соединяться
+                                    сегменты линий ( дуг или кривых Безье ) длиной больше 
+                                    нуля, в месте их соединения.
+                                    Это свойство не работает с заполненными фигурами.
+
+                                    <code class="language-js">
+                                        // Синтаксис<br>
+                                        ctx.lineJoin = "bevel";<br>
+                                        ctx.lineJoin = "round";<br>
+                                        ctx.lineJoin = "miter";<br>
+                                    </code>
+
+                                    <code class="language-js">
+                                        // Синтаксис<br>
+                                        ctx.lineWidth = 20;<br>
+                                        ctx.lineJoin = "round";<br>
+                                        ctx.strokeRect( 100, 100, 100, 100 );<br>
+                                    </code>
+
+                                div.btn.btn-default
+                                    span#stroke-style Stroke Style
+                                p.desc.
+                                    Определяет цвет линий. Значение — имя цвета, или 
+                                    шестнадцатиричный код, или rgb / rgba. Можно градиент или паттерн ( картинку ). По умолчанию - черный.
+
+                                    <code class="language-js">
+                                        // Синтаксис<br>
+                                        ctx.strokeStyle = color;<br>
+                                        ctx.strokeStyle = gradient;<br>
+                                        ctx.strokeStyle = pattern;<br>
+                                    </code>  
+
+                                    <code class="language-js">
+                                        // Пример<br>
+                                        ctx.lineWidth = 7;<br>
+                                        ctx.strokeStyle = "rgb( 134, 72, 161 )";<br>
+                                        ctx.moveTo( 50, 50 );<br>
+                                        ctx.lineTo( 250, 250 );<br>
+                                        ctx.stroke();<br>
+                                    </code>  
+
                                 div.btn.btn-default
                                     span#straight-line Straight Line
-                                p.desc ...
+                                p.desc.
+                                    Здесь просто выводим в консоль код, который
+                                    рисует прямую линию, чтобы было меньше писать ручками.
+                                
                                 div.btn.btn-default
                                     span#arc Arc Line
                                 p.desc.
@@ -220,14 +548,25 @@ html( lang="ru" )
                                         void ctx.arc( x, y, radius, startAngle, endAngle, anticlockwise );<br>
                                     </code>
 
+                                    <code class="language-js">
+                                        // Пример<br>
+                                        ctx.lineWidth = 5;<br>
+                                        ctx.strokeStyle = "rgb( 237, 179, 43 )";<br>
+                                        ctx.arc( 100, 30, 50, 0.2 * Math.PI, 1.1 * Math.PI );<br>
+                                        ctx.stroke();<br>
+                                    </code>
+
                                 div.btn.btn-default
                                     span#bezier Bezier Curve
                                 p.desc.
+
                                     <a class="fancybox f-box" href="app/img/bezier.jpg">
                                         <img class='visual-cheet' src='app/img/bezier.jpg' alt='bezier visual cheet'>
                                     </a>
+
                                     Рисует кривую Безье от текущей точки на холсте до указанной через промежуточные (
-                                    контрольные ) точки. Если нужно передвинуть начало кривой, можно воспользоваться методом
+                                    контрольные ) точки. Дуга отобразится после вызова метода stroke(). Цвет дуги определяет свойство strokeStyle, толщину линии — lineWidth. Текущее положение на холсте переместится в конец кривой.
+                                    Если нужно передвинуть начало кривой, можно воспользоваться методом
                                     ctx.moveTo(), который нужно вызвать перед созданием кривой.
                                     Контрольных точек может быть сколько угодно, и задаются они
                                     координатами в параметрах ( controlX, controlY, ... , control-10-X, control-10-Y ). endX,
@@ -239,47 +578,160 @@ html( lang="ru" )
                                         void bezierCurveTo( control-1-X, control-1-Y, control-2-X, control-2-Y, endX, endY );<br>
                                     </code>
 
+                                    <code class="language-js">
+                                        // Пример <br>
+                                         ctx.moveTo( 50, 20 );<br>
+                                         ctx.lineWidth = 10;<br>
+                                         ctx.strokeStyle = "red";<br>
+                                         ctx.bezierCurveTo( 75, 37, 70, 25, 50, 25 );<br>
+                                         ctx.bezierCurveTo( 20, 25, 20, 62.5, 20, 62.5 );<br>
+                                         ctx.bezierCurveTo( 20, 80, 40, 102, 75, 120 );<br>
+                                         ctx.bezierCurveTo( 110, 102, 130, 80, 130, 62.5 );<br>
+                                         ctx.bezierCurveTo( 130, 62.5, 130, 25, 100, 25 );<br>
+                                         ctx.bezierCurveTo( 85, 25, 75, 37, 75, 40 );<br>
+                                         ctx.stroke();<br>
+                                    </code>
+
+                                    <code class="language-js">
+                                        // Еще один <br>                                       
+                                         ctx.lineWidth = 7;<br>
+                                         ctx.moveTo( 75, 25 );<br>
+                                         ctx.strokeStyle = "darkslategray";<br>
+                                         ctx.quadraticCurveTo( 25, 25, 25, 62.5 );<br>
+                                         ctx.quadraticCurveTo( 25, 100, 50, 100 );<br>
+                                         ctx.quadraticCurveTo( 50, 120, 30, 125 );<br>
+                                         ctx.quadraticCurveTo( 60, 120, 65, 100 );<br>
+                                         ctx.quadraticCurveTo( 125, 100, 125, 62.5 );<br>
+                                         ctx.quadraticCurveTo( 125, 25, 75, 25 );<br>
+                                         ctx.stroke();<br>
+                                    </code>
+
                             // ===================================================================
                             section#shadow-drawing.shadow-drawing.tab-pane.fade.well
+
                                 div.btn.btn-default
                                     span#shadow-color Shadow Color
                                 p.desc.
-                                    The CanvasRenderingContext2D.shadowColor property of the Canvas 2D API
-                                    specifies the color of the shadow.
-                                    ctx.shadowColor = color;
+                                    Задает цвет тени. Значением может быть имя цвета, 
+                                    шестнадцатеричный код, rba / rgba представление.
+
+                                    <code class="language-js">
+                                        // Синтаксис<br>
+                                        ctx.shadowColor = color;<br>
+                                    </code>
+
+                                    <code class="language-js">
+                                        // Пример<br>
+                                        ctx.shadowOffsetX = 4;<br>
+                                        ctx.shadowOffsetY = 4;<br>
+                                        ctx.shadowBlur = 4;<br>
+                                        ctx.shadowColor = "rgba( 128, 0, 0, 0.5 )";<br>
+                                        ctx.fillStyle = "rgb( 0, 128, 128 )";<br>
+                                        ctx.fillRect( 50, 50, 200, 100 );<br>
+                                    </code>
+
+                                div.btn.btn-default
+                                    span#shadow-offset Shadow Offset
+                                p.desc.
+                                    Задает смещение тени относительно объекта по оси X или Y в пикселах.
+                                    По умолчанию смещение равно 0. Положительные значения смещают тень вправо, 
+                                    отрицательные — влево.
+
+                                    <code class="language-js">
+                                        // Синтаксис<br>
+                                        ctx.shadowOffsetX [ = value ]<br>                                        
+                                        ctx.shadowOffsetY [ = value ]<br>
+                                    </code>
+
+                                    <code class="language-js">
+                                        // Пример<br>
+                                        ctx.shadowOffsetX = 4;<br>
+                                        ctx.shadowOffsetY = 4;<br>
+                                        ctx.shadowBlur = 4;<br>
+                                        ctx.shadowColor = "rgba( 26, 0, 140, 0.6 )";<br>
+                                        ctx.fillStyle = "rgb( 114, 140, 0 )";<br>
+                                        ctx.fillRect( 50, 50, 200, 100 );<br>
+                                    </code>
+
                                 div.btn.btn-default
                                     span#shadow-blur Shadow Blur
                                 p.desc.
-                                    The CanvasRenderingContext2D.shadowBlur property of the Canvas 2D API
-                                    specifies the level of the blurring effect; this value doesn't correspond
-                                    to a number of pixels and is not affected by the current transformation matrix.
-                                    The default value is 0.
-                                    ctx.shadowBlur = level;
-                                div.btn.btn-default
-                                    span#shadow-position Shadow Position
-                                p.desc.
-                                    The CanvasRenderingContext2D.shadowOffsetX property of the Canvas 2D API
-                                    specifies the distance that the shadow will be offset in horizontal distance.
-                                    ctx.shadowOffsetX = offset;
+                                    Задает размер размытия тени.
+                                    Значение по умолчанию равно 0.                                    
+
+                                    <code class="language-js">
+                                        // Синтаксис<br>
+                                        ctx.shadowBlur [ = value ];<br>
+                                    </code>       
+
+                                    <code class="language-js">
+                                        // Пример<br>
+                                        ctx.shadowOffsetX = 6;<br>
+                                        ctx.shadowOffsetY = 6;<br>
+                                        ctx.shadowBlur = 8;<br>
+                                        ctx.shadowColor = "rgba( 23, 66, 235, 0.5 )";<br>
+                                        ctx.fillStyle = "rgb( 235, 192, 23 )";<br>
+                                        ctx.fillRect( 50, 50, 200, 100 );<br>
+                                    </code>
+
                             // ===========================================================================
                             section#bg-drawing.bg-drawing.tab-pane.fade.well
                                 div.btn.btn-default
                                     span#bg-color Background Color
                                 p.desc.
-                                    The CanvasRenderingContext2D.fillStyle property of the Canvas 2D API
-                                    specifies the color or style to use inside shapes. The default is #000 (black).
+                                    Определяет цвет заливки внутри фигуры. По умолчанию - черный. Значение — имя цвета, или
+                                    шестнадцатиричный код, или rgb/ rgba. Если не задавать значение, тогда будет происходить
+                                    чтение свойства.
 
-                                    ctx.fillStyle = color;
-                                    ctx.fillStyle = gradient;
-                                    ctx.fillStyle = pattern;
+                                    <code class="language-js">
+                                        // Синтаксис<br>
+                                        ctx.createLinearGradient( x0, y0, x1, y1 );<br>
+                                    </code>
+
+                                    Кроме этого фигуры можно заливать градиентами или изображениями, естественно,
+                                    сохданными предварительно.
+
+                                    <code class="language-js">
+                                        // Синтаксис<br>
+                                        ctx.fillStyle = color;<br>
+                                        ctx.fillStyle = gradient;<br>
+                                        ctx.fillStyle = pattern;<br>
+                                    </code>
+
+                                    <code class="language-js">
+                                        // Пример<br>
+                                        ctx.fillStyle = "rgb( 237, 120, 57 )";<br>
+                                        ctx.fillRect( 100, 100, 150, 150 );<br>
+                                    </code>
+
                                 div.btn.btn-default
                                     span#opacity Opacity
                                 p.desc.
-                                    The CanvasRenderingContext2D.globalAlpha property of the Canvas 2D API
-                                    specifies the alpha value that is applied to shapes and images
-                                    before they are drawn onto the canvas.
-                                    The value is in the range from 0.0 (fully transparent) to 1.0 (fully opaque).
-                                    ctx.globalAlpha = value;
+
+                                    Определяет уровень прозрачности.
+
+                                    <code class="language-js">
+                                        // Синтаксис<br>
+                                        globalAlpha [ =value ]<br>
+                                    </code>
+
+                                    Значение — число в диапазоне от 0 до 1.0 ( 0 — абсолютно прозрачно ).
+                                    По умолчанию значение равно 1.
+                                    Если не задавать значение, тогда будет происходить чтение свойства.
+
+                                    <code class="language-js">
+                                        // Пример<br>
+                                        ctx.beginPath();<br>
+                                        ctx.fillStyle = "rgb( 226, 167, 111 )";<br>
+                                        ctx.fillRect( 50, 50, 100, 50 );<br>
+
+                                        ctx.beginPath();<br>
+                                        ctx.globalAlpha = 0.5;<br>
+                                        ctx.fillStyle = "rgb( 111, 171, 227)";<br>
+                                        ctx.arc( 100, 120, 50, 0,2 * Math.PI, false );<br>
+                                        ctx.fill();
+                                    </code>
+
                                 div.btn.btn-default
                                     span#create-linear-gradient Create Linear Gradient
                                 p.desc.
@@ -343,10 +795,11 @@ html( lang="ru" )
 
                                     <code class="language-js">
                                         // Пример<br>
-                                        ctx.fillStyle = "blue";<br>
+                                        ctx.fillStyle = "rgb( 115, 140, 0 )";<br>
                                         ctx.arc( 100, 120, 50, 0, 2 * Math.PI, false );<br>
                                         ctx.fill();<br>
                                     </code>
+
                                 div.btn.btn-default
                                     span#fill-rectangle Fill Rectangle
                                 p.desc.
@@ -365,41 +818,199 @@ html( lang="ru" )
 
                                     <code class="language-js">
                                         // Пример<br>
-                                        ctx.fillRect( 0, 0, canvas.width, canvas.height );<br>
+                                        ctx.fillStyle = "rgb( 177, 251, 23 )";<br>
+                                        ctx.fillRect( 0, 0, html.canvas.width, html.canvas.height );<br>
                                     </code>
 
                                 div.btn.btn-default
                                     span#round Round
-                                p.desc ...
+                                p.desc.
+                                    Эта кнопка просто рисует круг при помощи метода arc().
+
                                 div.btn.btn-default
                                     span#empty-rectangle Empty Rectangle
                                 p.desc.
-                                    The CanvasRenderingContext2D.strokeRect() method of the Canvas 2D API paints
-                                    a rectangle which has a starting point at (x, y) and has a w width and an h
-                                    height onto the canvas, using the current stroke style.
-                                    void ctx.strokeRect(x, y, width, height);
+                                    Рисует контур прямоугольника, определенный свойством strokeStyle.
+                                    Левый верхний угол прямоугольника в точке ( x, y ).
+                                    Размеры - width x height.
+
+                                    <code class="language-js">
+                                        // Синтаксис<br>
+                                        void ctx.strokeRect( x, y, width, height );<br>
+                                    </code>
+
+                                    Все параметры обязательны и должны быть положительными числами.
+
+                                    <code class="language-js">
+                                        // Пример<br>
+                                        ctx.fillRect( 50, 50, 100, 50 );<br>
+                                        ctx.strokeRect( 120, 100, 100, 50 );<br>
+                                        ctx.clearRect( 100, 70, 50, 50 );<br>
+                                    </code>
+
+                                div.btn.btn-default
+                                    span#global-composite-operation Перекрытие фигур
+                                p.desc.
+                                    Определяет как будут себя вести перекрывающиеся фигуры.
+
+                                    <code class="language-js">
+                                        // Синтаксис<br>
+                                        void ctx.globalCompositeOperation = type;
+                                    </code>
+
+                                    На место type нужно подставить одно из зарезервированных значений:<br>
+                                     <strong>- source-over</strong> ( по умолчанию ) — новое изображение рисуется поверх старого<br>
+                                     <strong>- destination-over</strong> — новые фигуры рисуются под уже нарисованными<br>
+                                     <strong>- source-in</strong> — отображается только та часть, где фигуры накладываются одна на другую. Сверху новое изображение<br>
+                                     <strong>- destination-in</strong> — отображается только та часть изображения, где фигуры накладываются одна на другую. Сверху старое изображение<br>
+                                     <strong>- source-out</strong> — отображается только та часть нового изображения, которая не пересекается с другими фигурами<br>
+                                     <strong>- destination-out</strong> — отображается только та часть предшествующего изображения, которая не пересекается с другими фигурами<br>
+                                     <strong>- source-atop</strong> — у нового изображения отображается только та часть, которая пересекается с предшествующими фигурами<br>
+                                     <strong>- destination-atop</strong> — у предшествующего изображения отображается (поверх) только та часть, которая пересекается с новой фигурой.<br>
+                                     <strong>- lighter</strong> — место пересечения фигур изменяет цвет на тот, которые получается путем сложения цветов пересекающихся фигур.<br>
+                                     <strong>- darker</strong> — место пересечения фигур изменяет цвет на тот, которые получается путем вычитания цветов пересекающихся фигур.<br>
+                                     <strong>- xor</strong> — место пересечения фигур прозрачно.<br>
+                                     <strong>- copy</strong> — отображается только новая фигура, все остальное удаляется.<br>
+
+                                    <code class="language-js">
+                                        // Пример<br>
+                                        ctx.globalCompositeOperation = "xor";<br>
+
+                                        ctx.fillStyle = "rgb( 193, 27, 23 )";<br>
+                                        ctx.fillRect(10, 10, 100, 100);<br>
+
+                                        ctx.fillStyle = "rgb( 23, 191, 194 )";<br>
+                                        ctx.fillRect(50, 50, 100, 100);<br>
+                                    </code>
+
+
                             // ================================================================
+                           
                             section#text-drawing.text-drawing.tab-pane.fade.well
+
+                                div.btn.btn-default
+                                    span#font Font
+                                p.desc.
+                                    Определяет свойства шрифта. Значение — перечень свойств шрифта
+                                    аналогично синтаксису в CSS.
+
+                                    <code class="language-js">
+                                        // Синтаксис<br>
+                                        void ctx.font[ =value ];
+                                    </code>
+
+                                    <code class="language-js">
+                                        // Пример<br>
+                                        ctx.font = "italic bold 32px Tahoma";<br>
+                                        ctx.textBaseline = "Top";<br>
+                                        ctx.textAligne = "center";<br>
+                                        ctx.fillStyle = "rgb( 38, 51, 74 )";<br>
+                                        ctx.textAligne = "center";<br>
+                                        ctx.strokeText( "Hello world", 20, 100 );<br>
+                                    </code>
+
                                 div.btn.btn-default
                                     span#fill-text Fill Text
                                 p.desc.
-                                    The CanvasRenderingContext2D.fillText() method
-                                    of the Canvas 2D API fills a given text
-                                    at the given (x, y) position.
-                                    If the optional fourth parameter for a maximum width
-                                    is provided, the text will be scaled to fit that width.
-                                    void ctx.fillText(text, x, y [, maxWidth]);
+                                    Рисуем текст, левый верхний угол которого находится
+                                    в позиции ( x, y ), залитый цветом, определенным в fillStyle.
+                                    Параметр maxWidth - опциональный. Если его указать,
+                                    то текст масштабирается, чтобы соответствовать указанной ширине.
+
+                                    <code class="language-js">
+                                        // Синтаксис<br>
+                                        void ctx.fillText( text, x, y [, maxWidth ] );
+                                    </code>
+
+                                    <code class="language-js">
+                                        // Пример<br>
+                                        ctx.font = "48px serif";<br>
+                                        ctx.fillStyle = "rgb( 73, 61, 38 )";<br>
+                                        ctx.fillText( "Hello world", 20, 100 );<br>
+                                    </code>
+
                                 div.btn.btn-default
-                                    span#stroke-text Border Text
+                                    span#stroke-text Stroke Text
                                 p.desc.
-                                    The CanvasRenderingContext2D.strokeText() method
-                                    of the Canvas 2D API strokes a given text
-                                    at the given (x, y) position. If the optional fourth
-                                    parameter for a maximum width is provided,
-                                    the text will be scaled to fit that width.
-                                    void ctx.strokeText(text, x, y [, maxWidth]);
+                                    Рисуем контур текста цветом, определенным strokeStyle. 
+                                    Верхний левый угол - в похиции ( x, y ). Четвертый параметр - 
+                                    опциональный - это ширина, до которой должен масштабироваться 
+                                    написованный текст.
+
+                                    <code class="language-js">
+                                        // Синтаксис<br>
+                                        void ctx.strokeText( text, x, y [, maxWidth ] );
+                                    </code>
+
+                                    <code class="language-js">
+                                        // Пример<br>
+                                        ctx.font = "normal normal 32px Tahoma";<br>
+                                        ctx.strokeStyle = "red";<br>
+                                        ctx.strokeText( "Учим canvas", 300, 200 );<br>
+                                    </code>
+
+                                div.btn.btn-default
+                                    span#text-align Text Aligne
+                                p.desc.
+                                    Определяет выравнивание текста.
+
+                                    <code class="language-js">
+                                        // Синтаксис<br>
+                                        void ctx.textAlign[ =value ];
+                                    </code>
+
+                                    Значение — один из следующих вариантов:
+
+                                    <strong>- start</strong> — (по умолчанию)по правому краю;<br>
+                                    <strong>- end</strong> — по правому краю.<br>
+                                    <strong>- left</strong> — по левому краю;<br>
+                                    <strong>- right</strong> — по правому краю;<br>
+                                    <strong>- center</strong> — по центру;<br>
+
+                                    <code class="language-js">
+                                        // Пример<br>
+                                        ctx.font = "48px serif";<br>
+                                        ctx.textAlign = 'right';<br>
+                                        ctx.fillStyle = "rgb( 246, 96, 171 )";<br>
+                                        ctx.fillText( "London is the capital of Great Britain", 800, 100 );<br>
+                                    </code>
+                                    
+                                    Выравнивание происходит относительно указанных координат 
+                                    начала текста. Значение start / left и right / end совпадут 
+                                    когда у нас направление текста ltr. И наоборот, start / 
+                                    right и left / end совпадут для rtl.
+
+                                div.btn.btn-default
+                                    span#text-baseline Text BaseLine
+                                p.desc.
+                                    Возвращает / устанавливает выравнивание базовой линии.
+
+                                    <code class="language-js">
+                                        // Синтаксис<br>
+                                        ctx.textBaseline[ =value ];
+                                    </code>
+
+                                    Значение — один из следующих вариантов: top, hanging, middle,
+                                    alphabetic ( по умолчанию ), ideographic, bottom.
+
+                                    <a class="fancybox" href="app/img/textbaseline.png">
+                                        <img class='visual-cheet' src='app/img/textbaseline.png' alt='draw image visual cheet'>
+                                    </a>
+
+                                    <code class="language-js">
+                                        // Пример<br>
+                                        ctx.font = "48px serif";<br>
+                                        ctx.textBaseline = 'top';<br>
+                                        ctx.fillStyle = "rgb( 246, 96, 171 )";<br>
+                                        ctx.fillText( "Play Canvas", 50, 100 );<br>
+                                    </code>
+
+                                    Для работы с латиницей достаточно значений top, middle, bottom. Остальные — более тонкая настройка для остальных символов юникода.
+
+                                    
                             // ==================================================================================
                             section#images-drawing.images-drawing.tab-pane.fade.well
+
                                 div.btn.btn-default
                                     span#create-image Create image
                                 p.desc.
@@ -443,6 +1054,26 @@ html( lang="ru" )
                                         <img class='visual-cheet' src='app/img/drawimage2.jpg' alt='draw image visual cheet'>
                                     </a>
 
+                                    В примере внизу я влепила таймер, потому что при создании
+                                    картинки канвасу нужно немного времени на ее создание. 
+
+                                    Если вы будете подгружать свое изображение, возможно
+                                    придется увеличить задержку. Здесь всего лишь иконка.
+                                    Естественно, можно использовать любой другой способ, 
+                                    который задержит процесс. Например, в нашем случае - 
+                                    одной кнопкой создавать картинку, а другой рисовать ее на
+                                    холсте. Если вам так больше нравится, можете изменить код, 
+                                    а я подумала, что кнопок здесь и так... хватает...
+
+                                    <code class="language-js">
+                                        // Пример<br>
+                                        var image = new Image();<br>
+                                        image.src="app/img/present.png";<br>
+                                        setTimeout( function() {;<br>
+                                          ctx.drawImage( image, 10, 50, 50, 50 );<br>
+                                        }, 15 );<br>
+                                    </code>
+
                                     Будет немного понятнее, если посмотреть на картинку. Спецификация позволяет любые
                                     изображения - это может быть обычная картинка, картинка созданная при помощи методов
                                     из Canvas Api, ImageBitmap HTMLImageElement или вообще видео. Насчет видео - есть нюанс.
@@ -452,11 +1083,11 @@ html( lang="ru" )
                                     производительности, несмотря на то, что холст довольно быстр...
 
                                 div.btn.btn-default
-                                    span#create-image-data Create imageData
+                                    span#create-image-data Create image
                                 p.desc.
                                     Создает объект imageData. В width и height передаем
                                     размеры создаваемого объекта. В результате получим объект
-                                    imageData с RGBA = ( 0, 0, 0, 0) и размером width x height.
+                                    imageData с RGBA = ( 0, 0, 0, 0 ) и размером width x height.
 
                                     <code class="language-js">
                                         // Синтаксис<br>
@@ -474,8 +1105,87 @@ html( lang="ru" )
 
                                     <code class="language-js">
                                         // Синтаксис
-                                        imageData.data[i] = value,<br>
+                                        imageData.data[ i ] = value;<br>
                                     </code>
+
+                                    Пример уже в консоли. Слишком уж нестандартно.
+
+                                div.btn.btn-default
+                                    span#get-image-data Get Image Data
+                                p.desc.
+                                    Метод возвращает данные о цвете ( RGB ) и прозрачности указанного участка холста. При этом, будут возвращены значения цвета, которые фактически видит пользователь, а не те, которые определены в fillStyle/ strokeStyle.
+
+                                    <code class="language-js">
+                                        // Синтаксис<br>
+                                        ctx.getImageData( sx, sy, sw, sh );
+                                    </code>
+
+                                    Первые два параметра ( sx, sy ) - координаты верхнего левого угла участка,
+                                    оставшиеся - ( sw, sh ) - его ширина и высота. Значения вернутся в виде массива.<br>
+                                    Например, получим данные участка размером в 1px:
+
+                                    <code class="language-js">
+                                        // Пример<br>
+                                        var imageData = ctx.getImageData( 10, 10, 1, 1 );
+                                    </code>
+
+                                    Получим такой результат:
+
+                                    <code class="language-js">
+                                        // Пример<br>
+                                        imageData.data[ 0 ]     // значение красного цвета ( число от 0 до 255 );<br>
+                                        imageData.data[ 1 ]     // значение зеленого цвета ( число от 0 до 255 );<br>
+                                        imageData.data[ 2 ]     // значение синего цвета ( число от 0 до 255 );<br>
+                                        imageData.data[ 3 ]     // значение прозрачности ( число от 0 до 255 );<br>
+                                    </code>
+
+                                    Для участка размером, напрмер, 2px:
+
+                                    <code class="language-js">
+                                        // Пример<br>
+                                        var imageData = ctx.getImageData( 10, 10, 2, 2 );
+                                    </code>
+
+                                    <a class="fancybox" href="app/img/getimagedata.png">
+                                        <img class='visual-cheet' src='app/img/getimagedata.png' alt='getimagedata visual cheet'>
+                                    </a>
+
+                                    Массив будет уже большего размера: 4x2x2
+                                    ( 2x2 — 4 пикселя на каждый из которых 4 значения )<br>
+
+                                    Кроме этого, следует помнить, что getImageData является ресурсоемкой операцией, по возможности следует ее избегать.
+
+
+                                div.btn.btn-default
+                                    span#put-image-data Put Image Data
+                                p.desc.
+                                    Помещает на холст объект imageData ( содержит RGBA информацию ).
+
+                                    <code class="language-js">
+                                        // Синтаксис<br>
+                                        ctx.putImageData( imageData, x, y [, dX, dY, dWidth, dHeight ] );<br>
+                                    </code>
+
+                                    ImageData — объект, созданный с помощью метода createImageData()
+                                    или полученный с помощью getImageData().
+                                    x и y — координаты левого верхнего угла объекта относительно холста;
+                                    dX, dY — координаты левого верхнего угла относительно изображения в imageData,
+                                    от которого будут рассчитываться размеры изображения;
+                                    dWidth, dHeight — размеры размещаемого объекта ( обрезается часть изображения,
+                                    которая не вмещается в эти размеры ).
+
+                                    <code class="language-js">
+                                        // Пример<br>
+                                        ctx.fillStyle = "red";<br>
+                                        ctx.fillRect( 10, 10, 100, 40 );<br>
+                                        ctx.fillStyle = "green";<br>
+                                        ctx.globalAlpha = "0.5";<br>
+                                        ctx.fillRect( 90, 30, 50, 50 );<br>
+                                        var Pixel1 = ctx.getImageData( 10, 10, 140, 80 );<br><br>
+                                        // отображаем только зеленый квадрат<br>
+                                        ctx.putImageData( Pixel1, 200, 200, 80, 20, 50, 50 );<br>
+                                    </code>
+
                                 div.btn.btn-default
                                     span#tile-canvas Tile Canvas
                                 p.desc.
@@ -489,6 +1199,17 @@ html( lang="ru" )
                                     <code class="language-js">
                                         // Синтаксис<br>
                                         ctx.createPattern( image, type );
+                                    </code>
+
+                                div.btn.btn-default
+                                    span#to-data-url To Data Url
+                                p.desc.
+                                    Сохраняет в data url изображение нарисованное на холсте.
+                                    Результатом будет url PNG изображения закодированного в data url.
+
+                                    <code class="language-js">
+                                        // Синтаксис<br>
+                                        ctx.canvas.toDataURL();<br>
                                     </code>
 
                             // ===================================================================
@@ -507,26 +1228,69 @@ html( lang="ru" )
                         div.btn.btn-default
                             span#save-context-btn Save Context
                         p.desc.
-                            Контекст - это все настройки рисования.
+                            Контекст - содержит настройки рисования.
                             Метод save() сохраняет копию текущего состояния контекста
-                            на вершину стека состояния. Потом его можно оттуда восстановить,
-                            если написать что-нибудь вроде ctx.restore().
+                            на вершину стека состояния. Сохраняются 
+                            примененные трансформации, strokeStyle, fillStyle, globalAlpha, lineWidth, 
+                            lineCap, lineJoin, miterLimit, shadowOffsetX, shadowOffsetY, shadowBlur, shadowColor, 
+                            globalCompositeOperation и контуры отсечения.<br>
+                            Потом его можно оттуда восстановить, воспользовавшись ctx.restore().
+
                             <code class="language-js">
                                 // Пример<br>
                                 void ctx.save();<br>
                                 void ctx.restore();<br>
                             </code>
+
+                            <code class="language-js">
+                                ctx.fillRect( 50, 50, 30, 20 );<br>
+                                    
+                                ctx.fillStyle = "green";<br>
+                                ctx.save();<br>
+                                ctx.fillRect( 80, 50, 30, 20 );<br>
+                                    
+                                ctx.fillStyle = "blue";<br>
+                                ctx.fillRect( 110, 50, 30, 20 );<br>
+                                    
+                                ctx.restore();<br>
+                                ctx.fillRect( 140, 50, 30, 20 );<br>
+                                    
+                                ctx.restore();<br>
+                                ctx.fillRect( 170, 50, 30, 20 );<br>
+                            </code>
+
                         div.btn.btn-default
                             span#restore-context-btn Restore Context
                         p.desc.
-                            Восстанавливаем из стека верхнее состояние контекста
-                            Если мы предварительно не сделали ctx.save(),
-                            ничего не произойдет.
+                            Восстанавливаем из стека верхнее состояние контекста. Восстанавливаются 
+                            примененные трансформации, strokeStyle, fillStyle, globalAlpha, lineWidth, 
+                            lineCap, lineJoin, miterLimit, shadowOffsetX, shadowOffsetY, shadowBlur, shadowColor, 
+                            globalCompositeOperation и контуры отсечения.<br>
+                            Если мы предварительно не сделали ctx.save(), ничего не восстановится.
+
                             <code class="language-js">
-                                // Пример<br>
+                                // Синтаксис<br>
                                 void ctx.save();<br>
                                 void ctx.restore();<br>
                             </code>
+
+                            <code class="language-js">
+                                ctx.fillRect( 50, 50, 30, 20 );<br>
+                                    
+                                ctx.fillStyle = "green";<br>
+                                ctx.save();<br>
+                                ctx.fillRect( 80, 50, 30, 20 );<br>
+                                    
+                                ctx.fillStyle = "blue";<br>
+                                ctx.fillRect( 110, 50, 30, 20 );<br>
+                                    
+                                ctx.restore();<br>
+                                ctx.fillRect( 140, 50, 30, 20 );<br>
+                                    
+                                ctx.restore();<br>
+                                ctx.fillRect( 170, 50, 30, 20 );<br>
+                            </code>
+
                         div.btn.btn-default
                             span#clear-canvas-btn Clear Canvas
                         p.desc.
@@ -542,20 +1306,26 @@ html( lang="ru" )
                                 // Синтаксис<br>
                                 void clearRect( 0, 0, html.canvas.width, html.canvas.height );<br>
                             </code>
+
                         div.btn.btn-default
                             span#clear-cheet-btn Clear Cheet
+
                         div.btn.btn-default
                             span#clear-console-btn Clear Console
 
                          // ===================================================================
+
                         span.single-buttons
+
                             div.btn.btn-default
                                 span#run-btn Run Canvas
+
                             div.btn.btn-default
                                 span#reset-canvas-btn Reset Canvas
 
                         // ===================================================================
                         span#additional-objects-field.additional-objects-field
+
                             div.btn.btn-default
                                 span#save-image Save Image
                             p.desc.
@@ -583,11 +1353,10 @@ html( lang="ru" )
                                             i.glyphicon.glyphicon-chevron-up.pull-right(
                                                 data-toggle="collapse" data-target="#collapsed-canvas" )
                                 div#collapsed-canvas.canvas-wrapper.panel-body.well
-                                    canvas#canvas-field.center-block( width="800" height="400" )
-                        div.row
-                            div#img-container.saved-image.col-lg-12
-                                img#img-copy.image-copy
-                                p Щелкните правой кнопкой мыши для сохранения ...
+                                        canvas#canvas-field.center-block( width="800" height="400" )
+                                div#img-container.saved-image.col-lg-12
+                                    p Щелкните правой кнопкой мыши для сохранения ...
+                                    img#img-copy.image-copy
 
                 section.col-md-6
                     div.code-panel
@@ -601,7 +1370,7 @@ html( lang="ru" )
 
                                 div#collapseCodePanel.panel-body.collapse.well.in
                                     div.textarea-field
-                                        pre( class="language-js" )
+                                        pre.language-js
                                             code#console( contenteditable='true' )
 
                         div.row
